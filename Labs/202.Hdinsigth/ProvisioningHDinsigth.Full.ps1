@@ -37,8 +37,9 @@ $clusterPassword = "Av@nade001"
 
 $secpasswd = ConvertTo-SecureString $clusterPassword -AsPlainText -Force
 $clusterCreds = New-Object System.Management.Automation.PSCredential($clusterUsername, $secpasswd)
-$blobStorage = "$storageAccountName.blob.core.windows.net"
+$blobStorage = "$storageAccountName.blob.core.windows.nets"
 $sqlServer = Get-AzureSqlDatabaseServer|%{$_.ServerName}
+$sqlServer="$sqlServer.database.windows.net"
 ##credentials
 $dbusername="mdadmin"
 $dbpassword="Av@nade001"
@@ -51,6 +52,7 @@ $storageAccountKey = Get-AzureStorageKey $storageAccountName | %{ $_. Primary }
 New-AzureHDInsightClusterConfig -ClusterSizeInNodes $clusterNodes| 
     Set-AzureHDInsightDefaultStorage -StorageAccountName $blobStorage -StorageAccountKey $storageAccountKey -StorageContainerName $containerName |
     Add-AzureHDInsightMetastore -SqlAzureServerName $sqlServer -DatabaseName $databaseName -Credential $databaseCreds -MetastoreType OozieMetastore |
+    Add-AzureHDInsightMetastore -SqlAzureServerName $sqlServer -DatabaseName $databaseName -Credential $databaseCreds -MetastoreType HiveMetastore |
     New-AzureHDInsightCluster  -Credential $clusterCreds -Name $clusterName -Location $location
 
 ## OLD
