@@ -1,0 +1,38 @@
+-------------------------------------------------------------------------------------------------
+01/03/2013 18:31:54	164792	Regular	USA	Adword	Add to Cart
+
+create external table ClickStreamData(hitdatetime string, productid int, visitortype string, country string, referrer string, action string) 
+row format delimited fields terminated by '\t' 
+stored as textfile
+location 'asv://joydivision@joydivision.blob.core.windows.net/handsonlabs/data/'
+
+	
+	select x.country, sum(numPurchases), 100 * sum(numNewPurchases)/sum(numPurchases)
+	from (
+		select country, 
+				visitortype, 
+				count(1) numPurchases, 
+				sum(CASE visitortype WHEN 'New' THEN 1 WHEN 'Regular' THEN 0 WHEN 'Infrequent' THEN 0 END) numNewPurchases
+		from ClickStreamData
+		where action = 'Purchase'
+		group by country, visitortype ) x
+	group by x.country
+
+
+-------------------------------------------------------------------------------------------------
+
+
+load data inpath 'hdfs://namenodehost:9000/output_checkoutStepCounts/part-00000' into table CheckoutSteps
+
+create external table CheckoutStepsFeb2013(visitor_id string, Step1 int, Step2 int, Step3 int, Step4 int, Step5 int, Step6 int, Step7 int, Step8 int) 
+row format delimited fields terminated by '\t' location 'hdfs://namenodehost:9000/output_checkoutStepCounts/'
+
+/output_checkoutStepCounts/ASOS Main Site/2013/02/CheckoutStepCounts/part-*
+
+CREATE EXTERNAL TABLE user(id INT, name STRING) ROW FORMAT
+              DELIMITED FIELDS TERMINATED BY ','
+              LINES TERMINATED BY '\n' 
+              STORED AS TEXTFILE
+              LOCATION '/home/admin/userdata';s
+			  
+			  

@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md -->
+<html lang="en" class=""><head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# object: http://ogp.me/ns/object# article: http://ogp.me/ns/article# profile: http://ogp.me/ns/profile#"><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Language" content="en">
+    
+    
+    <title>HDInsight-Labs-Preview/HandsOnLabs.md at master · Azure-Samples/HDInsight-Labs-Preview · GitHub</title>
+    <link rel="search" type="application/opensearchdescription+xml" href="https://github.com/opensearch.xml" title="GitHub">
+    <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub">
+    <link rel="apple-touch-icon" sizes="57x57" href="https://github.com/apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="https://github.com/apple-touch-icon-114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="https://github.com/apple-touch-icon-144.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="https://github.com/apple-touch-icon-144.png">
+    <meta property="fb:app_id" content="1401488693436528">
+
+      <meta content="@github" name="twitter:site"><meta content="summary" name="twitter:card"><meta content="Azure-Samples/HDInsight-Labs-Preview" name="twitter:title"><meta content="HDInsight-Labs-Preview - This repository includes 5 hands on labs in preview.  MapReduce, Chain multiple MR jobs together, data import and Hive, PivotTable&amp;amp;PivotChart, Collaborative Filtering." name="twitter:description"><meta content="https://avatars3.githubusercontent.com/u/1844662?v=3&amp;s=400" name="twitter:image:src">
+      <meta content="GitHub" property="og:site_name"><meta content="object" property="og:type"><meta content="https://avatars3.githubusercontent.com/u/1844662?v=3&amp;s=400" property="og:image"><meta content="Azure-Samples/HDInsight-Labs-Preview" property="og:title"><meta content="https://github.com/Azure-Samples/HDInsight-Labs-Preview" property="og:url"><meta content="HDInsight-Labs-Preview - This repository includes 5 hands on labs in preview.  MapReduce, Chain multiple MR jobs together, data import and Hive, PivotTable&amp;PivotChart, Collaborative Filtering." property="og:description">
+      <meta name="browser-stats-url" content="/_stats">
+    <link rel="assets" href="https://assets-cdn.github.com/">
+    <link rel="conduit-xhr" href="https://ghconduit.com:25035/">
+    
+    <meta name="pjax-timeout" content="1000">
+    
+
+    <meta name="msapplication-TileImage" content="/windows-tile.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    
+      <meta name="google-analytics" content="UA-3769691-2">
+
+    <meta content="collector.githubapp.com" name="octolytics-host"><meta content="collector-cdn.github.com" name="octolytics-script-host"><meta content="github" name="octolytics-app-id"><meta content="A2191895:2BF0:226F843A:54DB9058" name="octolytics-dimension-request_id">
+    
+    <meta content="Rails, view, files#disambiguate" name="analytics-event">
+
+    
+    
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+
+
+    <meta content="authenticity_token" name="csrf-param">
+<meta content="idEWpIV684n0NHAVc4Xpxb0WT684p7ShdaBT2pnDu1H5olHwog3pdsPT80NLJXCXyzN8WfVSB74xCXfA3/Uk8w==" name="csrf-token">
+
+    <link href="https://assets-cdn.github.com/assets/github-a877311d38319215d5b12cc8009c0260e2e2935a87976dec85ee155bc865fe97.css" media="all" rel="stylesheet">
+    <link href="https://assets-cdn.github.com/assets/github2-2f94522764087a389e29cfa191bbac8a255b35627ddc6c91657fa167234745f4.css" media="all" rel="stylesheet">
+    
+    
+
+
+    <meta http-equiv="x-pjax-version" content="2bb6071abdffe882a38ffd249ef9bb45">
+
+      
+  <meta name="description" content="HDInsight-Labs-Preview - This repository includes 5 hands on labs in preview.  MapReduce, Chain multiple MR jobs together, data import and Hive, PivotTable&amp;PivotChart, Collaborative Filtering.">
+  <meta name="go-import" content="github.com/Azure-Samples/HDInsight-Labs-Preview git https://github.com/Azure-Samples/HDInsight-Labs-Preview.git">
+
+  <meta content="1844662" name="octolytics-dimension-user_id"><meta content="Azure-Samples" name="octolytics-dimension-user_login"><meta content="9970271" name="octolytics-dimension-repository_id"><meta content="Azure-Samples/HDInsight-Labs-Preview" name="octolytics-dimension-repository_nwo"><meta content="true" name="octolytics-dimension-repository_public"><meta content="false" name="octolytics-dimension-repository_is_fork"><meta content="9970271" name="octolytics-dimension-repository_network_root_id"><meta content="Azure-Samples/HDInsight-Labs-Preview" name="octolytics-dimension-repository_network_root_nwo">
+  <link href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/commits/master.atom" rel="alternate" title="Recent Commits to HDInsight-Labs-Preview:master" type="application/atom+xml">
+
+  <script type="text/javascript" async="" src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/api.js"></script><meta name="selected-link" value="repo_source" data-pjax-transient="true"><meta content="Rails, view, blob#show" name="analytics-event" data-pjax-transient="true"></head>
+
+
+  <body class="logged_out  env-production windows vis-public">
+    <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#start-of-content" tabindex="1" class="accessibility-aid js-skip-to-content">Skip to content</a>
+    <div class="wrapper">
+      
+      
+      
+      
+
+
+      
+      <div class="header header-logged-out" role="banner">
+  <div class="container clearfix">
+
+    <a class="header-logo-wordmark" href="https://github.com/" ga-data-click="(Logged out) Header, go to homepage, icon:logo-wordmark">
+      <span class="mega-octicon octicon-logo-github"></span>
+    </a>
+
+    <div class="header-actions" role="navigation">
+        <a class="button primary" href="https://github.com/join" data-ga-click="(Logged out) Header, clicked Sign up, text:sign-up">Sign up</a>
+      <a class="button" href="https://github.com/login?return_to=%2FAzure-Samples%2FHDInsight-Labs-Preview" data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Sign in</a>
+    </div>
+
+    <div class="site-search repo-scope js-site-search" role="search">
+      <form accept-charset="UTF-8" action="https://github.com/Azure-Samples/HDInsight-Labs-Preview/search" class="js-site-search-form" data-global-search-url="/search" data-repo-search-url="/Azure-Samples/HDInsight-Labs-Preview/search" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
+  <input type="text" class="js-site-search-field is-clearable" data-hotkey="s" name="q" placeholder="Search" data-global-scope-placeholder="Search GitHub" data-repo-scope-placeholder="Search" tabindex="1" autocapitalize="off">
+  <div class="scope-badge">This repository</div>
+</form>
+    </div>
+
+      <ul class="header-nav left" role="navigation">
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="https://github.com/explore" data-ga-click="(Logged out) Header, go to explore, text:explore">Explore</a>
+          </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="https://github.com/features" data-ga-click="(Logged out) Header, go to features, text:features">Features</a>
+          </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="https://enterprise.github.com/" data-ga-click="(Logged out) Header, go to enterprise, text:enterprise">Enterprise</a>
+          </li>
+          <li class="header-nav-item">
+            <a class="header-nav-link" href="https://github.com/blog" data-ga-click="(Logged out) Header, go to blog, text:blog">Blog</a>
+          </li>
+      </ul>
+
+  </div>
+</div>
+
+
+
+      <div id="start-of-content" class="accessibility-aid"></div>
+          <div class="site" itemscope="" itemtype="http://schema.org/WebPage">
+    <div id="js-flash-container"><div id="pjax-flash">
+  
+</div></div>
+    <div class="pagehead repohead instapaper_ignore readability-menu">
+      <div class="container">
+        
+<ul class="pagehead-actions">
+
+  <li>
+      <a href="https://github.com/login?return_to=%2FAzure-Samples%2FHDInsight-Labs-Preview" class="minibutton with-count tooltipped tooltipped-n" aria-label="You must be signed in to watch a repository" rel="nofollow">
+    <span class="octicon octicon-eye"></span>
+    Watch
+  </a>
+  <a class="social-count" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/watchers">
+    18
+  </a>
+
+
+  </li>
+
+  <li>
+      <a href="https://github.com/login?return_to=%2FAzure-Samples%2FHDInsight-Labs-Preview" class="minibutton with-count tooltipped tooltipped-n" aria-label="You must be signed in to star a repository" rel="nofollow">
+    <span class="octicon octicon-star"></span>
+    Star
+  </a>
+
+    <a class="social-count js-social-count" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/stargazers">
+      11
+    </a>
+
+  </li>
+
+    <li>
+      <a href="https://github.com/login?return_to=%2FAzure-Samples%2FHDInsight-Labs-Preview" class="minibutton with-count tooltipped tooltipped-n" aria-label="You must be signed in to fork a repository" rel="nofollow">
+        <span class="octicon octicon-repo-forked"></span>
+        Fork
+      </a>
+      <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/network" class="social-count">
+        7
+      </a>
+    </li>
+</ul>
+
+        <h1 itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb" class="entry-title public">
+          <span class="mega-octicon octicon-repo"></span>
+          <span class="author"><a href="https://github.com/Azure-Samples" class="url fn" itemprop="url" rel="author"><span itemprop="title">Azure-Samples</span></a></span><!--
+       --><span class="path-divider">/</span><!--
+       --><strong><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview" class="js-current-repository" data-pjax="#js-repo-pjax-container">HDInsight-Labs-Preview</a></strong>
+
+          <span class="page-context-loader">
+            <img alt="" height="16" src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+          </span>
+
+        </h1>
+      </div><!-- /.container -->
+    </div><!-- /.repohead -->
+
+    <div class="container">
+      <div class="repository-with-sidebar repo-container new-discussion-timeline">
+        <div class="repository-sidebar clearfix">
+            
+<nav class="sunken-menu repo-nav js-repo-nav js-sidenav-container-pjax js-octicon-loaders" role="navigation" data-pjax="#js-repo-pjax-container" data-issue-count-url="/Azure-Samples/HDInsight-Labs-Preview/issues/counts">
+  <ul class="sunken-menu-group">
+    <li class="tooltipped tooltipped-w" aria-label="Code">
+      <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview" aria-label="Code" class="js-selected-navigation-item sunken-menu-item selected" data-hotkey="g c" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches /Azure-Samples/HDInsight-Labs-Preview">
+        <span class="octicon octicon-code"></span> <span class="full-word">Code</span>
+        <img alt="" class="mini-loader" height="16" src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+</a>    </li>
+
+      <li class="tooltipped tooltipped-w" aria-label="Issues">
+        <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/issues" aria-label="Issues" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g i" data-selected-links="repo_issues repo_labels repo_milestones /Azure-Samples/HDInsight-Labs-Preview/issues">
+          <span class="octicon octicon-issue-opened"></span> <span class="full-word">Issues</span>
+          <span class="counter">1</span>
+
+          <img alt="" class="mini-loader" height="16" src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+</a>      </li>
+
+    <li class="tooltipped tooltipped-w" aria-label="Pull Requests">
+      <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/pulls" aria-label="Pull Requests" class="js-selected-navigation-item sunken-menu-item" data-hotkey="g p" data-selected-links="repo_pulls /Azure-Samples/HDInsight-Labs-Preview/pulls">
+          <span class="octicon octicon-git-pull-request"></span> <span class="full-word">Pull Requests</span>
+          <span class="counter">0</span>
+
+          <img alt="" class="mini-loader" height="16" src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+</a>    </li>
+
+
+  </ul>
+  <div class="sunken-menu-separator"></div>
+  <ul class="sunken-menu-group">
+
+    <li class="tooltipped tooltipped-w" aria-label="Pulse">
+      <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/pulse" aria-label="Pulse" class="js-selected-navigation-item sunken-menu-item" data-selected-links="pulse /Azure-Samples/HDInsight-Labs-Preview/pulse">
+        <span class="octicon octicon-pulse"></span> <span class="full-word">Pulse</span>
+        <img alt="" class="mini-loader" height="16" src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+</a>    </li>
+
+    <li class="tooltipped tooltipped-w" aria-label="Graphs">
+      <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/graphs" aria-label="Graphs" class="js-selected-navigation-item sunken-menu-item" data-selected-links="repo_graphs repo_contributors /Azure-Samples/HDInsight-Labs-Preview/graphs">
+        <span class="octicon octicon-graph"></span> <span class="full-word">Graphs</span>
+        <img alt="" class="mini-loader" height="16" src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/octocat-spinner-32-e513294efa576953719e4e2de888dd9cf929b7d62ed8d05f25e731d02452ab6c.gif" width="16">
+</a>    </li>
+  </ul>
+
+
+</nav>
+
+              <div class="only-with-full-nav">
+                  
+<div class="clone-url open" data-protocol-type="http" data-url="/users/set_protocol?protocol_selector=http&amp;protocol_type=clone">
+  <h3><span class="text-emphasized">HTTPS</span> clone URL</h3>
+  <div class="input-group js-zeroclipboard-container">
+    <input type="text" class="input-mini input-monospace js-url-field js-zeroclipboard-target" value="https://github.com/Azure-Samples/HDInsight-Labs-Preview.git" readonly="readonly">
+    <span class="input-group-button">
+      <button aria-label="Copy to clipboard" class="js-zeroclipboard minibutton zeroclipboard-button" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+  
+<div class="clone-url " data-protocol-type="subversion" data-url="/users/set_protocol?protocol_selector=subversion&amp;protocol_type=clone">
+  <h3><span class="text-emphasized">Subversion</span> checkout URL</h3>
+  <div class="input-group js-zeroclipboard-container">
+    <input type="text" class="input-mini input-monospace js-url-field js-zeroclipboard-target" value="https://github.com/Azure-Samples/HDInsight-Labs-Preview" readonly="readonly">
+    <span class="input-group-button">
+      <button aria-label="Copy to clipboard" class="js-zeroclipboard minibutton zeroclipboard-button" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+    </span>
+  </div>
+</div>
+
+
+
+<p class="clone-options">You can clone with
+  <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#" class="js-clone-selector" data-protocol="http">HTTPS</a> or <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#" class="js-clone-selector" data-protocol="subversion">Subversion</a>.
+  <a href="https://help.github.com/articles/which-remote-url-should-i-use" class="help tooltipped tooltipped-n" aria-label="Get help on which URL is right for you.">
+    <span class="octicon octicon-question"></span>
+  </a>
+</p>
+
+
+  <a href="http://windows.github.com/" class="minibutton sidebar-button" title="Save Azure-Samples/HDInsight-Labs-Preview to your computer and use it in GitHub Desktop." aria-label="Save Azure-Samples/HDInsight-Labs-Preview to your computer and use it in GitHub Desktop.">
+    <span class="octicon octicon-device-desktop"></span>
+    Clone in Desktop
+  </a>
+
+                <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/archive/master.zip" class="minibutton sidebar-button" aria-label="Download the contents of Azure-Samples/HDInsight-Labs-Preview as a zip file" title="Download the contents of Azure-Samples/HDInsight-Labs-Preview as a zip file" rel="nofollow">
+                  <span class="octicon octicon-cloud-download"></span>
+                  Download ZIP
+                </a>
+              </div>
+        </div><!-- /.repository-sidebar -->
+
+        <div id="js-repo-pjax-container" class="repository-content context-loader-container" data-pjax-container="">
+    
+
+<a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/aa7807f34705a517a19774108ff800b01602f851/HandsOnLabs.md" class="hidden js-permalink-shortcut" data-hotkey="y">Permalink</a>
+
+<!-- blob contrib key: blob_contributors:v21:c28eaf04cf54431700eabc3b66309047 -->
+
+<div class="file-navigation js-zeroclipboard-container">
+  
+<div class="select-menu js-menu-container js-select-menu left">
+  <span class="minibutton select-menu-button js-menu-target css-truncate" data-hotkey="w" data-master-branch="master" data-ref="master" title="master" role="button" aria-label="Switch branches or tags" tabindex="0" aria-haspopup="true">
+    <span class="octicon octicon-git-branch"></span>
+    <i>branch:</i>
+    <span class="js-select-button css-truncate-target">master</span>
+  </span>
+
+  <div class="select-menu-modal-holder js-menu-content js-navigation-container" data-pjax="" aria-hidden="true">
+
+    <div class="select-menu-modal">
+      <div class="select-menu-header">
+        <span class="select-menu-title">Switch branches/tags</span>
+        <span class="octicon octicon-x js-menu-close" role="button" aria-label="Close"></span>
+      </div>
+
+      <div class="select-menu-filters">
+        <div class="select-menu-text-filter">
+          <input type="text" aria-label="Filter branches/tags" id="context-commitish-filter-field" class="js-filterable-field js-navigation-enable" placeholder="Filter branches/tags">
+        </div>
+        <div class="select-menu-tabs">
+          <ul>
+            <li class="select-menu-tab">
+              <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#" data-tab-filter="branches" data-filter-placeholder="Filter branches/tags" class="js-select-menu-tab">Branches</a>
+            </li>
+            <li class="select-menu-tab">
+              <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#" data-tab-filter="tags" data-filter-placeholder="Find a tag…" class="js-select-menu-tab">Tags</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="branches">
+
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+            <div class="select-menu-item js-navigation-item selected">
+              <span class="select-menu-item-icon octicon octicon-check"></span>
+              <a href="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub.html" data-name="master" data-skip-pjax="true" rel="nofollow" class="js-navigation-open select-menu-item-text css-truncate-target" title="master">master</a>
+            </div>
+        </div>
+
+          <div class="select-menu-no-results">Nothing to show</div>
+      </div>
+
+      <div class="select-menu-list select-menu-tab-bucket js-select-menu-tab-bucket" data-tab-filter="tags">
+        <div data-filterable-for="context-commitish-filter-field" data-filterable-type="substring">
+
+
+        </div>
+
+        <div class="select-menu-no-results">Nothing to show</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <div class="button-group right">
+    <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/find/master" class="js-show-file-finder minibutton empty-icon tooltipped tooltipped-s" data-pjax="" data-hotkey="t" aria-label="Quickly jump between files">
+      <span class="octicon octicon-list-unordered"></span>
+    </a>
+    <button aria-label="Copy file path to clipboard" class="js-zeroclipboard minibutton zeroclipboard-button zeroclipboard-is-hover" data-copied-hint="Copied!" type="button"><span class="octicon octicon-clippy"></span></button>
+  </div>
+
+  <div class="breadcrumb js-zeroclipboard-target">
+    <span class="repo-root js-repo-root"><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview" class="" data-branch="master" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">HDInsight-Labs-Preview</span></a></span></span><span class="separator">/</span><strong class="final-path">HandsOnLabs.md</strong>
+  </div>
+</div>
+
+
+  <div class="commit file-history-tease">
+    <div class="file-history-tease-header">
+        <img alt="" class="avatar" height="24" src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/c10772d383ef4b506061e6aa9bf514b9" width="24">
+        <span class="author"><span>U-REDMOND\wenmingy</span></span>
+        <time datetime="2013-05-09T23:23:55Z" is="relative-time" title="May 10, 2013, 1:23 AM GMT+2">on May 10, 2013</time>
+        <div class="commit-title">
+            <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/commit/6cdd8cc81f879bcce8eac30ba5ce47f56e7a3611" class="message" data-pjax="true" title="first commit, adding all lab files including mark down and source code.">first commit, adding all lab files including mark down and source code.</a>
+        </div>
+    </div>
+
+    <div class="participation">
+      <p class="quickstat">
+        <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#blob_contributors_box" rel="facebox">
+          <strong>0</strong>
+           contributors
+        </a>
+      </p>
+      
+    </div>
+    <div id="blob_contributors_box" style="display:none">
+      <h2 class="facebox-header">Users who have contributed to this file</h2>
+      <ul class="facebox-user-list">
+      </ul>
+    </div>
+  </div>
+
+<div class="file-box">
+  <div class="file">
+    <div class="meta clearfix">
+      <div class="info file-name">
+          <span class="mode" title="File mode">executable file</span>
+          <span class="meta-divider"></span>
+          <span>631 lines (320 sloc)</span>
+          <span class="meta-divider"></span>
+        <span>31.911 kb</span>
+      </div>
+      <div class="actions">
+        <div class="button-group">
+          <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/raw/master/HandsOnLabs.md" class="minibutton " id="raw-url">Raw</a>
+            <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blame/master/HandsOnLabs.md" class="minibutton js-update-url-with-hash">Blame</a>
+          <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/commits/master/HandsOnLabs.md" class="minibutton " rel="nofollow">History</a>
+        </div><!-- /.button-group -->
+
+          <a class="octicon-button tooltipped tooltipped-nw" href="http://windows.github.com/" aria-label="Open this file in GitHub for Windows">
+              <span class="octicon octicon-device-desktop"></span>
+          </a>
+
+            <a class="octicon-button disabled tooltipped tooltipped-w" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#" aria-label="You must be signed in to make or propose changes"><span class="octicon octicon-pencil"></span></a>
+
+          <a class="octicon-button danger disabled tooltipped tooltipped-w" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#" aria-label="You must be signed in to make or propose changes">
+          <span class="octicon octicon-trashcan"></span>
+        </a>
+      </div><!-- /.actions -->
+    </div>
+    
+  <div id="readme" class="blob instapaper_body">
+    <article class="markdown-body entry-content" itemprop="mainContentOfPage"><p><a name="user-content-Title"></a></p>
+
+<h1>
+<a id="user-content-hdinsight-hands-on-labs" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#hdinsight-hands-on-labs" aria-hidden="true"><span class="octicon octicon-link"></span></a>HDInsight Hands On Labs</h1>
+
+<hr>
+
+<p><a name="user-content-Overview"></a></p>
+
+<h2>
+<a id="user-content-overview" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+
+<p>During these hands-on labs, you discover several ways to run MapReduce jobs across an HDInsight cluster. HDInsight is a new Windows Azure service built on the Hadoop distribution and harnesses the power of Azure and Hadoop to solve your Big Data needs.</p>
+
+<p>The Labs include programatically connecting to your cluster to run C# and F# MapReduce jobs, running Javascript MapReduce functions at the Javascript Interactive Console, chaining MapReduce jobs together for additional transformations, running HiveQL at the Hive Interactive Console, generating the MapReduce jobs directly from within Excel via the Hive ODBC driver and finally using Mahout for machine learning. </p>
+
+<ul class="task-list">
+<li><p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#Lab1">Lab 1</a> creates a MapReduce job in <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#Lab1TaskA">C#</a>, <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#Lab1TaskB">javascript</a> and <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#Lab1TaskC">F#</a> then runs the job on an Azure cluster using HDInsight. </p></li>
+<li><p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#Lab2">Lab 2</a> chains multiple MapReduce jobs together.</p></li>
+<li><p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#Lab3">Lab 3</a> imports tab separated data into an Azure cluster using Hive-based connectivity and then analyses the data using HiveQL. </p></li>
+<li><p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#Lab4">Lab 4</a> uses the Hive ODBC driver to export data from an HDInsight cluster into Excel then visualise the data using PivotTable and PivotChart.</p></li>
+<li><p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#Lab5">Lab 5</a> demonstrates how to use Mahout to build a recommendation engine using collaborative filtering. </p></li>
+</ul>
+
+<p><a name="user-content-Prerequisites"></a></p>
+
+<h3>
+<a id="user-content-prerequisites" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h3>
+
+<p>You must have an account to access HDInsight on Azure and an HDInsight cluster already created and backed by an Azure Storage Account. You may request for an invitation <a href="http://www.hadooponazure.com/">here</a>. To create a HDInsight cluster, follow the instructions outlined in the <em>Getting Started</em> Appendix.  </p>
+
+<p>These Labs were prepared by using an HDInsight cluster called '<em>handsonlabs</em>' which is backed by an Azure Storage Account called '<em>joydivision</em>'. HDInsight storage built on Azure Blob Storage, however, in the context of HDInsight this is known as the Azure Storage Vault &amp; uses an ASV protocol.</p>
+
+<p><a name="user-content-Exercises"></a></p>
+
+<h2>
+<a id="user-content-labs" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#labs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Labs</h2>
+
+<h3>
+<a id="user-content-the-scenario" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#the-scenario" aria-hidden="true"><span class="octicon octicon-link"></span></a>The scenario</h3>
+
+<p>Labs 1-4 use the power of HDInsight to analyse the web traffic of an imaginary e-commerce company. </p>
+
+<p>The company started in the USA and, whilst the USA still accounts for the majority of its revenue, they are interested in discovering how their products are selling in their European markets compared to the U.S. They are also  particularly interested in which are the fastest growing markets as indicated by a high percentage of purchases from new users. </p>
+
+<h3>
+<a id="user-content-the-data" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>The data</h3>
+
+<p>The dataset used for the labs, clickStream.log, contains ~100,000 rows of tab delimited with the following fields in the following order:</p>
+
+<ul class="task-list">
+<li>Date &amp; time of the hit.</li>
+<li>The ProductId of the product involved in the action.</li>
+<li>The user's classification according to the company database (New, Regular or Infrequent).</li>
+<li>The country code of the origin of the request.</li>
+<li>The referrer of the hit(Adword, Organic Search or No Referrer). </li>
+<li>
+<p>The user action (Purchase, Add to Cart, Search or View Product). </p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/sample-of-clickstream-data.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/sample-of-clickstream-data.png" alt="sample of clickStream data" style="max-width:100%;"></a></p>
+
+<p><em><strong>Uploading the data file into our HDInsight cluster</strong></em></p>
+
+<p>The data may be uploaded to the Azure Storage Vault backing our HDInsight cluster by using the HDInsight Javascript Interactive Console. Go to the HDInsight web portal of your cluster, https://{Your Cluster Name}.azurehdinsight.net/ and choose the Interactive Console:</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/javascriptconsolefromhome.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/javascriptconsolefromhome.png" alt="JavascriptConsoleFromHome" style="max-width:100%;"></a></p>
+
+<p>The Javascript Console is a command shell that provides a fluent interface to interact with the cluster.
+We can upload our MapReduce javascript job to our Azure Storage Vault by using the fs.put() command:</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/uploading-the-file.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/uploading-the-file.png" alt="Uploading the file" style="max-width:100%;"></a></p>
+</li>
+</ul>
+
+<hr>
+
+<p><a name="user-content-Lab1"></a></p>
+
+<h3>
+<a id="user-content-lab-1-creating-testing--executing-a-mapreduce-programs-using-hdinsight" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#lab-1-creating-testing--executing-a-mapreduce-programs-using-hdinsight" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lab 1: Creating, testing &amp; executing a MapReduce programs using HDInsight</h3>
+
+<p><em>Objective</em> 
+In this lab you will learn how to create, test and run MapReduce programs on HDInsight.</p>
+
+<p>Each task uses a different language in order to sum the number of purchases made in each country across the 4 days as well as calculate what percentage of these purchases were made by new customers. For the sake of brevity, we shall henceforth refer to this job as the 'AggregatePurchase' job.</p>
+
+<p><a name="user-content-Lab1TaskA"></a></p>
+
+<h4>
+<a id="user-content-task-a---create-test--execute-a-mapreduce-program-in-c" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#task-a---create-test--execute-a-mapreduce-program-in-c" aria-hidden="true"><span class="octicon octicon-link"></span></a>Task A - Create, test &amp; execute a MapReduce program in C#</h4>
+
+<p>Start by creating a new C# solution with both a console application as well as a test project, then:</p>
+
+<ol class="task-list">
+<li>
+<p><strong>Prepare the solution</strong>.</p>
+
+<p>Using the NuGet Package Manager, search the online packages for 'hadoop' and 'Install' the Microsoft.Hadoop.MapReduce package into both the Console project &amp; the Test project, accepting the Terms &amp; Conditions presented during install.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/adding-the-hdinsight-assemblies-to-your-proje.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/adding-the-hdinsight-assemblies-to-your-proje.png" alt="Adding the HDInsight assemblies to your project" style="max-width:100%;"></a></p>
+
+<p>This configures your console application with all the assemblies required to author and run MapReduce programs including: microsoft.hadoop.mapreduce which contains the base classes for authoring MapReduce jobs; microsoft.hadoop.webclient which allows your MapReduce job to be remotely submitted to your HDInsight cluster and then monitored using REST API calls.</p>
+
+<p>A folder called 'mrlib' is also added to your project. This contains all the drivers required to execute a MapReduce program.   </p>
+</li>
+<li>
+<p><strong>Create tests for the Mapper</strong>.</p>
+
+<p>As good TDD citizens, we shall first create some unit tests for the Mapper class that we shall soon write and benefit from the satisfying Red-Green approach to testing. </p>
+
+<p>The HDInsight SDK provides a debugging framework called StreamingUnit to allow in-process debugging into MapReduce programs. This allows us to execute a mapper class, or a mapper and reducer pair of classes, and  examine the key value output that would normally be streamed to Hadoop when running the classes through HDInsight.</p>
+
+<p>The code snippet below illustrates passing different input strings to our future mapper and using the streaming unit to execute the mapper and assert the correct output from the mapper.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/using-the-streaming-unit-to-test-a-mapper.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/using-the-streaming-unit-to-test-a-mapper.png" alt="Using the Streaming unit to test a Mapper" style="max-width:100%;"></a> </p>
+
+<p>To get the test compiling we will create an empty AggregatePurchaseMapper class then run the test and observe its failure. </p>
+</li>
+<li>
+<p><strong>Create the Mapper</strong>.</p>
+
+<p>Now let's implement the AggregatePurchaseMapper class by deriving from MapperBase and overriding the Map function with our custom logic to filter all data concerning purchases and map the matches to a key value pair where the country is the key and the user type is the key. The emitted key value will server as the input to the Reducer we shall soon write. </p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/a-mapper-class-to-filter-purchase-data.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/a-mapper-class-to-filter-purchase-data.png" alt="A Mapper class to filter purchase data" style="max-width:100%;"></a></p>
+
+<p>Note that it is possible to increment Hadoop counters by calling IncrementCounter (which exists on ContextBase derived classes). Here we are incrementing one of a pair of counter classified as 'HitMissProgress' to indicate whether this input contained purchase data. These counters are summed across all nodes involved in the execution of the hadoop job and can be seen to be incrementing whilst running by remoting onto the head node of the HDInsight cluster. Consequently, this provides a near real-time insight into the operational status &amp; progress  of the remotely running job.</p>
+
+<p>Running all the Mapper tests created in the previous step should now all pass and show up as green.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/passing-mapper-tests.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/passing-mapper-tests.png" alt="Passing Mapper tests" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p><strong>Create tests for the Reducer</strong>.</p>
+
+<p>The StreamingUnit may also be used to test our future Reducer in a similar way as we tested out Mapper logic. The difference is that the Reducer must be tested in combination with the Mapper as is shown below.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/testing-the-reducer.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/testing-the-reducer.png" alt="Testing the Reducer" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p><strong>Create the Reducer</strong>.</p>
+
+<p>To implement the AggregatePurchaseReducer we will subclass ReducerCombinerBase &amp; override its Reduce method with our logic to count the number of purchases for a particular country which is particularly easy given that the data passed to our Reducer is keyed on country. We will also calculate the percentage of those purchases made by filtering the values matching 'New'. </p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/creating-the-aggregatepurchasereducer.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/creating-the-aggregatepurchasereducer.png" alt="Creating the AggregatePurchaseReducer" style="max-width:100%;"></a></p>
+
+<p>Note that becuase we want our Reducer to emit multiple values (i.e. both the count of purchases as well as the percentage of new purchases) for each country, we using a custom extension method to emit a tab separated string as the Reducer output value. </p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/string-utility-helper.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/string-utility-helper.png" alt="String Utility helper" style="max-width:100%;"></a></p>
+
+<p>Our Reducer tests now pass.</p>
+</li>
+<li>
+<p><strong>Creating a Hadoop job based on our Mapper &amp; Reducer</strong>.</p>
+
+<p>Now that we have Mapper &amp; Reducer classes ready and tested let's create a Hadoop job to run them and configure it to use locations in our Azure Storage Vault that is backing our HDInsight cluster as its input and output. 
+Note that HDInsight will not overwrite an existing file when attempting to write the output so please ensure the ouput path is unique for each execution of the job. </p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/creating-a-mapreduce-job.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/creating-a-mapreduce-job.png" alt="Creating a MapReduce job" style="max-width:100%;"></a></p>
+
+<p>The Azure Storage Vault URL will be in the format "asv://{Container Name}@{Storage Account Name}.blob.core.windows.net" using the Storage Account that was assigned to the HDInsight cluster during its creation.</p>
+</li>
+<li>
+<p><strong>Running the Hadoop job remotely on the HDInsight cluster</strong>.</p>
+
+<p>Finally, we can use the code below to connect to HDInsight and execute our job on the cluster.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/connecting-to-hdinsight.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/connecting-to-hdinsight.png" alt="Connecting to HDInsight" style="max-width:100%;"></a></p>
+
+<p>During execution, http traffic to the HDInsight Templeton endpoint may be observed such as that shown below captured using Fiddler. </p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/templeton-http-traffic.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/templeton-http-traffic.png" alt="Templeton http traffic" style="max-width:100%;"></a></p>
+
+<p>Command line output will look like the following which shows the location of the output file which we configured in our MapReduce job:</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/joboutput.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/joboutput.png" alt="joboutput" style="max-width:100%;"></a></p>
+
+<p>Job progression can be viewed by remoting onto the name node of the HDInsight cluster. Go to the HDInsight web portal &amp; use the remote desktop box to download an rdp connection that allows you to logon to the name node.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/remoting-onto-hdinsight-head-node.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/remoting-onto-hdinsight-head-node.png" alt="Remoting onto HDInsight Head Node" style="max-width:100%;"></a></p>
+
+<p>and then using the Job portal that is present on the desktop...</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/jobwebportal.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/jobwebportal.png" alt="JobWebPortal" style="max-width:100%;"></a></p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/jobportal2.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/jobportal2.png" alt="JobPortal2" style="max-width:100%;"></a></p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/running-jobs.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/running-jobs.png" alt="Running Jobs" style="max-width:100%;"></a></p>
+
+<p>Note that by drilling into a particular job we can view considerable diagnostics information, including the new Counters we increment in our Mapper in Step 3.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/job-stats.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/job-stats.png" alt="Job Stats" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p><strong>Viewing the results from our MapReduce job</strong>.  </p>
+
+<p>The results from our MapReduce job can be viewed by one of the following ways:</p>
+
+<p>i) <em>Using the Javascript Interactive Console</em>.</p>
+
+<p>From the HDInsight web portal of your cluster navigate to the Javascript Interactive Console. 
+You can navigate to the output folder configured in the MapReduce job in step 6 as follows:</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/navigatinginjs.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/navigatinginjs.png" alt="navigatingInJS" style="max-width:100%;"></a></p>
+
+<p>and then output the contents via the following command:</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/outputonjs.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/outputonjs.png" alt="outputOnJS" style="max-width:100%;"></a></p>
+
+<p>ii) <em>Using an External Tool</em>.</p>
+
+<p>A tool, such as Cerebrata's Cloud Storage Studio may be used to browse the Azure Storage Vault configured for your HDInsight Cluster and download any blobs.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/cloud-storage-studio.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/cloud-storage-studio.png" alt="Cloud Storage Studio" style="max-width:100%;"></a></p>
+</li>
+</ol>
+
+<hr>
+
+<p><a name="user-content-Lab1TaskB"></a></p>
+
+<h4>
+<a id="user-content-task-b---create-test--execute-a-mapreduce-program-in-javascript" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#task-b---create-test--execute-a-mapreduce-program-in-javascript" aria-hidden="true"><span class="octicon octicon-link"></span></a>Task B - Create, test &amp; execute a MapReduce program in Javascript</h4>
+
+<p>In this task, you will create a MapReduce job in javascript and run it using the fluent API layered on Pig that is provided by the javascript Interactive Console. </p>
+
+<p>HDInsight expects Mapper &amp; Reducer functions to follow the following signatures respectively:</p>
+
+<pre><code>var map = function (key, value, context)
+var reduce = function (key, values, context)
+</code></pre>
+
+<ol class="task-list">
+<li>
+<p><strong>Create tests for the Mapper &amp; Reducer</strong>. </p>
+
+<p>You can use the qunit test framework (<a href="http://www.qunitjs.com/">http://www.qunitjs.com/</a>) in order to create unit tests for our mapper &amp; reducer which we can then run and debug inside a browser. </p>
+
+<p>In order to unit test our functions, we must create a fake context to pass to the Mapper &amp; Reducer as they will write their outputs to this context. </p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/fake-context-writer.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/fake-context-writer.png" alt="fake context writer" style="max-width:100%;"></a></p>
+
+<p>The values parameter accepted by the Reducer must also be faked by an object that has an iterator if we are to unit test our Reducer. </p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/fake-reducer-values.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/fake-reducer-values.png" alt="fake reducer values" style="max-width:100%;"></a></p>
+
+<p>The tests can then be created as below and positioned inside the script tags of a simple html page to run when the DOM is loaded.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/mapper-and-reducer-tests.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/mapper-and-reducer-tests.png" alt="Mapper and Reducer tests" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p><strong>Create the Mapper &amp; Reducer</strong>.</p>
+
+<p>You can create an implementation of a MapReduce job in javascript by creating a map &amp; reduce function as shown below.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/implementaion-of-map-reduce-functions.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/implementaion-of-map-reduce-functions.png" alt="implementaion of map &amp; reduce functions" style="max-width:100%;"></a></p>
+
+<p>Rerunning our qunit tests in the browser now pass.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/qunit-tests-passing.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/qunit-tests-passing.png" alt="qunit tests passing" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p><strong>Run the MapReduce Javascript job on the HDInsight cluster</strong>.</p>
+
+<p>Upload our MapReduce javascript file containing our Mapper &amp; Reducer to our Azure Storage Vault by using the fs.put() command at the Javascript Interactive Console (like how we uploaded the original data file).</p>
+
+<p>Then use the following command to run the uploaded javascript MapReduce job:</p>
+
+<p><code>
+pig.from("/handsonlabs/data/clickStream.log").mapReduce("/handsonlabs/lab1/javascript/Lab1MapReduce.js", "country, counts").to("/handsonlabs/lab1/javascript/output")</code></p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/running-pig-latin-job.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/running-pig-latin-job.png" alt="Running pig latin job" style="max-width:100%;"></a>
+Scroll to the right and click on <strong>View Log</strong> if you want to observe the details of the job's progress. This log will also provide diagnostics if the job fails to complete. </p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/view-log.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/view-log.png" alt="View Log" style="max-width:100%;"></a>
+<em>The View Log</em></p>
+</li>
+<li><p>Displaying the output from our MapReduce job can be achieved from the Javascript Interactive Console using the fs.read command with the created output file specified <code>file = fs.read("/handsonlabs/lab1/javascript/AggregatePurchaseResults/part-00000")</code> at the <strong>js&gt;</strong> prompt.</p></li>
+</ol>
+
+<hr>
+
+<p><a name="user-content-Lab1TaskC"></a></p>
+
+<h4>
+<a id="user-content-task-c---create-test--execute-a-mapreduce-program-in-f" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#task-c---create-test--execute-a-mapreduce-program-in-f" aria-hidden="true"><span class="octicon octicon-link"></span></a>Task C - Create, test &amp; execute a MapReduce program in F#</h4>
+
+<p>In this task, you will create a MapReduce job in F# and run it remotely on your HDInsight cluster. </p>
+
+<ol class="task-list">
+<li>
+<p><strong>Prepare the F# solution</strong>.</p>
+
+<p>Create a new F# Console project and, similar to how we prepared our C# project in Task A, use the NuGet Library Package Manager to install the Mircosoft Map Reduce API assemblies to our project.</p>
+
+<p>For simplicity, all the functions required for our MapReduce job can be placed in the same F# file which should import the following .Net namespaces:</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/f-file-imports.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/f-file-imports.png" alt="F# file imports" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p><strong>Create the Mapper</strong>.</p>
+
+<p>Our Mapper must inherit MapperBase and override the Map function with our logic to extract the purchase data.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/mapper-in-f.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/mapper-in-f.png" alt="Mapper in F#" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p><strong>Create the Reducer</strong>.</p>
+
+<p>Our Reducer must inherit ReducerCombinerBase and override the Reduce function with the same reducer logic we are using in each Task.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/reducer-in-f.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/reducer-in-f.png" alt="Reducer in F#" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p><strong>Create the MapReduce job</strong>.</p>
+
+<p>Next create a Hadoop job typed on our Mapper &amp; Reducer with the input &amp; output path configured appropriately.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/mapreduce-job-in-f.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/mapreduce-job-in-f.png" alt="MapReduce job in F#" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p><strong>Run the MapReduce job programmatically</strong></p>
+
+<p>Finally, we can use the code below to connect to the remote HDInsight and execute our job on the cluster</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/running-the-f-mapreduce-job.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/running-the-f-mapreduce-job.png" alt="Running the F# MapReduce job" style="max-width:100%;"></a></p>
+</li>
+</ol>
+
+<hr>
+
+<p><a name="user-content-Lab2"></a></p>
+
+<h3>
+<a id="user-content-lab-2-chaining-mapreduce-jobs-together" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#lab-2-chaining-mapreduce-jobs-together" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lab 2: Chaining MapReduce jobs together</h3>
+
+<p><em>Objective</em> 
+In this lab, you will run a futher MapReduce job on the output of the AggregatePurchases MapReduce job created in Lab1 to count the number of purchases made by new users in each continent.</p>
+
+<ol class="task-list">
+<li>
+<p><strong>Create a new Mapper, Reducer &amp; Job</strong>.</p>
+
+<p>Create a second MapReduce job that takes the output results of Lab1 and maps these to each continent and then reduces the data to output the total number of purchases in each continent made by new users. </p>
+
+<p>The Mapper and Reducer can be built and tested following the same pattern as that used in Lab1. </p>
+
+<p>The Mapper would filter by continent and calculate the number of new users for each data row:
+<a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/continent-mapper.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/continent-mapper.png" alt="Continent Mapper" style="max-width:100%;"></a></p>
+
+<p>The Reducer would simply sum the mapper values:
+<a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/continent-reducer.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/continent-reducer.png" alt="Continent reducer" style="max-width:100%;"></a></p>
+
+<p>The important point is that the output of the first job must be configured as the input to the second job either by passing context to the job via arguments to the hadoop.MapReduceJob.ExecuteJob method or by hardcoding.</p>
+</li>
+<li>
+<p><strong>Running the jobs sequentially</strong>. </p>
+
+<p>It's now as simple as executing each job in order.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/running-multiple-mapreduce-job.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/running-multiple-mapreduce-job.png" alt="Running multiple MapReduce job" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p><strong>Viewing the output of the chained jobs</strong>.</p>
+
+<p>Using the Javascript Interactive Console to view the results reveals the following:
+<a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/lab-2-results.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/lab-2-results.png" alt="Lab 2 results" style="max-width:100%;"></a></p>
+</li>
+</ol>
+
+<hr>
+
+<p><a name="user-content-Lab3"></a></p>
+
+<h3>
+<a id="user-content-lab-3-running-a-mapreduce-using-hive" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#lab-3-running-a-mapreduce-using-hive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lab 3: Running a MapReduce using Hive</h3>
+
+<p><em>Objective</em> 
+This lab will demonstrate how you can output the same aggregate purchase data by writing HiveQL, an SQL dialect, in the Hive Interactive Console of your HDInsight cluster. Hive is a data warehouse framework, built on top of Hadoop, that provides data management, querying, and analysis. </p>
+
+<ol class="task-list">
+<li>
+<p>** Create a Hive External data table **.</p>
+
+<p>We will create an External table from the clickStream.log data file already stored in our Azure Storage Vault (ASV). We are creating an 'External' Hive table as this won't import all the data into the Hive warehouse but instead will superimpose a schema on top of our existing data stored in ASV. In contrast, a regular Hive table imports all data into the Hive warehouse.</p>
+
+<p>The command below creates our External Hive table:</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/creating-a-hive-external-table.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/creating-a-hive-external-table.png" alt="Creating a Hive External table" style="max-width:100%;"></a></p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/hive-table-created-successfully.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/hive-table-created-successfully.png" alt="hive table created successfully" style="max-width:100%;"></a></p>
+
+<p>We can ensure the successful creation of the schema for our table by using the dropdowns in the Console to view our table columns. </p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/hive-schema.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/hive-schema.png" alt="Hive schema" style="max-width:100%;"></a></p>
+
+<p>We could check that the data is queryable by issuing a simple select statement at the Hive console.</p>
+</li>
+<li>
+<p>** Writing HiveQL to MapReduce our Purchase data**.</p>
+
+<p>The HiveQL to extract our aggregate purchase data is shown below:</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/hiveql.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/hiveql.png" alt="HiveQL" style="max-width:100%;"></a></p>
+
+<p>Note that under the covers Hive is generating appropriate MapReduce jobs for the HiveQL and running the jobs across our HDInsight cluster.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/hiveql-output.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/hiveql-output.png" alt="HiveQL output" style="max-width:100%;"></a></p>
+
+<p>As can be seen, we get the same results as we did from our MapReduce job created in Lab 1. </p>
+</li>
+</ol>
+
+<hr>
+
+<p><a name="user-content-Lab4"></a></p>
+
+<h3>
+<a id="user-content-lab-4-connecting-to-and-querying-hive-data-in-a-cluster-using-excel" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#lab-4-connecting-to-and-querying-hive-data-in-a-cluster-using-excel" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lab 4: Connecting to and Querying Hive Data in a Cluster using Excel</h3>
+
+<p><em>Objective</em> 
+In this lab, you will connect Excel to the Hive data warehouse framework of an HDInsight Hadoop cluster via the Hive Open Database Connectivity (ODBC) driver. </p>
+
+<ol class="task-list">
+<li>
+<p><strong>Install the Hive ODBC Driver</strong>.</p>
+
+<p>Choose 'Download' from the cluster dashboard on the HDInsight portal to bring up the links for downloading the Hive ODBC driver MSIs and select the appropriate one. </p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/downloading-hiveodbc.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/downloading-hiveodbc.png" alt="Downloading the Hive ODBC driver" title="Downloading the Hive ODBC driver" style="max-width:100%;"></a></p>
+
+<p><em>Downloading the Hive ODBC driver and Add-in for Excel</em></p>
+
+<p>After downloading run the install and select the <strong>Run anyway</strong> option from the <strong>SmartScreen Filter</strong> window that pops up.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/selecting-the-runanyway-option.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/selecting-the-runanyway-option.png" alt="Selecting the Run anyway option" title="Selecting the Run anyway option" style="max-width:100%;"></a></p>
+
+<p><em>Selecting the Run anyway option</em></p>
+</li>
+<li>
+<p><strong>Create a Hive ODBC Data Source</strong>.</p>
+
+<p>i) Go to the System and Security-&gt;Administrative Tools and click Data Sources (ODBC) if you are using Windows 7 or ODBC Data Sources if you are using Windows 8. This will launch the ODBC Data Source Administrator dialog.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/admin-tools.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/admin-tools.png" alt="Admin Tools" style="max-width:100%;"></a></p>
+
+<p>ii) Click Add to add a new data source on the User DSN tab.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/odbc.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/odbc.png" alt="odbc" style="max-width:100%;"></a></p>
+
+<p>iii) Select 'Hive' &amp; Click the Finish button. This will launch the Hive Data Source Configuration dialog.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/hive-odbc.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/hive-odbc.png" alt="hive odbc" style="max-width:100%;"></a></p>
+
+<p>iv) Complete the data as appropriate for your HDInsight cluster and OK everything.</p>
+</li>
+<li>
+<p><strong>Import Data into Excel</strong>.</p>
+
+<p>i) From an Excel workbook, click the Data tab and from the 'Get External Data' tile, select 'From Other Data Sources' -&gt; 'From Data Connection Wizard' to launch the Data Connection Wizard.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/data-connection-wizard.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/data-connection-wizard.png" alt="Data Connection Wizard" style="max-width:100%;"></a></p>
+
+<p>ii) Click next with 'ODBC DSN' selected.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/creating-the-connection.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/creating-the-connection.png" alt="creating the connection" style="max-width:100%;"></a></p>
+
+<p>iii) In the Connect to ODBC Data Source dialog, select the Data Source name that you created in the previous step (in our example, myHiveData) and click Next.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/selecting-your-hive-datasource.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/selecting-your-hive-datasource.png" alt="Selecting your Hive datasource" style="max-width:100%;"></a></p>
+
+<p>iv) In the Hive Data Source Configuration dialog, enter the password for the cluster and click OK.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/entering-pwd-to-your-hive-data-source.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/entering-pwd-to-your-hive-data-source.png" alt="Entering pwd to your Hive data source" style="max-width:100%;"></a></p>
+
+<p>v) When the Select Database and Table dialog in the Data Connection Wizard opens, select the table that you want to import (here, for example, the default database and table "clickstreamdata") and click Next.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/slecting-the-database-and-table.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/slecting-the-database-and-table.png" alt="Slecting the Database and Table" style="max-width:100%;"></a></p>
+
+<p>vi) When the Save Data Connection File and Finish dialog in the Data Connection Wizard opens, click the Finish button.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/finish-step.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/finish-step.png" alt="finish step" style="max-width:100%;"></a></p>
+
+<p>vii) In the Import Data dialog which now opens, you can change or specify the query. To do so, click Properties to launch the Connection Properties dialog.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/import-data.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/import-data.png" alt="import data " style="max-width:100%;"></a></p>
+
+<p>viii) We can enter our HiveQL into the 'Command text' box to run MapReduce jobs straight from Excel and only import their output:</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/import-with-hive-query.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/import-with-hive-query.png" alt="Import with Hive query" style="max-width:100%;"></a></p>
+
+<p>ix) In the Import Data popup that then appears, seelct to create a PivotChart &amp; PivotTable report:</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/importing-data-into-a-pivotchart.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/importing-data-into-a-pivotchart.png" alt="importing data into a pivotchart" style="max-width:100%;"></a></p>
+
+<p>Once the MapReduce jobs complete the PivotTable &amp; PivotChart will be available.</p>
+
+<p>The PivotChart allows a visual way to illustrate some of the analytics we have derived from our MapReduce jobs. E.g. By using a Pie chart we can easily identify which country had the most purchases from new users across our 4 day period.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/pie-chart-showing-new-users.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/pie-chart-showing-new-users.png" alt="Pie chart showing % new users" style="max-width:100%;"></a></p>
+
+<p>Or by selecting other data output from our Mapreduce job we can show just how many more visits our U.S site receives.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/pivot-bar-chart.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/pivot-bar-chart.png" alt="Pivot Bar Chart" style="max-width:100%;"></a></p>
+</li>
+</ol>
+
+<hr>
+
+<p><a name="user-content-Lab5"></a></p>
+
+<h3>
+<a id="user-content-lab-5-using-mahout-to-build-a-recommendations-engine" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#lab-5-using-mahout-to-build-a-recommendations-engine" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lab 5: Using Mahout to build a Recommendations Engine</h3>
+
+<p><em>Objective</em> 
+This lab teaches how to use Mahout to build a recommendation engine for your users. </p>
+
+<p>There are several important considerations when working with large datasets. One common task is to be able to apply machine learning algorithms against the output of a map-reduce task. It is common now to be able to provide a recommendation engine for internet sites and is normal practice to use map-reduce to take a large data set and use the output to be able to feed into the engine.</p>
+
+<p>The following lab will show how you can use both Mahout and Infer.NET to build a recommendation engine for your users. Both libraries support “Collaborative Filtering” but also support other popular use cases such as clustering and classification.</p>
+
+<h4>
+<a id="user-content-the-data-1" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#the-data-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Data</h4>
+
+<p>The dataset used in the Lab concerns movie ratings made by users and can be downloaded from </p>
+
+<p><a href="http://www.grouplens.org/system/files/ml-100k.zip">http://www.grouplens.org/system/files/ml-100k.zip</a></p>
+
+<p>The GroupLens data contains a file called ua.base which contains the training data for the recommendation. The file contains an extra column which is not native to Mahout processing format.</p>
+
+<p>As our Collaborative Filtering technologies require the data to be in the format of (user id, item id, rating) triples we will use the skills learnt from the early Labs to write a MapReduce job consisting of a single Mapper to transform the data into the required format. The Mapper can consequently be implemented as the following:</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/a-mapper-to-transform-the-movie-data.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/a-mapper-to-transform-the-movie-data.png" alt="A Mapper to transform the movie data" style="max-width:100%;"></a></p>
+
+<p>We can now write a MapReduce job that is just built from our Mapper and run it on our HDInsight cluster. </p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/movie-job.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/movie-job.png" alt="Movie job" style="max-width:100%;"></a></p>
+
+<p>Alternatively, due to the smallish size of our file we could use the HDInsight StreamingUnit to run our mapper locally and write to a local file like below:</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/using-the-streamingunit.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/using-the-streamingunit.png" alt="Using the StreamingUnit" style="max-width:100%;"></a></p>
+
+<p>The output from this map-reduce task we'll call MovieGroupLensData.log and can be loaded into a Mahout model directly from disk. We'll copy this file into the run directory when we debug the Mahout ptoject in Eclipse.</p>
+
+<p>Now that we have our dataset ready we can proceed to our Machine Learning tasks. </p>
+
+<ol class="task-list">
+<li>
+<p><strong>Setting up Eclipse &amp; Mahout</strong>.</p>
+
+<p>To begin this lab you'll need to ensure that you have the JRE 1.6 which can be found here:</p>
+
+<p><a href="http://java.com/en/download/index.jsp">http://java.com/en/download/index.jsp</a></p>
+
+<p>In order to use Mahout download the latest Maven build from here:</p>
+
+<p><a href="http://maven.apache.org/download.cgi">http://maven.apache.org/download.cgi</a></p>
+
+<p>Then download the latest Eclipse build from here:</p>
+
+<p><a href="http://www.eclipse.org/">http://www.eclipse.org/</a></p>
+
+<p>Then download the latest Mahout build from here (version 0.7):</p>
+
+<p><a href="http://mahout.apache.org/">http://mahout.apache.org/</a></p>
+
+<p>Mahout can now be built from either Eclipse (use the Maven M2E plugin) or the command line. From the command line ensure that the maven directory is in your path. Then navigate to the mahout source directory where the pom.xml exists and enter:</p>
+
+<p><em>mvn install</em></p>
+
+<p>This will build Mahout and examples and execute all unit tests.</p>
+
+<p>A guide can be found here:</p>
+
+<p><a href="https://cwiki.apache.org/MAHOUT/buildingmahout.html">https://cwiki.apache.org/MAHOUT/buildingmahout.html</a></p>
+
+<p>Mahout supports recommendations based on similarities between items and users and takes input in the form of <em>user, item, rating</em>.</p>
+
+<p>In this we’ll be looking at the Grouplens movie dataset, which contains line items in exactly the right form for the lab so that we can avoid any pre-processing steps. The following file contains 100Kb worth of data (or 100,000 ratings from 943 users for 1,682 movies!) </p>
+</li>
+<li>
+<p>Configuring the Mahout project   </p>
+
+<p>The properties of the Mahout project can be configured with 4 parameters to be passed into the Main method of the DPERecommender class.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/configuring-with-debug-variables.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/configuring-with-debug-variables.png" alt="Configuring with debug variables" style="max-width:100%;"></a></p>
+
+<p>The parameters do as follows:</p>
+
+<ol class="task-list">
+<li>The name of the file to be loaded into Mahout</li>
+<li>Either "slope" or "user" depending on the type of Recommender </li>
+<li>The User id for the recommender to return the best fit items</li>
+<li>The number of return items and their best fit values to return</li>
+</ol>
+</li>
+</ol>
+
+<p>The Lab 5 Mahout project contains two classes of UserRecommendation. </p>
+
+<p>The first contains a standard UserRecommender which takes into account the nearest 100 neighbours of the particular user that is being queried and returns a best fit list of recommended items on a scale of 0.0 to 5.0. The latter being the closest fit.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/slopeonerecommendation.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/slopeonerecommendation.png" alt="SlopeOneRecommendation" style="max-width:100%;"></a></p>
+
+<p>The SlopeOneRecommender uses pre-computation against the dataset and allows values to be easily updated dynamically for faster accurate performance of smaller datasets.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/user-recommendation.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/user-recommendation.png" alt="User Recommendation" style="max-width:100%;"></a></p>
+
+<p>Notice that the trace is available illustrating the number of lines read and distinct users from the file.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/trace-results.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/trace-results.png" alt="trace results" style="max-width:100%;"></a></p>
+
+<p>Whilst Mahout is not distrubuted with HDInsight it can be copied to the local nodes and a mahout workload can be distributed across the HDInsight cluster to a certain extent. In order to do this the output type for the Lab5 project should be a JAR file.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/exporting-a-jar.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/exporting-a-jar.png" alt="Exporting a JAR" style="max-width:100%;"></a></p>
+
+<p>More information can be found on the Apache Mahout website:</p>
+
+<p><a href="http://mahout.apache.org/">http://mahout.apache.org/</a></p>
+
+<p>A good example of using a Recommender with Infer.NET can be found here:</p>
+
+<p><a href="http://research.microsoft.com/en-us/um/cambridge/projects/infernet/docs/Recommender%20System.aspx">http://research.microsoft.com/en-us/um/cambridge/projects/infernet/docs/Recommender%20System.aspx</a></p>
+
+<p>Please note that Infer.NET cannot be used under a commercial license.</p>
+
+<hr>
+
+<p><a name="user-content-Summary"></a></p>
+
+<h2>
+<a id="user-content-summary" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary</h2>
+
+<p>During these hands-on labs, you have seen several languages and technologies to create &amp; run MapReduce jobs on an HDInsight cluster.  </p>
+
+<p><a name="user-content-Appendices"></a></p>
+
+<h2>
+<a id="user-content-appendix" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#appendix" aria-hidden="true"><span class="octicon octicon-link"></span></a>Appendix</h2>
+
+<p><a name="user-content-GettingStarted"></a></p>
+
+<h3>
+<a id="user-content-appendix-1-getting-started" class="anchor" href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#appendix-1-getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>Appendix 1: Getting Started</h3>
+
+<p>In this exercise, you will request a new HDInsight cluster through the Windows Azure portal.</p>
+
+<ol class="task-list">
+<li>
+<p>In order to access HDInsight you must first enable it as a preview feature from the Windows Azure Account screen.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/preview%20features.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/preview features.png" alt="preview features" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p>Once the HDInsight feature has been enabled, go to the <a href="http://manage.windowsazure.com/">Windows Azure</a> portal, login using your credentials and select the <strong>HDInsight</strong> option on the left-hand menu.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/hdinsight%20on%20windows%20azure%20portal.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/hdinsight on windows azure portal.png" alt="hdinsight on windows azure portal" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p>Before creating a new HDInsight cluster you must create a new Storage account in the 'East US' location for the cluster.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/create%20hdinsight%20storage%20account.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/create hdinsight storage account.png" alt="create hdinsight storage account" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p>Next create the HDInsight cluster using the Quick Create wizard, entering the DNS name, choosing a small sized cluster with 4 data nodes, entering login credentials and selecting the storage account we just created before clicking <strong>Create HDInsight Cluster</strong></p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/create%20an%20hdinsight%20account.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/create an hdinsight account.png" alt="create an hdinsight account" style="max-width:100%;"></a></p>
+
+<p><em>Requesting a new cluster</em></p>
+</li>
+<li>
+<p>The process will take a few minutes.  While your cluster is requested, you will see feedback messages like the following.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/provisioning%20cluster%201.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/provisioning cluster 1.png" alt="provisioning cluster 1" style="max-width:100%;"></a></p>
+
+<p><em>Cluster creation and allocation in progress</em></p>
+</li>
+<li>
+<p>After the cluster has been successfully allocated you will see it listed under your HDInsight menu.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/hdinsight%20complete.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/hdinsight complete.png" alt="hdinsight complete" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p>Click on the newly created cluster to view its details in the Azure portal.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/manage%20cluster.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/manage cluster.png" alt="manage cluster" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p>Click the link to open the HDInsight portal for the newly created cluster and login using your credentials.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/HDInsight%20login.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/HDInsight login.png" alt="HDInsight login" style="max-width:100%;"></a></p>
+</li>
+<li>
+<p>You can now manage your cluster from the HDInsight portal account page.</p>
+
+<p><a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/images/Windows%20Azure%20HDInsight%20portal.png?raw=true" target="_blank"><img src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/Windows Azure HDInsight portal.png" alt="Windows Azure HDInsight portal" style="max-width:100%;"></a></p>
+</li>
+</ol>
+</article>
+  </div>
+
+  </div>
+</div>
+
+<a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#jump-to-line" rel="facebox[.linejump]" data-hotkey="l" style="display:none">Jump to Line</a>
+<div id="jump-to-line" style="display:none">
+  <form accept-charset="UTF-8" class="js-jump-to-line-form">
+    <input class="linejump-input js-jump-to-line-field" type="text" placeholder="Jump to line…" autofocus="">
+    <button type="submit" class="button">Go</button>
+  </form>
+</div>
+
+  
+</div>
+
+      </div><!-- /.repo-container -->
+      <div class="modal-backdrop"></div>
+    </div><!-- /.container -->
+  </div><!-- /.site -->
+
+
+    </div><!-- /.wrapper -->
+
+      <div class="container">
+  <div class="site-footer" role="contentinfo">
+    <ul class="site-footer-links right">
+      <li><a href="https://status.github.com/">Status</a></li>
+      <li><a href="https://developer.github.com/">API</a></li>
+      <li><a href="http://training.github.com/">Training</a></li>
+      <li><a href="http://shop.github.com/">Shop</a></li>
+      <li><a href="https://github.com/blog">Blog</a></li>
+      <li><a href="https://github.com/about">About</a></li>
+
+    </ul>
+
+    <a href="https://github.com/" aria-label="Homepage">
+      <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
+    </a>
+
+    <ul class="site-footer-links">
+      <li>© 2015 <span title="0.03796s from github-fe137-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+        <li><a href="https://github.com/site/terms">Terms</a></li>
+        <li><a href="https://github.com/site/privacy">Privacy</a></li>
+        <li><a href="https://github.com/security">Security</a></li>
+        <li><a href="https://github.com/contact">Contact</a></li>
+    </ul>
+  </div><!-- /.site-footer -->
+</div><!-- /.container -->
+
+
+    <div class="fullscreen-overlay js-fullscreen-overlay" id="fullscreen_overlay">
+  <div class="fullscreen-container js-suggester-container">
+    <div class="textarea-wrap">
+      <textarea name="fullscreen-contents" id="fullscreen-contents" class="fullscreen-contents js-fullscreen-contents" placeholder=""></textarea>
+      <div class="suggester-container">
+        <div class="suggester fullscreen-suggester js-suggester js-navigation-container"></div>
+      </div>
+    </div>
+  </div>
+  <div class="fullscreen-sidebar">
+    <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#" class="exit-fullscreen js-exit-fullscreen tooltipped tooltipped-w" aria-label="Exit Zen Mode">
+      <span class="mega-octicon octicon-screen-normal"></span>
+    </a>
+    <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#" class="theme-switcher js-theme-switcher tooltipped tooltipped-w" aria-label="Switch themes">
+      <span class="octicon octicon-color-mode"></span>
+    </a>
+  </div>
+</div>
+
+
+
+    <div id="ajax-error-message" class="flash flash-error">
+      <span class="octicon octicon-alert"></span>
+      <a href="https://github.com/Azure-Samples/HDInsight-Labs-Preview/blob/master/HandsOnLabs.md#" class="octicon octicon-x flash-close js-ajax-error-dismiss" aria-label="Dismiss error"></a>
+      Something went wrong with that request. Please try again.
+    </div>
+
+
+      <script crossorigin="anonymous" src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/frameworks-996268c2962f947579cb9ec2908bd576591bc94b6a2db184a78e78815022ba2c.js"></script>
+      <script async="async" crossorigin="anonymous" src="./HDInsight-Labs-Preview HandsOnLabs.md at master · Azure-Samples HDInsight-Labs-Preview · GitHub_files/github-455d91df77d3419a4be0141f76f1a989a75963c00b5f6e2ef8f21ad1866acb8d.js"></script>
+      
+      
+
+  
+
+
+<object id="__symantecPKIClientMessenger" style="display: none;"></object><span id="__symantecPKIClientDetector" style="display: none;">__PRESENT</span><div id="global-zeroclipboard-html-bridge" class="global-zeroclipboard-container" style="position: absolute; left: 1185.5px; top: 148px; width: 36px; height: 26px; z-index: 999999999;"><object id="global-zeroclipboard-flash-bridge" name="global-zeroclipboard-flash-bridge" width="100%" height="100%" type="application/x-shockwave-flash" data="https://assets-cdn.github.com/flash/ZeroClipboard.v2.1.6.swf"><param name="allowScriptAccess" value="always"><param name="allowNetworking" value="all"><param name="menu" value="false"><param name="wmode" value="transparent"><param name="flashvars" value="trustedOrigins=github.com%2C%2F%2Fgithub.com%2Chttps%3A%2F%2Fgithub.com&amp;swfObjectId=global-zeroclipboard-flash-bridge"></object></div>    <div class="facebox" id="facebox" style="display:none;">       <div class="facebox-popup">         <div class="facebox-content">         </div>         <button type="button" class="facebox-close js-facebox-close" aria-label="Close modal">           <span class="octicon octicon-remove-close"></span>         </button>       </div>     </div></body></html>

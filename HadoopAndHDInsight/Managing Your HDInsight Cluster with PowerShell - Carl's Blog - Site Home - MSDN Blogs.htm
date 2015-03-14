@@ -1,0 +1,1546 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/ms2_blogs.js" async="" type="text/javascript"></script><script async="" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/ai.js" type="text/javascript"></script><script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/Widget.js" charset="UTF-8" type="text/javascript"></script><meta name="robots" content="index,follow">
+<meta name="description" content="I work for Microsoft Consulting Services in the UK. My primary focus is enterprise applications using C# and SQL Server.
+However I also have an interest in other programming paradigms, hence the interest in F# and MapReduce.">
+<meta name="keywords" content="F#, FSharp, C#, CSharp, Hadoop, SQL Server, TSQL, .Net, Windows Azure, Hadoop Streaming, MapReduce">
+<meta name="GENERATOR" content="Telligent Evolution Platform Developer Build (Build: 5.6.50428.7875)">
+<link rel="pingback" href="http://blogs.msdn.com/b/carlnol/pingback.aspx">
+<link href="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/e8ef9a0f5baf04c5b72689852bedf1f8-3cca145f259b38265dcb26477a5.css" rel="Stylesheet" type="text/css"><link rel="alternate" type="application/rss+xml" title="Site Home (RSS 2.0)" href="http://blogs.msdn.com/rss.aspx">
+<link rel="alternate" type="application/rss+xml" title="Carl Nolan's Comments (RSS 2.0)" href="http://blogs.msdn.com/members/carlnolan/comments/rss.aspx">
+<link rel="alternate" type="application/rss+xml" title="Carl Nolan's Activities (RSS 2.0)" href="http://blogs.msdn.com/members/carlnolan/activities/rss.aspx">
+<link rel="alternate" type="application/rss+xml" title="Activities of People Carl Nolan Follows (RSS 2.0)" href="http://blogs.msdn.com/members/carlnolan/activities/followersrss.aspx">
+<link rel="alternate" type="application/rss+xml" title="Carl Nolan's Groups Activities (RSS 2.0)" href="http://blogs.msdn.com/members/carlnolan/activities/groupsrss.aspx">
+<link rel="alternate" type="application/rss+xml" title="Carl's Blog (RSS 2.0)" href="http://blogs.msdn.com/b/carlnol/rss.aspx">
+<link rel="alternate" type="application/atom+xml" title="Carl's Blog (Atom 1.0)" href="http://blogs.msdn.com/b/carlnol/atom.aspx">
+<link rel="alternate" type="application/rss+xml" title="Carl's Blog - All Comments (RSS 2.0)" href="http://blogs.msdn.com/b/carlnol/rsscomments.aspx">
+<link rel="alternate" type="application/rss+xml" title="Managing Your HDInsight Cluster with PowerShell - Comments for this post (RSS 2.0)" href="http://blogs.msdn.com/b/carlnol/rsscomments.aspx?WeblogPostID=10424475">
+
+                    
+          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+          <link rel="shortcut icon" type="image/ico" href="http://blogs.msdn.com/themes/wireframe/favicon.ico">
+          <!--
+            Third party scripts and code linked to or referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Terms of Use – http://www.asp.net/ajaxlibrary/CDN.ashx.
+          -->
+          <link href="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/1eae160ea2c1e5cb3196f8c18470cca1-9728b852b1bb5db880b4edfc37d.css" rel="Stylesheet" type="text/css"><script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/jquery-1.js" type="text/javascript" language="javascript"></script>
+                  
+          		
+          <link type="text/css" rel="stylesheet" href="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/DynamicStyle.css" media="screen,print">
+          <link type="text/css" rel="stylesheet" href="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/DynamicStyle_002.css" media="screen,print">
+        
+          <!--[if lte IE 6]>
+              <link type="text/css" rel="stylesheet" href="/themes/wireframe/css/ie6.css" media="screen,print" />
+          <![endif]-->
+                  <meta name="msvalidate.01" content="B717AD6FC29D3A844832AF011B5F9E4C">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://blogs.msdn.com/b/carlnol/rsd.ashx">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" title="WLWManifest" href="http://blogs.msdn.com/b/carlnol/wlwmanifest.ashx">
+
+        <!--
+            Third party scripts and code linked to or referenced from this website are licensed to you by the parties that own such code, not by Microsoft.  See ASP.NET Ajax CDN Terms of Use – http://www.asp.net/ajaxlibrary/CDN.ashx.
+          -->
+        <script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/jquery-1.js" type="text/javascript" language="javascript"></script>
+    <title>
+	Managing Your HDInsight Cluster with PowerShell - Carl's Blog - Site Home - MSDN Blogs
+</title><script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/metrics.js" charset="utf-8" type="text/javascript"></script><style type="text/css"></style><script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/jquery-1_002.js"></script><script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/WebResource.axd"></script><script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/WebResource_003.axd"></script><script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/WebResource_002.axd"></script><script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/jquery.js" type="text/javascript"></script><link type="text/css" rel="stylesheet" href="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/UnifiedBaseballCard.css"><link type="text/css" rel="stylesheet" href="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/usercard.css"><script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/jquery_002.js" type="text/javascript"></script><script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/jquery_003.js" type="text/javascript"></script><script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/widgets.js" type="text/javascript"></script></head>
+	<body spellcheck="true">
+		<form name="aspnetForm" method="post" action="/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx" onsubmit="javascript:return WebForm_OnSubmit();" id="aspnetForm">
+<div>
+<input name="__EVENTTARGET" id="__EVENTTARGET" value="" type="hidden">
+<input name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" type="hidden">
+<input name="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_answer" id="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_answer" value="9" type="hidden">
+<input name="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_encrypted" id="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_encrypted" value="sdEcw46gnJU+bS72mf0AfLbBdKMClicBaJrTtuUI5mQ=" type="hidden">
+<input name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTM5OTAxNDYyNWRkvI787cXLvh9XHlDReEjVejxzcZ4=" type="hidden">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/a8fb5c65e90be47b953490942d6072e1-b821e8a36b9a76870897e9c1c693.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+//<![CDATA[
+function WebForm_OnSubmit() {
+if (typeof(ValidatorOnSubmit) == "function" && ValidatorOnSubmit() == false) return false;
+return true;
+}
+//]]>
+</script>
+
+<div>
+
+	<input name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="84C00179" type="hidden">
+</div>
+			
+            
+                
+            
+            <div class="header-fragments-header"></div>
+<div class="header-fragments"><div class="header-fragment-outer top-bar wireframe-header-fragment-outer wireframe-top-bar"><div class="header-fragment-inner top-bar wireframe-header-fragment-inner wireframe-top-bar"><div class="header-fragment welcome-message" id="header-fragment-247403536">
+
+
+<!-- always render -->
+</div><div class="header-fragment login-logout" id="header-fragment-247403537">
+
+
+
+
+
+        <div class="navigation-list-header"></div>
+        <ul class="navigation-list">
+
+            <li class="navigation-item">
+                <span id="ctl00_header_fragment_247403537__acbc85_ctl00_ctl02_ctl05_WLIDLoginButton1" class="internal-link live-id-button"><a href="https://login.live.com/login.srf?wa=wsignin1.0&amp;rpsnv=12&amp;ct=1426324211&amp;rver=6.0.5286.0&amp;wp=MBI&amp;wreply=http:%2F%2Fblogs.msdn.com%2Fb%2Fcarlnol%2Farchive%2F2013%2F06%2F07%2Fmanaging-your-hdinsight-cluster-with-powershell.aspx&amp;lc=1033&amp;id=271611">Sign in</a></span>
+            </li>
+        </ul>
+        <div class="navigation-list-footer"></div>
+    </div><div class="header-fragment user-welcome-without-login" id="header-fragment-247403538">
+
+ &nbsp;<!-- always render -->
+
+</div></div></div><div class="header-fragment-outer wireframe-header-fragment-outer site-banner"><div class="header-fragment-inner wireframe-header-fragment-inner site-banner"><div class="header-fragment site-banner" id="header-fragment-247403539">
+
+
+<div class="site-banner-header"></div>
+<div class="site-banner">
+    
+    
+    
+            <div class="site-logo"><a href="http://blogs.msdn.com/">
+                    <img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/logo_msdn.png" alt="" style="border-width:0px;">
+                </a></div>
+        
+</div>
+<div class="site-banner-footer"></div></div></div></div><div class="header-fragment-outer wireframe-header-fragment-outer search"><div class="header-fragment-inner wireframe-header-fragment-inner search"><div class="header-fragment search" id="header-fragment-247403540">
+
+<div class="field-list-header">
+</div>
+<fieldset class="field-list">
+    <ul class="field-list">
+        <li class="field-item"><span class="field-item-input">
+            <input value="Search MSDN with Bing" style="color: rgb(170, 170, 170); font-style: italic;" title="Search MSDN with Bing" id="SearchTextBox_Header" name="SearchTextBox_Header" class="search empty" autocomplete="off" type="text">
+            <input title="Search MSDN with Bing" id="SearchButton_Header" name="SearchButton_Header" class="search-button" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/trans.gif" type="image">
+        <span style="background: white url(/Utility/images/MSDNTechnet/common.png) 0 -20px no-repeat;display:block;height:22px;overflow:hidden;width:47px;position:absolute;right:22px"></span><div style="display: none; text-align: left; border: 1px solid buttonshadow; position: absolute; z-index: 1000; padding: 2px; background-color: rgb(255, 255, 255); color: rgb(51, 51, 51); font-family: MS Shell Dlg; font-size: 11px;" id="SearchFlyoutContainer"><div id="SuggestionContainer"><ul style="list-style: outside none none; padding: 4px 2px 0px 1px; cursor: pointer; margin: 1px; white-space: nowrap;"></ul></div></div></span></li>
+        <li id="ctl00_header_fragment_247403540__acbc85_ctl00_SearchOptionsButtonWrapper" class="field-item"><span class="field-item-input">
+            <a class="internal-link search-options" title="Change Search Scope">
+                &nbsp;</a> </span></li>
+    </ul>
+</fieldset>
+<div class="field-list-footer">
+</div>
+<script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/SearchBox_002.js" type="text/javascript" language="javascript"></script>
+
+<script type="text/javascript" language="javascript">
+    if ($.browser && $.browser.mozilla) {
+        $('#SearchButton_Header').parent().append('<span style="background: white url(/Utility/images/MSDNTechnet/common.png) 0 -20px no-repeat;display:block;height:22px;overflow:hidden;width:47px;position:absolute;right:22px"></span>');
+    } else {
+        $('#SearchButton_Header').parent().append('<span style="background: white url(/Utility/images/MSDNTechnet/common.png) 0 -20px no-repeat;display:block;height:22px;overflow:hidden;width:47px;position:absolute;right:-17px"></span>');
+    }
+</script>
+</div></div></div><div class="header-fragment-outer wireframe-header-fragment-outer group-navigation"><div class="header-fragment-inner wireframe-header-fragment-inner group-navigation"><div class="header-fragment group-navigation" id="header-fragment-247403541">
+
+<script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/44a500773671f30bd4ba3b0c7bba2359-14e0c332a84e56b6d37629b4d8ca.js" type="text/javascript"></script>
+    
+<div id="ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_ParentGroupListContainer" class="parent-container" style="width: 100%;">
+<div class="parent-sub-container">
+	
+            <div class="navigation-list-header"></div>
+            <ul class="navigation-list parent">
+            <li class="navigation-item" style="display: none;">
+                <a href="http://blogs.msdn.com/">MSDN Blogs</a>
+            </li>
+        
+            <li class="navigation-item entry" style="">
+				
+						<a class="internal-link view-group" href="http://blogs.msdn.com/Microsoft_Blog_Images/"><span></span>Microsoft Blog Images</a>
+					
+            </li>
+        
+			
+            <li class="navigation-item last">
+				<a id="MoreLink" style="display: none;" onmouseover="Core_GroupNavigation_MoreShowNav(ctl00_header_fragment_247403541, true, this)" onmouseout="Core_GroupNavigation_MoreMouseOutPopup(ctl00_header_fragment_247403541, true, this)" href="#">More ...</a>
+            </li>
+            </ul>
+            <div class="navigation-list-footer"></div>
+        
+</div>
+</div>
+<div id="ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_GroupNavigationPopup" style="position:absolute;visibility:hidden;left:-5000px;"></div>
+<div id="ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_ParentMore" style="display: none;">
+    <div class="content-list-header"></div>
+    <ul id="ParentMoreListheader-fragment-247403541" class="content-list"></ul>
+    <div class="content-list-footer"></div>
+</div>
+<div id="ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_ChildMore" style="display: none;">
+    <div class="content-list-header"></div>
+    <ul id="ChildMoreListheader-fragment-247403541" class="content-list"></ul>
+    <div class="content-list-footer"></div>
+</div>
+	
+<script type="text/javascript">
+    // <![CDATA[
+    
+    var Core_GroupNavigation_AjaxEndpoint = '/Utility/HeaderFragments/Core/GroupNavigationAjax.asmx';
+        
+    var ctl00_header_fragment_247403541={"wrapperId":"header-fragment-247403541","variableName":"ctl00_header_fragment_247403541","parameter":{"currentGroupId":0,"popupMenuId":"ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_GroupNavigationPopup","popupParentMoreId":"ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_ParentMore","popupChildMoreId":"ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_ChildMore","popupWrapperID":"popup-ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_GroupNavigationPopup","mouseInPopup":false,"popupPopulated":false,"errorHtml":"<div class=\"message error\">An error occured while attempting to load groups.</div>","loadingHtml":"<div class=\"message loading\">Loading...</div>","groupNavigationContentWrapperHtmlBlock":"<div id=\"popup-ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_GroupNavigationPopup\">{GroupNavigationContent}</div>","groupNavigationListHtmlBlock":"<div class=\"multiple-column-list-header\"></div>\n<div class=\"multiple-column-list columns-{ColumnsCount}\">{Columns}</div>\n<div class=\"multiple-column-list-footer\"></div>","columnWrapperHtmlBlock":"<div class=\"multiple-column-item column-{ColumnId}\">{T1GroupsData}</div>","t1GroupHtmlBlock":"\r\n\t\t<div class=\"content-list-header\"></div>\r\n\t\t<div class=\"content-list-name{NameClass}\">{Name}</div>\r\n\t\t<ul class=\"content-list\">\r\n\t\t\t{Groups}\r\n\t\t</ul>\r\n\t\t<div class=\"content-list-footer\"></div>\r\n\t","t2GroupHtmlBlock":"<li class=\"content-item{ItemClass}\">{Item}</li>","viewAllHtmlBlock":"<a href=\"{Url}\" class=\"internal-link view-all\">{Text}</a>","linkHtmlBlock":"<a href=\"{Url}\" class=\"{MoreClass}\">{Name}</a>","searchResultItemHtmlBlock":"<li class=\"content-item\"><a href=\"{Url}\">{Name}</a></li>","viewMoreText":"and {MoreText} more..."}};
+
+	$(document).ready(function() {
+		Core_GroupNavigation_SetMenuItems("#ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_ParentGroupListContainer", true, "ParentMoreListheader-fragment-247403541");
+		Core_GroupNavigation_SetMenuItems("#ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_ChildGroupListContainer", false, "ChildMoreListheader-fragment-247403541");
+	});
+
+	$(window).resize(function() {
+		Core_GroupNavigation_SetMenuItems("#ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_ParentGroupListContainer", true, "ParentMoreListheader-fragment-247403541");
+		Core_GroupNavigation_SetMenuItems("#ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_ChildGroupListContainer", false, "ChildMoreListheader-fragment-247403541");
+	});
+    // ]]>
+</script></div></div></div></div>
+<div class="header-fragments-footer"></div>
+			
+    <div class="content-fragment-page post" id="ctl00_content_ctl00_page"><div class="layout">
+<div class="layout-header"></div>
+<div class="layout-content header-top-content-left-sidebar-right" id="ctl00_content_ctl00_layout">
+<div class="layout-region header" id="ctl00_content_ctl00_header">
+<div class="layout-region-inner header"><div class="content-fragment blog-title full-border" id="fragment-187883">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-content">
+<h1 class="title">
+	    
+			        
+			    
+	                Managing Your HDInsight Cluster with PowerShell
+			    
+	</h1></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment blog-bread-crumbs no-wrapper-with-spacing" id="fragment-187884">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-content">
+
+
+<div class="breadcrumb-list-header"></div>
+<div class="breadcrumb-list">
+	<span class="breadcrumb-item"><a class="internal-link view-home" href="http://blogs.msdn.com/">MSDN Blogs</a></span>
+  
+	
+
+	
+			<span class="separator"> &gt; </span>
+			<span class="breadcrumb-item">
+		<a href="http://blogs.msdn.com/b/carlnol/">Carl's Blog</a>
+			</span>
+		
+	
+	
+			<span class="separator"> &gt; </span>
+			<span class="breadcrumb-item">
+		<a href="http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx">Managing Your HDInsight Cluster with PowerShell</a>
+			</span>
+		
+
+	
+</div>
+<div class="breadcrumb-list-footer"></div>
+</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment raw-html no-wrapper" id="fragment-187885">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-content">
+<div class="user-defined-markup"><div id="stb-breadcrumbs">
+  <div class="breadcrumb-list">
+    <span class="breadcrumb-item"><a href="http://blogs.technet.com/b/serverandtools/">Server &amp; Tools Blogs</a></span>
+    <span class="separator"> &gt; </span>
+    <span class="breadcrumb-item"><a href="http://blogs.msdn.com/b/business-intelligence/">Business Intelligence Blogs</a></span>
+<span class="separator"> &gt; </span>
+<span class="breadcrumb-item2">Carl Nolan's Blog</span>
+  </div>
+</div>
+<div id="stb-header">
+      <ul class="stb-nav"> 
+    <li>
+      <a href="#" class="menu-title">All About Business Intelligence<b><!--style element: drop-down arrow--></b></a>
+      <ul class="stb-nav-drop">
+        <b><!--style element: partial white border atop the drop-down menu--></b>					
+        <li><a href="http://blogs.msdn.com/b/microsoft_business_intelligence1/">Microsoft Business Intelligence</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" class="menu-title">Power BI<b><!--style element: drop-down arrow--></b></a>
+      <ul class="stb-nav-drop">
+        <b><!--style element: partial white border atop the drop-down menu--></b>					
+        <li><a href="http://blogs.msdn.com/b/powerbi/">Power BI</a></li>
+        <li><a href="http://blogs.msdn.com/b/analysisservices/">Analysis Services and PowerPivot</a></li>
+        <li><a href="http://blogs.technet.com/b/powerbisupport/">Power BI Support Blog</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" class="menu-title">Reporting Services<b><!--style element: drop-down arrow--></b></a>
+      <ul class="stb-nav-drop">
+        <b><!--style element: partial white border atop the drop-down menu--></b>
+        <li><a href="http://blogs.msdn.com/b/sqlrsteamblog/">Reporting Services</a></li>
+        <li><a href="http://blogs.msdn.com/b/analysisservices/">Analysis Services and PowerPivot</a></li>
+        <li><a href="http://blogs.technet.com/b/dataplatforminsider/">SQL Server</a></li>
+        <li><a href="http://blogs.msdn.com/tags/reporting+services/" target="_blank">All MSDN Reporting Services Posts</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" class="menu-title">Analysis Services<b><!--style element: drop-down arrow--></b></a>
+      <ul class="stb-nav-drop">
+        <b><!--style element: partial white border atop the drop-down menu--></b>
+        <li><a href="http://blogs.msdn.com/b/analysisservices/">Analysis Services and PowerPivot</a></li>
+        <li><a href="http://blogs.msdn.com/b/as_emea/">AS_EMEA</a></li>
+        <li><a href="http://blogs.msdn.com/b/analysisservices/archive/tags/analysis+services/">All MSDN Analysis Services Posts</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" class="menu-title">Information Management<b><!--style element: drop-down arrow--></b></a>
+      <ul class="stb-nav-drop">
+        <b><!--style element: partial white border atop the drop-down menu--></b>					
+        <li><a href="http://blogs.msdn.com/b/mds/">Master Data Services</a></li>
+        <li><a href="http://blogs.msdn.com/b/mattm/">SSIS</a></li>
+        <li><a href="http://blogs.msdn.com/b/dqs/">Data Quality Services</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" class="menu-title">Big Data<b><!--style element: drop-down arrow--></b></a>
+      <ul class="stb-nav-drop">
+        <b><!--style element: partial white border atop the drop-down menu--></b>
+        <li><a href="http://blogs.technet.com/b/dataplatforminsider/">SQL Server</a></li>
+        <li><a href="http://blogs.msdn.com/b/carlnol/">Carl Nolan</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#" class="menu-title">Data in the Cloud<b><!--style element: drop-down arrow--></b></a>
+      <ul class="stb-nav-drop">
+        <b><!--style element: partial white border atop the drop-down menu--></b>
+        <li><a href="http://blogs.msdn.com/b/windowsazure">Microsoft Azure</a></li>
+        <li><a href="http://blogs.technet.com/b/dataplatforminsider/">SQL Server</a></li>
+        <li><a href="http://blogs.msdn.com/b/silverlining/">Silver Lining</a></li>
+      </ul>
+    </li>
+  </ul>
+<div class="description-container">
+    <div class="description">
+      <a href="http://blogs.msdn.com/b/carlnol/"><h2>Carl Nolan’s Blog</h2></a>
+      <p class="tagline">Carl Nolan’s ramblings on development</p>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+<!-- Begin drop-down menu -->
+  $("#stb-header > .stb-nav")
+    .mouseleave(function () {
+      $(this)
+        .find("a.menu-title")
+          .removeClass("expanded")
+        .end()
+        .find(".stb-nav-drop")
+          .removeClass("expanded");
+    })
+	.find("a.menu-title")
+	.click(function(e) {
+		  e.preventDefault();
+		  e.stopImmediatePropagation();
+		  
+		  $(this).parents('li:first').find(".stb-nav-drop")
+            .toggleClass("expanded")
+          .end()
+          .find("a.menu-title")
+            .toggleClass("expanded")
+          .end()
+          .siblings()
+            .find("a.menu-title")
+              .removeClass("expanded")
+            .end()
+            .find(".stb-nav-drop")
+              .removeClass("expanded");
+	  });
+});  
+</script></div></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div id="fragment-187886"></div>
+</div>
+</div>
+<div class="layout-region right-sidebar" id="ctl00_content_ctl00_right-sidebar">
+<div class="layout-region-inner right-sidebar"><div class="content-fragment search-form no-wrapper-with-spacing" id="fragment-187887">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-content">
+
+<div class="field-list-header">
+</div>
+<fieldset class="field-list">
+    <ul class="field-list">
+        <li class="field-item search">
+            <div style="display: none;" id="search-allblogs-container">
+                <span class="field-item-input">
+                    <input value="Search MSDN with Bing" style="color: rgb(170, 170, 170); font-style: italic;" title="Search MSDN with Bing" id="SearchTextBox_AllBlogs" name="SearchTextBox_AllBlogs" class="searchField" maxlength="64" size="45" autocomplete="off" type="text">
+                    <input title="Search MSDN with Bing" id="SearchButton_AllBlogs" name="SearchButton_AllBlogs" class="search-button" type="button">
+                <div style="display: none; text-align: left; border: 1px solid buttonshadow; position: absolute; z-index: 1000; padding: 2px; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-family: MS Shell Dlg; font-size: 11px;" id="SearchFlyoutContainer"><div id="SuggestionContainer"><ul style="list-style: outside none none; padding: 4px 2px 0px 1px; cursor: pointer; margin: 1px; white-space: nowrap;"></ul></div></div></span>
+            </div>
+            <div id="search-thisblog-container">
+                <span class="field-item-input">
+                    <input value="Search MSDN with Bing" style="color: rgb(170, 170, 170); font-style: italic;" title="Search MSDN with Bing" id="SearchTextBox_ThisBlog" name="SearchTextBox_ThisBlog" class="searchField" maxlength="64" size="45" autocomplete="off" type="text">
+                    <input title="Search MSDN with Bing" id="SearchButton_ThisBlog" name="SearchButton_ThisBlog" class="search-button" type="button">
+                <div style="display: none; text-align: left; border: 1px solid buttonshadow; position: absolute; z-index: 1000; padding: 2px; background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); font-family: MS Shell Dlg; font-size: 11px;" id="SearchFlyoutContainer"><div id="SuggestionContainer"><ul style="list-style: outside none none; padding: 4px 2px 0px 1px; cursor: pointer; margin: 1px; white-space: nowrap;"></ul></div></div></span>
+            </div>
+        </li>
+    </ul>
+</fieldset>
+<div class="field-list-footer">
+    <div id="search-switch-container">
+        <span style="display: inline-block">
+            <input name="SearchTypeRadio" value="ThisBlog" id="ThisBlog" checked="checked" type="radio"><label for="ThisBlog" id="ThisBlogText">Search this blog</label></span>
+        <span style="display: inline-block">
+            <input name="SearchTypeRadio" value="AllBlogs" id="AllBlogs" type="radio"><label for="AllBlogs" id="AllBlogsText">Search all blogs</label></span>
+    </div>
+</div>
+<script type="text/javascript">
+var elmSearchAll = $('#search-allblogs-container').hide();
+var elmSearchThis = $('#search-thisblog-container');
+
+// try to get the blog id, if we fail, then we aren't on a blog and just use the regular search approach       
+(14676 === -1) && $('#search-switch-container').hide();
+
+$(document).ready(function() {
+    $('#ThisBlog').click(function () {
+        var self = $(this);
+        if (self.is(':checked')) {
+            elmSearchAll.hide();
+            elmSearchThis.show();
+        }
+    });
+    
+    $('#AllBlogs').click(function () {
+        var self = $(this);
+        if (self.is(':checked')) {
+            elmSearchThis.hide();
+            elmSearchAll.show();
+        }
+    });
+});
+</script>
+<script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/SearchBox.js" type="text/javascript" language="javascript"></script>
+<script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/SearchBox_003.js" type="text/javascript" language="javascript"></script>
+</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment html-content no-wrapper-with-spacing with-header" id="fragment-187888">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-header"><div>Top Server &amp; Tools Blogs</div></div>
+<div class="content-fragment-content">
+<div class="user-defined-markup"><div class="sxp-feed"><a href="http://weblogs.asp.net/scottgu">ScottGu's Blog</a></div>
+<div class="sxp-feed"><a href="http://blogs.technet.com/b/in_the_cloud/">Brad Anderson’s "In the Cloud" Blog</a></div>
+<div class="sxp-feed"><a href="http://blogs.msdn.com/b/somasegar/">Somasegar's Blog</a></div>
+<div class="sxp-feed"><a href="http://blogs.msdn.com/b/bharry/">Brian Harry's Blog</a></div>
+<div class="sxp-feed"><a href="http://blogs.msdn.com/b/stevengu/">Steve "Guggs" Guggenheimer's Blog</a></div></div></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment raw-html no-wrapper-with-spacing" id="fragment-187889">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-content">
+<div class="user-defined-markup"><!-- SIDEBAR: METRO TILES -->
+<ul class="sidebar-tiles">
+  <li class="first">
+    <a href="http://blogs.msdn.com/b/carlnol/rss.aspx" class="sidebar-tile-subscribe">Subscribe</a>
+  </li>
+  <li class="mid">
+    <a href="https://twitter.com/mspowerbi" class="sidebar-tile-twitter">Twitter</a>  </li>
+  <li class="last">
+    <a href="http://www.facebook.com/microsoftbi" class="sidebar-tile-facebook">Facebook</a>
+  </li>
+</ul></div></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment blog-links no-wrapper-with-spacing with-header" id="fragment-187890">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-header"><div>Menu</div></div>
+<div class="content-fragment-content">
+
+		<div class="navigation-list-header"></div>
+		<ul class="navigation-list">
+	<li class="navigation-item"><a class="internal-link view-application" href="http://blogs.msdn.com/b/carlnol/"><span></span>Blog Home</a></li><li class="navigation-item"><a class="internal-link view-user-profile" href="http://blogs.msdn.com/b/carlnol/about.aspx"><span></span>About</a></li><li id="" rsscomments"""="" class="navigation-item"><a class="internal-link rss" href="http://blogs.msdn.com/b/carlnol/rsscomments.aspx"><span></span>RSS for comments</a></li><li class="navigation-item"><a class="internal-link rss" href="http://blogs.msdn.com/b/carlnol/rss.aspx"><span></span>RSS for posts</a></li>
+		</ul>
+		<div class="navigation-list-footer"></div>
+	</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment raw-html no-wrapper-with-spacing with-header" id="fragment-187891">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-header"><div>About Carl Nolan</div></div>
+<div class="content-fragment-content">
+<div class="user-defined-markup"><div class="about">
+I work for Microsoft Consulting Services in the UK. My primary focus is enterprise applications using C# and SQL Server.<br>
+However I also have an interest in other programming paradigms, hence the interest in F#.<br>
+A summary of my previous publications can be found <a href="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-46-76-Documents/3731.Publications-List.pdf" target="_blank">here</a>.<br>
+A list of posted code can be found <a title="Code" href="http://code.msdn.microsoft.com/site/search?f%5B0%5D.Type=User&amp;f%5B0%5D.Value=Carl%20Nolan" target="_blank">here</a>.<br>
+</div></div></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment raw-html no-wrapper-with-spacing with-header" id="fragment-187892">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-header"><div>Twitter Feed</div></div>
+<div class="content-fragment-content">
+<div class="user-defined-markup"><!-- SIDEBAR: TWITTER -->
+<div class="sidebar-twitter">
+  <script charset="utf-8" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/widget.js"></script>
+  <script>
+  new TWTR.Widget({
+    version: 2,
+    type: 'profile',
+    rpp: 2,
+    interval: 30000,
+    width: 220,
+    height: 300,
+    theme: {
+      shell: {
+        background: '#00aced',
+        color: '#ffffff'
+      },
+      tweets: {
+        background: '#ffffff',
+        color: '#424242',
+        links: '#00749e'
+      }
+    },
+    features: {
+      scrollbar: false,
+      loop: false,
+      live: false,
+      behavior: 'all'
+    }
+  }).render().setUser('carl_nolan').start();
+  </script>
+</div></div></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment c-t-f-widget no-wrapper" id="fragment-187893">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-content">
+
+
+     <!--
+         
+           localize text, such as translate this & powered by 
+           
+           
+            -->
+<div class="" id="MicrosoftTranslatorWidget" style="border: 2px solid rgb(58, 87, 112); direction: ltr; width: 276px; min-height: 83px; background-color: rgb(120, 173, 208); background-repeat: repeat-x; background-image: url(&quot;data:image/x-ms-bmp;base64,Qk2eAAAAAAAAADYAAAAoAAAAAQAAABoAAAABABgAAAAAAGgAAAAAAAAAAAAAAAAAAAAAAAAAoIJZ/5x/V/+Ze1T/lXhS/5F1T/+OcU3/im5L/4ZrSP+CaEb/f2RE/3thQf93Xj//dFo8/6CCWf+khVv/p4le/6uMYP+vj2P/spNl/7aWZ/+6mWr/vpxs/8Ggbv/Fo3H/yaZz/8yqdv8=&quot;);"><div id="MSTWContent"><div style="border-color: rgb(101, 147, 179);" id="MSTWHeader"><span class="MSTWBox"><span id="MSTWHeaderText" style="width: 160px;">Translate this page</span></span><span class="MSTWBox"><select name="MSTWMenu" id="MSTWMenu"><option value="ar">Arabic</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="zh-chs">Chinese Simplified</option><option value="zh-cht">Chinese Traditional</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="et">Estonian</option><option value="fi">Finnish</option><option value="fr">French</option><option value="de">German</option><option value="el">Greek</option><option value="ht">Haitian Creole</option><option value="he">Hebrew</option><option value="hi">Hindi</option><option value="mww">Hmong Daw</option><option value="hu">Hungarian</option><option value="id">Indonesian</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="tlh">Klingon</option><option value="ko">Korean</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="ms">Malay</option><option value="mt">Maltese</option><option value="no">Norwegian</option><option value="fa">Persian</option><option value="pl">Polish</option><option value="pt">Portuguese</option><option value="otq">Querétaro Otomi</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option selected="selected" value="es">Spanish</option><option value="sv">Swedish</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option><option value="ur">Urdu</option><option value="vi">Vietnamese</option><option value="cy">Welsh</option><option value="yua">Yucatec Maya</option></select><a href="javascript:%20Translate%20this%20page" style="background-repeat: repeat-x; background-image: url(&quot;data:image/x-ms-bmp;base64,Qk2GAAAAAAAAADYAAAAoAAAAAQAAABQAAAABABgAAAAAAFAAAAAAAAAAAAAAAAAAAAAAAAAA6MOI/+XAhv/jvoT/4LyD/966gf/cuID/2bZ+/9ezff/VsXv/0q96/+jDiP/qxYn/7MeL/+/JjP/xy47/882P//bPkf/40pL/+tSU//3Wlf8=&quot;); border-color: rgb(101, 147, 179);" id="MSTWGoButton" title="Translate this page" class="MSTWButtonLink"><img id="MSTWGoImage" src="data:image/gif;base64,R0lGODlhGAASAHAAACH5BAEAAP8ALAAAAAAYABIAhwAAAP%2f%2f%2fwAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAg8AP8JHEiwoMGDCBMqXMiwIcMAARwihAhRYkGKFC0KxIjRIkeODj9%2bfCiyYsOSHkFq7KhxY8SW%0d%0aMGPKRBgQADs%3d" style="border-width:0px;"></a></span></div><div id="MSTWFooter"><span id="MSTWBrand" class="MSTWBox"><a id="MSTWBrandLink" title="Microsoft® Translator" href="http://www.bing.com/translator?ref=MSTWidget" target="_blank"><span style="font-family: Segoe UI; direction: ltr;">Microsoft<sup style="vertical-align: super; font-size: 70%;">®</sup> Translator</span></a></span><span id="MSTWGetShare" class="MSTWBox"><a style="border-color: rgb(101, 147, 179);" id="MSTWGetButton" title="Get this widget for your own site" class="MSTWButtonLink" href="http://www.microsofttranslator.com/widget/?ref=MSTWidget" target="_blank"><img id="MSTWGetImage" src="data:image/gif;base64,R0lGODlhGAASAPcAAAAAAP%2f%2f%2fwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAP8ALAAAAAAYABIA%0d%0aAAhBAP8JHEiwoMGDCBMqXMiwocOHCAMEGCgRYkWCFxlmxDhx4caCH0F2TBiSI8mRJw%2bWVIny38qI%0d%0aI19CnEmzpk2DAQEAOw%3d%3d" style="border-width:0px;"></a><a href="mailto:?charset=utf-8&amp;subject=Check%20out%20this%20page%20in%20Spanish%20translated%20from%20English&amp;body=Translated%3A%20http%3A%2F%2Fblogs.msdn.com%2Fb%2Fcarlnol%2Farchive%2F2013%2F06%2F07%2Fmanaging-your-hdinsight-cluster-with-powershell.aspx%23mstto%3Des%0D%0AOriginal%3A%20http%3A%2F%2Fblogs.msdn.com%2Fb%2Fcarlnol%2Farchive%2F2013%2F06%2F07%2Fmanaging-your-hdinsight-cluster-with-powershell.aspx%0D%0A%0D%0AAutomatic%20translation%20powered%20by%20Microsoft%C2%AE%20Translator%0D%0Ahttp%3A%2F%2Fwww.bing.com%2Ftranslator" style="border-color: rgb(101, 147, 179);" id="MSTWShareButton" title="Share" class="MSTWButtonLink"><img id="MSTWShareImage" src="data:image/gif;base64,R0lGODlhGAASAPcAAAAAAP%2f%2f%2fwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%0d%0aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAP8ALAAAAAAYABIA%0d%0aAAhHAP8JHEiwoMGDCBMqXMiwocOHBQNInEiRokKJFwNc%2fKfxoMaOCDuCHChyo8CRIEcaLGmxZMKP%0d%0aITlmnPmyok2MEHPq3MlTYUAAOw%3d%3d" style="border-width:0px;"></a></span></div><div id="MSTWHidden" style="display: none;"><span id="MSTWCheckOut">Check out this page in {0} translated from {1}</span><span id="MSTWTranslatedFrom">translated from</span><span id="MSTWOriginal">Original:</span><span id="MSTWTranslated">Translated:</span><span id="MSTWPoweredBy">Automatic translation powered by Microsoft® Translator</span><span id="MSTWStart">Start translating</span><span id="MSTWStop">Stop translating</span><span id="MSTWClose">Close</span><span id="MSTWCloseShowOrig">Close and show original page</span><span id="MSTWLangNotSup"></span><span id="MSTWSelect">Select</span></div></div></div>
+</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment blog-post-list no-wrapper-with-spacing with-header" id="fragment-187894">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-header"><div>Recent Posts</div></div>
+<div class="content-fragment-content">
+
+	    <div class="content-list-header simple"></div>
+        <ul class="content-list simple">
+	
+		<li class="content-item">
+			<div class="abbreviated-post-header"></div>
+			<div class="abbreviated-post">
+				<h4 class="post-name"><a class="internal-link view-post" href="http://blogs.msdn.com/b/carlnol/archive/2014/04/02/pushing-hadoop-cluster-configuration-changes-using-powershell.aspx"><span></span>Pushing Hadoop Cluster Configuration Changes using PowerShell</a></h4>
+				
+            <div class="post-date">
+		        <span class="label">Posted</span>
+		        <span class="value">11 months ago</span>
+	        </div>
+                <div class="post-author">
+                    <span class="fiji-post-author-by">by</span>
+                    <span class="avatar"><a href="http://blogs.msdn.com/257457/ProfileUrlRedirect.ashx"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/avatar.jpg" alt="" style="border-width:0px;max-height:32px;max-width:32px;"></a></span>
+                    
+                    <span class="user-name"><a class="internal-link view-user-profile" href="http://blogs.msdn.com/257457/ProfileUrlRedirect.ashx"><span></span>Carl Nolan</a></span>
+                    
+                </div>
+	            <div class="post-attributes">
+		                <div class="attribute-list-header"></div>
+                        <ul class="attribute-list">
+                            <span class="attribute-value">3</span>
+                            <span class="attribute-name">Comments</span>
+                        </ul>
+                        <div class="attribute-list-footer"></div>
+                    </div>
+			</div>
+			<div class="abbreviated-post-footer"></div>
+		</li>
+	
+		<li class="content-item">
+			<div class="abbreviated-post-header"></div>
+			<div class="abbreviated-post">
+				<h4 class="post-name"><a class="internal-link view-post" href="http://blogs.msdn.com/b/carlnol/archive/2014/03/19/deploying-hadoop-rack-awareness-with-powershell.aspx"><span></span>Deploying Hadoop Rack Awareness with PowerShell</a></h4>
+				
+            <div class="post-date">
+		        <span class="label">Posted</span>
+		        <span class="value">11 months ago</span>
+	        </div>
+                <div class="post-author">
+                    <span class="fiji-post-author-by">by</span>
+                    <span class="avatar"><a href="http://blogs.msdn.com/257457/ProfileUrlRedirect.ashx"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/avatar.jpg" alt="" style="border-width:0px;max-height:32px;max-width:32px;"></a></span>
+                    
+                    <span class="user-name"><a class="internal-link view-user-profile" href="http://blogs.msdn.com/257457/ProfileUrlRedirect.ashx"><span></span>Carl Nolan</a></span>
+                    
+                </div>
+	            <div class="post-attributes">
+		                <div class="attribute-list-header"></div>
+                        <ul class="attribute-list">
+                            <span class="attribute-value">2</span>
+                            <span class="attribute-name">Comments</span>
+                        </ul>
+                        <div class="attribute-list-footer"></div>
+                    </div>
+			</div>
+			<div class="abbreviated-post-footer"></div>
+		</li>
+	
+		<li class="content-item">
+			<div class="abbreviated-post-header"></div>
+			<div class="abbreviated-post">
+				<h4 class="post-name"><a class="internal-link view-post" href="http://blogs.msdn.com/b/carlnol/archive/2014/03/14/implementing-hadoop-rack-awareness-with-powershell.aspx"><span></span>Implementing Hadoop Rack Awareness with PowerShell</a></h4>
+				
+            <div class="post-date">
+		        <span class="label">Posted</span>
+		        <span class="value">11 months ago</span>
+	        </div>
+                <div class="post-author">
+                    <span class="fiji-post-author-by">by</span>
+                    <span class="avatar"><a href="http://blogs.msdn.com/257457/ProfileUrlRedirect.ashx"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/avatar.jpg" alt="" style="border-width:0px;max-height:32px;max-width:32px;"></a></span>
+                    
+                    <span class="user-name"><a class="internal-link view-user-profile" href="http://blogs.msdn.com/257457/ProfileUrlRedirect.ashx"><span></span>Carl Nolan</a></span>
+                    
+                </div>
+	            <div class="post-attributes">
+		                <div class="attribute-list-header"></div>
+                        <ul class="attribute-list">
+                            <span class="attribute-value">0</span>
+                            <span class="attribute-name">Comments</span>
+                        </ul>
+                        <div class="attribute-list-footer"></div>
+                    </div>
+			</div>
+			<div class="abbreviated-post-footer"></div>
+		</li>
+	
+		<li class="content-item">
+			<div class="abbreviated-post-header"></div>
+			<div class="abbreviated-post">
+				<h4 class="post-name"><a class="internal-link view-post" href="http://blogs.msdn.com/b/carlnol/archive/2013/12/16/managing-your-hdinsight-cluster-using-powershell-update.aspx"><span></span>Managing Your HDInsight Cluster using PowerShell – Update</a></h4>
+				
+            <div class="post-date">
+		        <span class="label">Posted</span>
+		        <span class="value">over 2 years ago</span>
+	        </div>
+                <div class="post-author">
+                    <span class="fiji-post-author-by">by</span>
+                    <span class="avatar"><a href="http://blogs.msdn.com/257457/ProfileUrlRedirect.ashx"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/avatar.jpg" alt="" style="border-width:0px;max-height:32px;max-width:32px;"></a></span>
+                    
+                    <span class="user-name"><a class="internal-link view-user-profile" href="http://blogs.msdn.com/257457/ProfileUrlRedirect.ashx"><span></span>Carl Nolan</a></span>
+                    
+                </div>
+	            <div class="post-attributes">
+		                <div class="attribute-list-header"></div>
+                        <ul class="attribute-list">
+                            <span class="attribute-value">0</span>
+                            <span class="attribute-name">Comments</span>
+                        </ul>
+                        <div class="attribute-list-footer"></div>
+                    </div>
+			</div>
+			<div class="abbreviated-post-footer"></div>
+		</li>
+	
+		</ul>
+		<div class="content-list-footer simple"></div>
+	</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment tag-cloud no-wrapper-with-spacing with-header" id="fragment-187895">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-header"><div>Tags</div></div>
+<div class="content-fragment-content">
+<div class="tag-list-header"></div><ul class="tag-list">
+<li class="tag-item level-1"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/-Net/" rel="tag">.Net</a></li>
+<li class="tag-item level-2"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/-Net+Programming/" rel="tag">.Net Programming</a></li>
+<li class="tag-item level-4"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Binary+Streaming/" rel="tag">Binary Streaming</a></li>
+<li class="tag-item level-3"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/C_2300_/" rel="tag">C#</a></li>
+<li class="tag-item level-1"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/F_2300_/" rel="tag">F#</a></li>
+<li class="tag-item level-1"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/FSharp/" rel="tag">FSharp</a></li>
+<li class="tag-item level-4"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/FSharpChart/" rel="tag">FSharpChart</a></li>
+<li class="tag-item level-1"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Hadoop/" rel="tag">Hadoop</a></li>
+<li class="tag-item level-2"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Hadoop+on+Azure/" rel="tag">Hadoop on Azure</a></li>
+<li class="tag-item level-2"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Hadoop+Streaming/" rel="tag">Hadoop Streaming</a></li>
+<li class="tag-item level-3"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Hadoop-Net/" rel="tag">Hadoop.Net</a></li>
+<li class="tag-item level-5"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/IEnumerable/" rel="tag">IEnumerable</a></li>
+<li class="tag-item level-6"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Machine+Learning/" rel="tag">Machine Learning</a></li>
+<li class="tag-item level-2"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/MapReduce/" rel="tag">MapReduce</a></li>
+<li class="tag-item level-6"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Matrix/" rel="tag">Matrix</a></li>
+<li class="tag-item level-4"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Parallel+Processing/" rel="tag">Parallel Processing</a></li>
+<li class="tag-item level-4"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/PowerShell/" rel="tag">PowerShell</a></li>
+<li class="tag-item level-6"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Recommendations/" rel="tag">Recommendations</a></li>
+<li class="tag-item level-5"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Sorting/" rel="tag">Sorting</a></li>
+<li class="tag-item level-5"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/SQL+Server/" rel="tag">SQL Server</a></li>
+<li class="tag-item level-6"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Task+Parallel+Library/" rel="tag">Task Parallel Library</a></li>
+<li class="tag-item level-5"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/TSQL/" rel="tag">TSQL</a></li>
+<li class="tag-item level-6"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Vector/" rel="tag">Vector</a></li>
+<li class="tag-item level-6"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/WPF/" rel="tag">WPF</a></li>
+<li class="tag-item level-4"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/XML+Streaming/" rel="tag">XML Streaming</a></li>
+</ul>
+<div class="tag-list-footer"></div>
+</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment blog-archive-list no-wrapper-with-spacing with-header" id="fragment-187896">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-header"><div>Archives</div></div>
+<div class="content-fragment-content">
+
+		<div class="content-list-header"></div>
+		<div class="content-list-name">Archives</div>
+		<ul class="content-list">
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2014/04.aspx">April 2014</a> (1)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2014/03.aspx">March 2014</a> (2)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2013/12.aspx">December 2013</a> (2)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2013/09.aspx">September 2013</a> (1)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2013/06.aspx">June 2013</a> (2)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2013/02.aspx">February 2013</a> (2)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2013/01.aspx">January 2013</a> (1)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2012/12.aspx">December 2012</a> (2)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2012/11.aspx">November 2012</a> (1)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2012/10.aspx">October 2012</a> (2)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2012/07.aspx">July 2012</a> (4)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2012/06.aspx">June 2012</a> (5)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2012/05.aspx">May 2012</a> (1)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2012/04.aspx">April 2012</a> (3)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2012/02.aspx">February 2012</a> (3)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2012/01.aspx">January 2012</a> (5)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2011/12.aspx">December 2011</a> (6)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2011/11.aspx">November 2011</a> (7)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2011/10.aspx">October 2011</a> (8)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2011/09.aspx">September 2011</a> (1)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2011/08.aspx">August 2011</a> (1)</li>
+	
+		<li style="display: none;" class="content-item"><a class="internal-link view-post-archive-list" href="http://blogs.msdn.com/b/carlnol/archive/2011/07.aspx">July 2011</a> (11)</li>
+	
+		</ul>
+		<div class="content-list-footer"></div>
+	
+</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment raw-html no-wrapper-with-spacing" id="fragment-187897">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-content">
+<div class="user-defined-markup"><script>
+    $(document).ready(function() {
+      $('.layout-region.right-sidebar .blog-archive-list ul.content-list li.content-item').hide();
+      if ($('.layout-region.right-sidebar .blog-archive-list ul.content-list li.content-item').length < 1) {
+        $('#ArchiveMoreLink,#ArchiveLessLink').hide();
+      }
+      if ($('.layout-region.right-sidebar .blog-archive-list ul.content-list li.content-item:visible').length == $('.layout-region.right-sidebar .blog-archive-list ul.content-list li.content-item').length) {
+        $('#ArchiveMoreLink,#ArchiveLessLink').hide();
+      }
+    });
+</script>
+<a id="ArchiveMoreLink" href="#" onclick="$('.layout-region.right-sidebar .blog-archive-list ul.content-list li.content-item').show(); $('#ArchiveLessLink').show(); $('#ArchiveMoreLink').hide(); return false;">More <span class="arrowhead">▼</span></a>
+<a id="ArchiveLessLink" href="#" style="display:none" onclick="$('.layout-region.right-sidebar .blog-archive-list ul.content-list li.content-item').hide(); $('#ArchiveMoreLink').show(); $('#ArchiveLessLink').hide(); return false;">Less <span class="arrowhead">▲</span></a></div></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+</div>
+</div>
+<div class="layout-region content" id="ctl00_content_ctl00_content">
+<div class="layout-region-inner content"><div class="content-fragment blog-post no-wrapper-with-spacing" id="fragment-187898">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-content">
+
+<div class="full-post-header"></div>
+<div class="full-post">
+	<h3 class="post-name">Managing Your HDInsight Cluster with PowerShell</h3>
+	
+	        <div class="post-rating">
+	            Rate This<br>
+	    <span class="rating readonly" id="ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl01" title="Rated Excellent [4.67 out of 5]."><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/star-left-on.png" style="border-width: 0px;" align="absmiddle" border="0"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/star-right-on.png" style="border-width: 0px;" align="absmiddle" border="0"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/star-left-on.png" style="border-width: 0px;" align="absmiddle" border="0"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/star-right-on.png" style="border-width: 0px;" align="absmiddle" border="0"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/star-left-on.png" style="border-width: 0px;" align="absmiddle" border="0"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/star-right-on.png" style="border-width: 0px;" align="absmiddle" border="0"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/star-left-on.png" style="border-width: 0px;" align="absmiddle" border="0"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/star-right-on.png" style="border-width: 0px;" align="absmiddle" border="0"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/star-left-on.png" style="border-width: 0px;" align="absmiddle" border="0"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/star-right-off.png" style="border-width: 0px;" align="absmiddle" border="0"></span><input value="4.67" id="ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl01_Value" type="hidden">
+	        </div>
+	    
+    <div class="post-author">
+        <span class="avatar"><a href="http://blogs.msdn.com/257457/ProfileUrlRedirect.ashx"><img src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/avatar.jpg" alt="" style="border-width:0px;max-height:32px;max-width:32px;"></a></span>
+        
+        <span data-profile-rendered="true" class="profile-usercard-hover" data-profile-userid="a429acc118cd4d78adbc574a6fbaa9e9">
+            <span class="user-name"><a class="internal-link view-user-profile" href="http://blogs.msdn.com/257457/ProfileUrlRedirect.ashx"><span></span>Carl Nolan</a></span>
+        
+            
+        <div class="profile-usercard">            <div class="profile-header">                <span class="profile-userimage">                                            <img src="data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAA0JCgsKCA0LCgsODg0PEyAVExISEyccHhcgLikxMC4pLSwzOko+MzZGNywtQFdBRkxOUlNSMj5aYVpQYEpRUk//2wBDAQ4ODhMREyYVFSZPNS01T09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0//wAARCAAsACwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDrgtLsPrSZpQaAMvVHu5bkWVrcm2+QO0iqC3JIwM9OlJp3220nS3urw3SyZ2s6gMpxnqOo4NTX6x/aEZgpLrtI78cj+ZplkoN4hKgOuWJPXGMf1rJyfPY3UI+zuagLU7cfSjcaTca2MDDGuWePvke2KoXfi2BGMdjC9xIO5+VR+NYGqavYtZtFYwgSPwWx0H51iNKywxwD5Qw3MfXNbU6cXrIlt9DT/t2eHUri6kSCZ58bwM8egB9q0T4kjivLW4toxzHmVWJAyeCM+1cxKiJJtjlEgwPmUEDP40inHFDhFy5rFczUbHocfimJ/wDliynGeWp//CTQdxg/WuJjkt4b23XLNbsEaRSwOCeD0rqjoenn/lm4/wCBmpmop6Eq5w97NHLcyNCu2PPyj2qFmZ2+bggAfhTGGBxxVzUQBftgAfKnT/dFUn0Arj60ppp6UUwEyS3WvRdLuTPplvK4+Zoxn3NebjrXfaOx/sm1/wCuYrOewH//2Q==" alt="Avatar of Carl Nolan">                                    </span>                <div>                    <p title="Carl Nolan" class="profile-display-name">Carl Nolan</p>                                    <p class="profile-company">Microsoft</p>                                    <p class="profile-affiliations">MSFT</p>                </div>            </div>            <div class="profile-points-bar">                <span class="profile-points">20,012<span class="points-label"> Points</span></span>                <span class="profile-count profile-bronze-points"><span class="profile-bronze-img" title="Achievements Earned"></span><span>9</span></span>                <span class="profile-count profile-silver-points"><span class="profile-silver-img" title="Achievements Earned"></span><span>4</span></span>                <span class="profile-count profile-gold-points"><span class="profile-gold-img" title="Achievements Earned"></span><span>4</span></span>                        </div>            <div class="profile-achievements-header">                <span class="profile-achievements-title">Recent Achievements</span>            </div>            <div class="profile-achievements-recent">                <div class="profile-achievements-centering">                                                                <span class="profile-achievement profile-achievement-Gold"><span>Ratings Board President</span></span>                                            <span class="profile-achievement profile-achievement-Silver"><span>Blog Conversation Starter</span></span>                                            <span class="profile-achievement profile-achievement-Bronze"><span>First Forums Reply</span></span>                                                            </div>            </div>            <div class="profile-footer">                                <a href="https://social.msdn.microsoft.com/profile/carl%20nolan/?ws=usercard-hover" class="profile-usercard-profileLink" target="_blank">View Profile</a>            </div>        </div></span>
+    </div>
+    <div class="post-date">
+        <span class="value">
+            7 Jun 2013 11:38 AM
+        </span>
+    </div>
+    <div class="post-attributes">
+        <div class="attribute-list-header"></div>
+        <ul class="attribute-list">
+             <li class="attribute-item post-reply-count">
+                <span class="attribute-name">Comments</span>
+                <span class="attribute-value"><a href="#comments" class="internal-link view-replies"><span></span>0</a></span>
+             </li>
+        </ul>
+        <div class="attribute-list-footer"></div>
+    </div>
+    <div class="post-content user-defined-markup"><p><strong><em>An updated version of this post can be found <a href="http://blogs.msdn.com/b/carlnol/archive/2013/12/02/managing-your-hdinsight-cluster-and-net-job-submissions.aspx">here</a>.</em></strong></p>
+<p>This blog post provides a mechanism for managing an HDInsight cluster
+ using a local management console through the use of Windows PowerShell.
+ The goal is to outline how to configure the local management console, 
+create a simple cluster, submit jobs using MRRunner, and finally provide
+ a mechanism for managing an elastic service.</p>
+<p>The ultimate goal will be to present a script that demonstrates how 
+you can provide a DLL and have the script bring a cluster online, run 
+your Job, and then remove the cluster, whilst allowing you to specify 
+the cluster name and the number of hosts needed to run the Job.</p>
+<p>All the scripts mentioned in this post can be downloaded from <a href="https://hadoopsdk.codeplex.com/downloads/get/690770">here</a>.</p>
+<p>Before provisioning a cluster one needs to ensure the Azure 
+subscription has been correctly configured and a local management 
+console has been setup. So lets start there.</p>
+<h2><a name="_Toc358025995"></a>Prepare Azure Subscription Storage</h2>
+<p>Under the subscription in which the HDInsight is going to be running 
+one needs a storage account defined, and a management certificate 
+uploaded.</p>
+<h3><a name="_Toc358025996"></a>Create a Storage Account</h3>
+<p><a href="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-46-76-metablogapi/5148.image_5F00_05C34539.png"><img style="border: 0px currentcolor; display: inline; background-image: none;" title="image" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/2671.png" alt="image" border="0" height="480" width="619"></a></p>
+<p>Next, under the storage account management create a new default container:</p>
+<p><a href="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-46-76-metablogapi/2438.image_5F00_0D0EDF19.png"><img style="margin: 0px; border: 0px currentcolor; display: inline; background-image: none;" title="image" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/5076.png" alt="image" border="0" height="480" width="592"></a></p>
+<p>At this point the Azure subscription is basically ready. It is 
+assumed that the subscription has the HDInsight preview enabled, see 
+“Cluster Provisioning” below.</p>
+<h2><a name="_Toc358025997"></a><a name="_Ref356565353"></a>Setting Up Your Local Environment</h2>
+<p>Once the Azure subscription has been configured, the next step is to configure your local management environment.</p>
+<p>The first step is to install and configure Windows Azure PowerShell. 
+Windows Azure PowerShell is the scripting environment that allows you to
+ control and automate the deployment and management of your workloads in
+ Windows Azure. This includes provisioning virtual machines, setting up 
+virtual networks and cross-premises networks, and managing cloud 
+services in Windows Azure.</p>
+<p>To use the cmdlets in Windows Azure PowerShell you will need to 
+download and import the modules, as well as import and configure 
+information that provides connectivity to Windows Azure through your 
+subscription. For instructions, see <a href="http://msdn.microsoft.com/en-us/library/windowsazure/jj554332.aspx">Get Started with Windows Azure Cmdlets</a>.</p>
+<h3><a name="_Toc358025998"></a>Prepare the Work Environment</h3>
+<p>The basic process for running the cmdlets by using the Windows Azure PowerShell command shell is as follows:</p>
+<ul>
+<li>Upload a Management Certificate. For more information about how to create and upload a management certificate, see <a href="http://msdn.microsoft.com/en-us/library/windowsazure/gg551721.aspx">How to: Manage Management Certificates in Windows Azure</a> and the section entitled “Create a Certificate”.</li>
+<li>Install the Windows Azure module for Windows PowerShell. The install can be found on the <a href="http://www.windowsazure.com/en-us/downloads/?fb=en-us">Windows Azure Downloads</a> page, under Windows.</li>
+<li>Finally set the Windows PowerShell execution policy. To achieve this run the <strong>Windows Azure PowerShell </strong>as an Administrator and execute the following command: <br><span style="font-family: Consolas;">Set-ExecutionPolicy RemoteSigned</span></li>
+</ul>
+<p>The Windows PowerShell execution policy determines the conditions 
+under which configuration files and scripts are run. The Windows Azure 
+PowerShell cmdlets need the execution policy set to a value of 
+RemoteSigned, Unrestricted, or Bypass.</p>
+<h3><a name="_Toc358025999"></a><a name="_Ref356564342"></a>Create a Certificate</h3>
+<p>From a Visual Studio Command Prompt run the following:</p>
+<p><span style="font-family: Consolas;">makecert -sky exchange -r -n "CN=&lt;CertificateName&gt;" -pe -a sha1 -len 2048 -ss My "&lt;CertificateName&gt;.cer"</span></p>
+<p>Where &lt;CertificateName&gt; is the name that you want to use for 
+the certificate. It must have a .cer extension. The command loads the 
+private key into your user store, indicated by the “-ss My” switch. In 
+the certmgr.msc, it appears in the path of Certificates Current 
+User\Personal\Certificates.</p>
+<p>Upload the new certification to Azure:</p>
+<p><a href="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-46-76-metablogapi/1602.image_5F00_2B68FA35.png"><img style="margin: 0px; border: 0px currentcolor; display: inline; background-image: none;" title="image" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/1070.png" alt="image" border="0" height="467" width="602"></a></p>
+<p>If one needs to connect from several machines the same certificate should be installed into the user store on that machine also.</p>
+<h3><a name="_Toc358026000"></a><a name="_Ref358016929"></a>Configure Connectivity</h3>
+<p>There are two ways one can configure connectivity between your local 
+workstation and Windows Azure. Either manually by configuring the 
+management certificate and subscription details with the <strong>Set-AzureSubscription</strong> and <strong>Select-AzureSubscription</strong>
+ cmdlets, or automatically by downloading and importing the 
+PublishSettings file from Windows Azure. The settings for Windows Azure 
+PowerShell are stored in: <strong>&lt;user&gt;\AppData\Roaming\Windows Azure PowerShell</strong>.</p>
+<p>The PublishSettings file method works well when you are responsible 
+for a limited number of subscriptions, but it adds a certificate to any 
+subscription that you are an administrator or co-administrator for. This
+ can be achieved by:</p>
+<ul>
+<li>Execute the following command: <br><span style="font-family: Consolas;">Get-AzurePublishSettingsFile</span></li>
+<li>Save the .publishSettings file locally.</li>
+<li>Import the downloaded .publishSettings file by running the PowerShell command: <br><span style="font-family: Consolas;">Import-AzurePublishSettingsFile &lt;publishSettings-file&gt;</span></li>
+</ul>
+<p>Security note: This file contains an encoded management certificate 
+that will serve as your credentials to administer all aspects of your 
+subscriptions and related services. Store this file in a secure 
+location, or delete it after you follow these steps.</p>
+<p>In complex or shared development environments, it might be desirable 
+to manually configure the publish settings and subscription information,
+ including any management certificates, for your Windows Azure 
+subscriptions. This is achieved by running the following script (for the
+ management certificate):</p>
+<p><span style="font-family: Consolas;">$mySubID = 
+"&lt;subscritionID&gt;" $certThumbprint = "&lt;Thumbprint&gt;" $myCert =
+ Get-Item cert:\CurrentUser\My\$certThumbprint $mySubName = 
+"&lt;SubscriptionName&gt;" $myStoreAcct = "mydefaultstorageaccount"<br><br>Set-AzureSubscription -SubscriptionName $mySubName -Certificate $myCert -SubscriptionID $mySubID </span></p>
+<p><span style="font-family: Consolas;">Set-AzureSubscription -DefaultSubscription $mySubName <br> Set-AzureSubscription –SubscriptionName $mySubName -CurrentStorageAccount $myStoreAcct <br>Select-AzureSubscription -SubscriptionName $mySubName</span></p>
+<p>To view the details of the Azure Subscription run the command:</p>
+<p><span style="font-family: Consolas;">Get-AzureSubscription</span></p>
+<p>This script uses the <strong>Set-AzureSubscription</strong> cmdlet. 
+This cmdlet can be used to configure a default Windows Azure 
+subscription, set a default storage account, or a custom Windows Azure 
+service endpoint.</p>
+<p>When managing your cluster and you have multiple subscription it is advisable to set the default subscription.</p>
+<h3><a name="_Toc358026001"></a><a name="_Ref356565468"></a>Install HDInsight cmdlets</h3>
+<p>Ensure the HDInsight binaries are accessible and loaded. They can be downloaded from:</p>
+<p><a href="https://hadoopsdk.codeplex.com/downloads/get/671067">https://hadoopsdk.codeplex.com/downloads/get/671067</a></p>
+<p>Once downloaded and unzipped, into an accessible directory, and 
+unblocked (open properties of the archive file and click Unblock), they 
+are ready to be loaded into Azure PowerShell environment:</p>
+<p><span style="font-family: Consolas;">Import-Module "C:\ local_folder\Microsoft.WindowsAzure.Management.HDInsight.Cmdlet.dll"</span></p>
+<h2><a name="_Toc358026002"></a><a name="_Ref356565162"></a>Cluster Provisioning</h2>
+<p>There are various ways one can provision a new cluster. If using the 
+Management Portal there is a simple UX process one can follow:</p>
+<p><a href="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-46-76-metablogapi/1348.image_5F00_01955975.png"><img style="margin: 0px; border: 0px currentcolor; display: inline; background-image: none;" title="image" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/8686.png" alt="image" border="0" height="260" width="602"></a></p>
+<p>However for an automated process it is recommended that PowerShell is
+ utilized. In running the script to be presented one has to remember to 
+load the HDInsight management binaries, as outlined in the “Install 
+HDInsight cmdlets” step.</p>
+<p>The following sections present a series of scripts for automating cluster management. Further examples can also be found at <a href="http://hadoopsdk.codeplex.com/wikipage?title=PowerShell%20Cmdlets%20for%20Cluster%20Management&amp;referringTitle=Cluster%20Management">Microsoft .Net SDK for Hadoop - PowerShell Cmdlets for Cluster Management</a>.</p>
+<h3><a name="_Toc358026003"></a>Provision Base Cluster</h3>
+<p>Firstly one needs access to the subscription Id and Certificate, for 
+the current Azure Subscription, that was registered in the “Setting Up 
+Your Environment” step.</p>
+<p>When running these scripts the italicized variables will first need to be defined.</p>
+<ol>
+<li>In this version you need to explicitly specify subscription 
+information for cmdlets. The plan is after the cmdlets are integrated 
+with Azure PowerShell tools this step won’t be necessary. <br><span style="font-family: Consolas;">$subid = Get-AzureSubscription -Current | %{ $_.SubscriptionId } <br>$cert = Get-AzureSubscription -Current | %{ $_.Certificate }</span></li>
+<li>Get the storage account key so you can use it later. <br><span style="font-family: Consolas;">$key1 = Get-AzureStorageKey <em>$myStoreAcct </em>| %{ $_.Primary }</span></li>
+<li>Finally create the new cluster; the cmdlet will return Cluster 
+object in about 10-15 minutes when cluster is finished provisioning: <br><span style="font-family: Consolas;">Write-Host "Creating '$numbernodes' Node Cluster named: $clustername" -f yellow <br>New-AzureHDInsightCluster -SubscriptionId $subid -Certificate $cert -Name <em>$clustername</em> -Location "East US" -DefaultStorageAccountName $blobstorage -DefaultStorageAccountKey $key1 -DefaultStorageContainerName <em>$containerdefault</em> -UserName <em>$username</em> -Password <em>$password</em> -ClusterSizeInNodes <em>$numbernodes</em></span></li>
+</ol>
+<p>As an example a set of variable definitions would be:</p>
+<p><span style="font-family: Consolas;">$mySubName = "Windows Azure Subscription Name" <br> $myStoreAcct = "mystorageaccount" <br> $blobstorage = "mystorageaccount.blob.core.windows.net" <br> $containerdefault = "hadooproot" <br> $clustername = "myhdinsighttest" <br> $location = "East US" <br> $numbernodes = 4 <br> $username = "Admin" <br> $password = "mypassword"</span></p>
+<p>Once the cluster has been created you will see the results displayed on the screen:</p>
+<p><span style="font-family: Consolas;">Name : myhdinsighttest <br>ConnectionUrl : </span><a href="https://myhdinsighttest.azurehdinsight.net/"><span style="font-family: Consolas;">https://myhdinsighttest.azurehdinsight.net</span></a> <br><span style="font-family: Consolas;"> State : Running <br>CreateDate : 07/05/2013 14:16:37 <br>UserName : Admin <br> Location : Admin <br>ClusterSizeInNodes : 4</span></p>
+<p>You will also be able to see the cluster in the management portal:</p>
+<p><a href="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-46-76-metablogapi/8004.image_5F00_3C4CDC7E.png"><img style="margin: 0px; border: 0px currentcolor; display: inline; background-image: none;" title="image" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/8836.png" alt="image" border="0" height="386" width="602"></a></p>
+<p>If the subscription one is managing is not the configured default, 
+before creating the cluster, one should execute the following command:</p>
+<p><span style="font-family: Consolas;">Set-AzureSubscription -DefaultSubscription $mySubName</span></p>
+<p>To create a script that enables one to pass in parameters, such as 
+the number of required hosts, you can have as your first few lines in 
+the script the following:</p>
+<p><span style="font-family: Consolas;">Param($Hosts = 4, $Cluster = "myhdinsighttest") <br> $numbernodes = $Hosts <br> $clustername = $Cluster</span></p>
+<p>The script can then be executed as follows (assuming saved as ClusterCreateSimple.ps1):</p>
+<p><span style="font-family: Consolas;">. "C:\\Scripts\ClusterCreateSimple.ps1" -Hosts 4 –Cluster "myhdinsighttest"</span></p>
+<p>Of course other variables can also be passed in.</p>
+<p>Currently the nodes supporting the creation of an HDInsight cluster are:</p>
+<ul>
+<li>East US</li>
+<li>North Europe</li>
+</ul>
+<p>More will be added over time.</p>
+<h3><a name="_Toc358026004"></a>Manage Your Cluster</h3>
+<p>One can view your current clusters within the current subscription using the following command:</p>
+<p><span style="font-family: Consolas;">Get-AzureHDInsightCluster -SubscriptionId $subid -Certificate $cert</span></p>
+<p>To view the details of a specific cluster use the following command:</p>
+<p><span style="font-family: Consolas;">Get-AzureHDInsightCluster $clustername -SubscriptionId $subid -Certificate $cert</span></p>
+<p>To delete the cluster, needed for elastic services, run the command:</p>
+<p><span style="font-family: Consolas;">Remove-AzureHDInsightCluster $clustername -SubscriptionId $subid -Certificate $cert</span></p>
+<p>There are a few words that need to be mentioned around versioning and cluster name.</p>
+<p>When a cluster is currently provisioned you will always get the 
+latest build. However if there are breaking changes between your current
+ build and latest build currently executing code could break. Also, when
+ you delete a cluster there is no guarantee that when you recreate the 
+cluster the name will be available. To ensure that your name is not 
+going to be used, abstract cluster names should be utilized.</p>
+<h2><a name="_Toc358026006"></a>Job Submission</h2>
+<p>In addition to managing the HDInsight cluster the Microsoft .Net SDK 
+for Hadoop also allows one to write MapReduce jobs utilizing the .Net 
+Framework. Under the covers this is employing the Hadoop Streaming 
+interface. The documentation for creating such jobs can be found at:</p>
+<p><a href="http://hadoopsdk.codeplex.com/wikipage?title=Map%2fReduce">http://hadoopsdk.codeplex.com/wikipage?title=Map%2fReduce</a></p>
+<h3><a name="_Toc358026007"></a>MRRunner Support</h3>
+<p>To submit such jobs there is a command-line utility called MRRunner 
+that should be utilized. To support the MRRunner utility you should have
+ an assembly (a .net DLL or EXE) that defines at least one 
+implementation of HadoopJob&lt;&gt;.</p>
+<p>If the Dll contains only one implementation of Hadoop&lt;&gt;, you can run the job with:</p>
+<p><span style="font-family: Consolas;">MRRunner -dll MyDll</span></p>
+<p>If the Dll contains multiple implementations of HadoopJob&lt;&gt;, then you need to indicate the one you wish to run:</p>
+<p><span style="font-family: Consolas;">MRRunner -dll MyDll -class MyClass</span></p>
+<p>To supply options to your job, pass them as trailing arguments on the command-line, after a double-hyphen:</p>
+<p><span style="font-family: Consolas;">MRRunner -dll MyDll -class MyClass -- extraArg1 extraArg2</span></p>
+<p>These additional arguments are provided to your job via a context object that is available to all methods on HadoopJob&lt;&gt;.</p>
+<h3><a name="_Toc358026008"></a>Local PowerShell Submission</h3>
+<p>Of course one can submit jobs directly from a .Net executable and thus PowerShell scripts.</p>
+<p>MapReduceJob is a property on Hadoop connection object. It provides 
+access to an implementation of the&nbsp; IStreamingJobExecutor interface
+ which handles the creation and execution of Hadoop Streaming jobs. 
+Depending on how the connection object was created it can execute jobs 
+locally, using Hadoop command-line, or against remote cluster using 
+WebHCat client library.</p>
+<p>Under the covers the MRRunner utility will invoke LocalStreamingJobExecutor implementation on your behalf; as discussed.</p>
+<p>Alternatively one can invoke the executor directly and request it execute a Hadoop Job:</p>
+<p><span style="font-family: Consolas;">var hadoop = Hadoop.Connect(); <br></span><span style="font-family: Consolas;">hadoop.MapReduceJob.ExecuteJob&lt;JobType&gt;(arguments);</span></p>
+<p>Utilizing this approach one can thus integrate Job Submission into cluster management scripts:</p>
+<p><span style="font-family: Consolas;"># Define Base Paths <br> $BasePath = "C:\Users\Me\Projects" <br> $dllPath = $BasePath + "\WordCountSampleApplication\bin" <br> $submitterDll = $dllPath + "\WordCount.dll" <br> $hadoopcmd = $env:HADOOP_HOME + "/bin/hadoop.cmd"</span></p>
+<p><span style="font-family: Consolas;"># Add submission file references <br> Add-Type -Path ($dllPath + "\microsoft.hadoop.client.dll") <br> Add-Type -Path ($dllPath + "\microsoft.hadoop.mapreduce.dll") <br> Add-Type -Path ($dllPath + "\microsoft.hadoop.webclient.dll") <br>&nbsp; <br> # Define the Type for the Job <br> $submitterAssembly = [System.Reflection.Assembly]::LoadFile($submitterDll) <br> [Type] $jobType = $submitterAssembly.GetType("WordCountSampleApplication.WordCount", 1) <br>&nbsp; <br> # Connect and Run the Job <br> $hadoop = [Microsoft.Hadoop.MapReduce.Hadoop]::Connect() <br> $job = $hadoop.MapReduceJob <br> $result = $job.ExecuteJob($jobType)</span></p>
+<p><span style="font-family: Consolas;">Write-Host "Job Run Information" <br> Write-Host "Job Id: " $result.Id <br> Write-Host "Exit Code: " $result.Info.ExitCode</span></p>
+<p>The only challenge becomes managing the generic objects within PowerShell.</p>
+<p>In this case I have used a version of the WordCountSample application
+ that comes with the SDK. I have removed the Driver entry point and 
+compiled the assembly into a DLL rather than an EXE.</p>
+<h3><a name="_Toc358026009"></a>Remote PowerShell Submission</h3>
+<p>Of course the ultimate goal is to submit the job from your management
+ console. The process for this is very similar to the Local submission, 
+with the inclusion of the connection information for the Azure cluster.</p>
+<h4><a name="_Toc358026010"></a>Hadoop Job Defined</h4>
+<p>In this sample the management objects are used, as in the 
+provisioning case, to obtain the subscription information. It is assumed
+ that the Job definition is contained within the code:</p>
+<p><span style="font-family: Consolas;"># Import the management module <br> Import-Module "C:\Users\Me\Cmdlets\Microsoft.WindowsAzure.Management.HDInsight.Cmdlet.dll" <br>&nbsp; <br> # Define Local Base Paths <br> $BasePath = "C:\Users\Me\Projects" <br> $dllPath = $BasePath + "\WordCountSampleApplication\bin" <br> $submitterDll = $dllPath + "\WordCount.dll" <br>&nbsp; <br> # Add submission file references <br> Add-Type -Path ($dllPath + "\microsoft.hadoop.client.dll") <br> Add-Type -Path ($dllPath + "\microsoft.hadoop.mapreduce.dll") <br> Add-Type -Path ($dllPath + "\microsoft.hadoop.webclient.dll") <br>&nbsp; <br> # Define the Type for the Job <br> $submitterAssembly = [System.Reflection.Assembly]::LoadFile($submitterDll) <br> [Type] $jobType = $submitterAssembly.GetType("WordCountSampleApplication.WordCount", 1) <br>&nbsp; <br> # Define the connection properties <br> [Uri] $cluster = New-Object System.Uri "</span><a href="https://myclustername.azurehdinsight.net:563%22"><span style="font-family: Consolas;">https://myclustername.azurehdinsight.net:563"</span></a> <br><span style="font-family: Consolas;"> $mySubName = "Windows Azure Subscription Name" <br> $clusterUsername = "Admin" <br> $clusterPassword = "mypassword" <br> $hadoopUsername = "Hadoop" <br> $storage = "mystorageaccount.blob.core.windows.net" <br> $containerdefault = "hadooproot" <br> [Boolean] $createContinerIfNotExist = $True <br>&nbsp; <br> # Get the storage key <br> Set-AzureSubscription -DefaultSubscription $mySubName <br> $key = Get-AzureStorageKey $myStoreAcct | %{ $_.Primary } <br>&nbsp; <br> # Connect and Run the Job <br>
+ $hadoop = [Microsoft.Hadoop.MapReduce.Hadoop]::Connect($cluster, 
+$clusterUsername, $hadoopUsername, $clusterPassword, $storage, $key, 
+$containerdefault, $createContinerIfNotExist) <br> $job = $hadoop.MapReduceJob <br> $result = $job.ExecuteJob($jobType)</span></p>
+<p>To execute the job one needs to define the type for the HadoopJob, which provides the necessary configuration details.</p>
+<p>After running this job, from within the management portal, you should
+ see the metrics for the number of mapper and reducers executed be 
+updated:</p>
+<p><a href="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-46-76-metablogapi/6646.image_5F00_01E140D0.png"><img style="margin: 0px; border: 0px currentcolor; display: inline; background-image: none;" title="image" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/0272.png" alt="image" border="0" height="299" width="602"></a></p>
+<p>Unfortunately at this point in time you will not see your job within 
+the job history when managing the cluster. For this you will have to use
+ the standard Hadoop UI interfaces; accessible by connecting to the head
+ node of the cluster.</p>
+<h4><a name="_Toc358026011"></a>PowerShell Configuration</h4>
+<p>If one wants to provide the configuration details for the job within 
+the PowerShell environment then the code is slightly different:</p>
+<p><span style="font-family: Consolas;">Param($Cluster = 
+"myhdinsighttest", [string] $InputPath = $(throw "Input Path 
+Required."), $OutputFolder = $(throw "Output Path Required."))</span></p>
+<p><span style="font-family: Consolas;"># Import the management module <br> Import-Module "C:\Users\Me\Cmdlets\Microsoft.WindowsAzure.Management.HDInsight.Cmdlet.dll"</span></p>
+<p><span style="font-family: Consolas;"># Define Local Base Paths <br> $dllPath = "C:\Users\Me\Projects\WordCountSampleApplication\bin" <br> $submitterDll = $dllPath + "\WordCount.dll"</span></p>
+<p><span style="font-family: Consolas;"># Add submission file references <br> Add-Type -Path ($dllPath + "\microsoft.hadoop.client.dll") <br> Add-Type -Path ($dllPath + "\microsoft.hadoop.mapreduce.dll") <br> Add-Type -Path ($dllPath + "\microsoft.hadoop.webclient.dll")</span></p>
+<p><span style="font-family: Consolas;"># Define the Types for the Job (Mapper. Reducer, Combiner) <br> $submitterAssembly = [System.Reflection.Assembly]::LoadFile($submitterDll) <br> [Type] $mapperType = $submitterAssembly.GetType("WordCountSampleApplication.WordCountMapper", 1) <br> [Type] $reducerType = $submitterAssembly.GetType("WordCountSampleApplication.WordCountReducer", 1) <br> [Type] $combinerType = $submitterAssembly.GetType("WordCountSampleApplication.WordCountReducer", 1)</span></p>
+<p><span style="font-family: Consolas;"># Define the configuration properties <br> $config = New-Object Microsoft.Hadoop.MapReduce.HadoopJobConfiguration <br> [Boolean] $config.Verbose = $True <br> $config.InputPath = $InputPath <br> $config.OutputFolder = $OutputFolder <br> $config.AdditionalGenericArguments.Add("-D""mapred.map.tasks=3""")</span></p>
+<p><span style="font-family: Consolas;"># Define the connection properties <br> $clustername = "</span><a href="https://$Cluster.azurehdinsight.net:563%22"><span style="font-family: Consolas;">https://$Cluster.azurehdinsight.net:563"</span></a> <br><span style="font-family: Consolas;"> [Uri] $clusterUri = New-Object System.Uri $clustername <br> $mySubName = "Windows Azure Subscription Name" <br> $clusterUsername = "Admin" <br> $clusterPassword = "mypassword" <br> $hadoopUsername = "Hadoop" <br> $storage = "mystorageaccount.blob.core.windows.net" <br> $containerdefault = "hadooproot" <br> [Boolean] $createContinerIfNotExist = $True</span></p>
+<p><span style="font-family: Consolas;"># Get the storage key <br> Set-AzureSubscription -DefaultSubscription $mySubName <br> $key = Get-AzureStorageKey $myStoreAcct | %{ $_.Primary }</span></p>
+<p><span style="font-family: Consolas;"># Connect and Run the Job <br> 
+$hadoop = [Microsoft.Hadoop.MapReduce.Hadoop]::Connect($cluster, 
+$clusterUsername, $hadoopUsername, $clusterPassword, $storage, $key, 
+$containerdefault, $createContinerIfNotExist) <br> $job = $hadoop.MapReduceJob <br> $result = $job.Execute($mapperType, $reducerType, $combinerType, $config)</span></p>
+<p>In this instance a HadoopJobConfiguration is created which allows for
+ the definition of input and output files, along with other Job 
+parameters. To execute the Job one has to provide the types for the 
+Mapper, Reducer, and Combiner. If a Reducer or Combiner are not needed 
+then the parameter value of $Null can be used.</p>
+<p>One has to remember as we are submitting the job to an Azure cluster 
+the default file system will be ASV. As such, to run this sample I 
+uploaded some text files to the appropriate Azure storage location:</p>
+<p><a href="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-46-76-metablogapi/4721.image_5F00_14F247AF.png"><img style="margin: 0px; border: 0px currentcolor; display: inline;" title="image" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/7635.png" alt="image" border="0" height="160" width="602"></a></p>
+<p>To run this script one just needs to execute the following command (assuming saved as ClusterJobConfigSubmission.ps1):</p>
+<p><span style="font-family: Consolas;">. "C: 
+\Scripts\ClusterJobConfigSubmission.ps1" –Cluster “clustername” 
+-InputPath "/wordcount/input" -OutputFolder "/wordcount/output"</span></p>
+<p>The output then will show up in the wordcount/output container.</p>
+<h4><a name="_Toc358026012"></a>Providing an Elastic Service</h4>
+<p>The idea behind an Elastic Service is that the cluster can be brought
+ up, with the necessary hosts, when Job execution is necessary. To 
+achieve this, with the provided script, one can use the following 
+script:</p>
+<p><span style="font-family: Consolas;">Param($Hosts = 4, $Cluster = 
+"clustername", [string] $InputPath = $(throw "Input Path Required."), 
+[string] $OutputFolder = $(throw "Output Path Required."))</span></p>
+<p><span style="font-family: Consolas;"># Create the Cluster <br> . ".\ClusterCreateSimple.ps1" -Hosts $Hosts -Cluster $Cluster</span></p>
+<p><span style="font-family: Consolas;"># Execute the Job <br> . ".\ClusterRemoteJobConfigSubmission.ps1" -Cluster $Cluster -InputPath $InputPath -OutputFolder $OutputFolder</span></p>
+<p><span style="font-family: Consolas;"># Delete the Cluster <br> . ".\ClusterDelete.ps1" -Cluster $Cluster</span></p>
+<p>To execute the script one just has to execute (assuming saved as ClusterElasticJobSubmission.ps1):</p>
+<p><span style="font-family: Consolas;">. 
+"C:\Scripts\ClusterElasticJobSubmission.ps1" -Hosts 4 -Cluster 
+"clustername" -InputPath "/wordcount/input" -OutputFolder 
+"/wordcount/output"</span></p>
+<p>This will create the cluster, run the required job, and then delete 
+the cluster. During the creation the cluster name and number of hosts is
+ specified, and during the job submission the input and output paths are
+ specified. One could of course customize these scripts to include 
+additional parameters such as number of mappers, additional job 
+arguments, etc.</p>
+<p>This process is possible because the storage used for input and 
+output is Azure Blob Storage. As such the cluster is only needed for 
+compute operations and not storage.</p>
+<p>Further customization of the script allows for the actual Mapper and 
+Reducers to be specified during the submission. If you have previously 
+configured your connectivity, as outlined in the Configure Connectivity 
+section, with a default subscription:</p>
+<p><span style="font-family: Consolas;">Set-AzureSubscription -DefaultSubscription $mySubName</span></p>
+<p>Then when submitting Jobs you can derive most of the necessary 
+subscription information and have a very general Job submission utility 
+that uses parameters for all job specific configurations:</p>
+<p><span style="font-family: Consolas;">Param($Hosts = 4, $Cluster = 
+"myclustername", [string] $StorageContainer = $(throw "Storage Container
+ Required."), [string] $InputPath = $(throw "Input Path Required."), 
+[string] $OutputFolder = $(throw "Output Path Required."), [string] $Dll
+ = $(throw "MapReduce Dll Path Required."), [string] $Mapper = $(throw 
+"Mapper Type Required."), [string] $Reducer = $Null, [string] $Combiner =
+ $Null)</span></p>
+<p><span style="font-family: Consolas;"># TODO Set to location of cmdlets <br> $modulePath = "C:\Users\Me\Cmdlets"</span></p>
+<p><span style="font-family: Consolas;"># Define all local variable names for script execution <br> $submitterDll = $Dll <br> $dllPath = Split-Path $submitterDll -parent <br> $dllFile = Split-Path $submitterDll -leaf</span></p>
+<p><span style="font-family: Consolas;"># Import the management module and set file references <br> Import-Module "$modulePath\Microsoft.WindowsAzure.Management.HDInsight.Cmdlet.dll" <br> Add-Type -Path ($dllPath + "\microsoft.hadoop.client.dll") <br> Add-Type -Path ($dllPath + "\microsoft.hadoop.mapreduce.dll") <br> Add-Type -Path ($dllPath + "\microsoft.hadoop.webclient.dll")</span></p>
+<p><span style="font-family: Consolas;"># Get the subscription information and set variables <br> $subscriptionInfo = Get-AzureSubscription -Current <br> $subName = $subscriptionInfo | %{ $_.SubscriptionName } <br> $subId = $subscriptionInfo | %{ $_.SubscriptionId } <br> $cert = $subscriptionInfo | %{ $_.Certificate } <br> $storeAccount = $subscriptionInfo | %{ $_.CurrentStorageAccount } <br> $key = Get-AzureStorageKey $storeAccount | %{ $_.Primary } <br> $storageAccountInfo = Get-AzureStorageAccount $storeAccount <br> $location = $storageAccountInfo | %{ $_.Location }</span></p>
+<p><span style="font-family: Consolas;">$clusterUsername = "Admin" <br> $clusterPassword = [System.Web.Security.Membership]::GeneratePassword(20, 5) <br> $hadoopUsername = "Hadoop" <br> $clusterName = $Cluster <br> $containerDefault = $StorageContainer <br> $numberNodes = $Hosts <br> $clusterHttp = "</span><a href="https://$clusterName.azurehdinsight.net:563%22"><span style="font-family: Consolas;">https://$clusterName.azurehdinsight.net:563"</span></a> <br><span style="font-family: Consolas;"> $blobStorage = "$storeAccount.blob.core.windows.net"</span></p>
+<p><span style="font-family: Consolas;"># Create the cluster <br> Write-Host "Creating '$numbernodes' Node Cluster named: $clusterName" -f yellow <br> Write-Host "Storage Account '$storeAccount' and Container '$containerDefault'" -f yellow <br> Write-Host "User '$clusterUsername' Password '$clusterPassword'" -f green <br>
+ New-AzureHDInsightCluster -SubscriptionId $subId -Certificate $cert 
+-Name $clusterName -Location $location -DefaultStorageAccountName 
+$blobStorage -DefaultStorageAccountKey $key -DefaultStorageContainerName
+ $containerDefault -UserName $clusterUsername -Password $clusterPassword
+ -ClusterSizeInNodes $numberNodes <br> Write-Host "Created '$numbernodes' Node Cluster: $clusterName" -f yellow</span></p>
+<p><span style="font-family: Consolas;"># Define the Types for the Job (Mapper. Reducer, Combiner) <br> $submitterAssembly = [System.Reflection.Assembly]::LoadFile($submitterDll) <br> [Type] $mapperType = $submitterAssembly.GetType($Mapper, 1) <br> [Type] $reducerType = $Null <br> if ($Reducer) { $reducerType = $submitterAssembly.GetType($Reducer, 1) } <br> [Type] $combinerType = $Null <br> if ($Combiner) { $combinerType = $submitterAssembly.GetType($Combiner, 1) }</span></p>
+<p><span style="font-family: Consolas;"># Define the configuration properties <br> $config = New-Object Microsoft.Hadoop.MapReduce.HadoopJobConfiguration <br> [Boolean] $config.Verbose = $True <br> $config.InputPath = $InputPath <br> $config.OutputFolder = $OutputFolder <br> $config.AdditionalGenericArguments.Add("-D""mapred.map.tasks=3""")</span></p>
+<p><span style="font-family: Consolas;"># Define the connection properties <br> [Boolean] $createContinerIfNotExist = $True <br> [Uri] $clusterUri = New-Object System.Uri $clusterHttp</span></p>
+<p><span style="font-family: Consolas;"># Connect and Run the Job <br> Write-Host "Executing Job Dll '$dllFile' on Cluster $clusterName" -f yellow</span></p>
+<p><span style="font-family: Consolas;">$hadoop = 
+[Microsoft.Hadoop.MapReduce.Hadoop]::Connect($clusterUri, 
+$clusterUsername, $hadoopUsername, $clusterPassword, $blobStorage, $key,
+ $containerDefault, $createContinerIfNotExist) <br> $job = $hadoop.MapReduceJob <br> $result = $job.Execute($mapperType, $reducerType, $combinerType, $config)</span></p>
+<p><span style="font-family: Consolas;">Write-Host "Job Run Information" -f yellow <br> Write-Host "Job Id: " $result.Id <br> Write-Host "Exit Code: " $result.Info.ExitCode</span></p>
+<p><span style="font-family: Consolas;"># Finally delete the cluster <br> Write-Host "Deleting Cluster named: $clusterName" -f yellow <br> Remove-AzureHDInsightCluster $clusterName -SubscriptionId $subId -Certificate $cert <br> Write-Host "Cluster $clusterName Deleted" -f yellow</span></p>
+<p>In this instance to run the job one would use the following command 
+(assuming saved as ClusterElasticJobConfigSubmissionAuto.ps1):</p>
+<p><span style="font-family: Consolas;">. 
+"C:\Users\Me\Scripts\ClusterElasticJobConfigSubmissionAuto.ps1" -Hosts 4
+ -Cluster "myclustername" -StorageContainer "hadooproot" -InputPath 
+"/wordcount/input" -OutputFolder "/wordcount/output" -Dll 
+"C:\Users\Me\bin\WordCount.dll" -Mapper 
+"WordCountSampleApplication.WordCountMapper" -Reducer 
+"WordCountSampleApplication.WordCountReducer" -Combiner 
+"WordCountSampleApplication.WordCountReducer"</span></p>
+<p>In this instance the only additional piece of information needed, 
+giving you a completely reusable script, is the default storage 
+container for the storage account. The script also generates a password,
+ which is displayed in case the cluster is not successfully deleted 
+after the job execution.</p>
+<p>Of course other parameters could be included in this model to make the PowerShell script more applicable to more Job types.</p>
+<h3><a name="_Toc358026013"></a>Specifying ASV Paths</h3>
+<p>As mentioned the default schema when submitting MapReduce Jobs is 
+Azure Blob Storage. This means the default container specified when 
+creating the cluster is used as the root.</p>
+<p>In the example above the path “/wordcount/input” actually equates to (assuming a storage account of “dataplatformrdpcarl”):</p>
+<p><span style="font-family: Consolas;">asv://hadooproot@dataplatformrdpcarl.blob.core.windows.net/wordcount/input</span></p>
+<p>Thus if one wanted to operate out of a different default container 
+such as “data” fully-qualified names could be specified such as:</p>
+<p><span style="font-family: Consolas;">-InputPath "asv://data@dataplatformrdpcarl.blob.core.windows.net/books" <br></span><span style="font-family: Consolas;">-OutputFolder "asv://data@dataplatformrdpcarl.blob.core.windows.net/wordcount/output"</span></p>
+<p>This would equate to the “data” container:</p>
+<p><a href="http://blogs.msdn.com/cfs-file.ashx/__key/communityserver-blogs-components-weblogfiles/00-00-01-46-76-metablogapi/8078.image_5F00_51B6A3B4.png"><img style="margin: 0px; border: 0px currentcolor; display: inline; background-image: none;" title="image" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/0804.png" alt="image" border="0" height="165" width="602"></a></p>
+<p>The containers being referenced just need to be under the same storage account.</p>
+<h2><a name="_Toc358026014"></a>References</h2>
+<p><a href="http://msdn.microsoft.com/en-us/library/windowsazure/jj156055.aspx">Windows Azure PowerShell</a>.</p>
+<p><a href="http://msdn.microsoft.com/en-us/library/windowsazure/jj554332.aspx">Get Started with Windows Azure Cmdlets</a>.</p>
+<p><a href="http://hadoopsdk.codeplex.com/wikipage?title=PowerShell%20Cmdlets%20for%20Cluster%20Management&amp;referringTitle=Cluster%20Management">Microsoft .Net SDK for Hadoop - PowerShell Cmdlets for Cluster Management</a>.</p>
+<p><a href="http://msdn.microsoft.com/en-us/library/windowsazure/gg551721.aspx">How to: Manage Management Certificates in Windows Azure</a>.</p>
+<p><a href="http://www.windowsazure.com/en-us/downloads/?fb=en-us">Windows Azure Downloads</a>.</p>
+<p><a href="https://hadoopsdk.codeplex.com/downloads/get/671067">HDInsight cmdlets</a>.</p>
+<p><a href="http://blogs.msdn.com/b/windowsazure/archive/2013/02/07/windows-azure-sql-database-management-with-powershell.aspx">Windows Azure SQL Database Management with PowerShell</a>.</p>
+<p><a href="http://hadoopsdk.codeplex.com/wikipage?title=Map%2fReduce">Microsoft .Net SDK for Hadoop - Map/Reduce</a>.</p>
+<p><a href="https://hadoopsdk.codeplex.com/downloads/get/690770">Managing HDInsight with PowerShell Download</a></p><div style="clear:both;"></div></div>
+    <div class="post-attachment-viewer">
+		
+    </div>
+    <div class="post-actions">
+        <div class="navigation-list-header"></div>
+        <ul class="navigation-list">
+            <!---->
+            <li class="navigation-item"><a class="internal-link view-replies" href="http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx#comments"><span></span>0 Comments</a></li>
+            
+            
+        </ul>
+        <div class="navigation-list-footer"></div>
+    </div>
+    <div class="post-tags"><div id="ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_Container" style="display: none;"><div class="tags-editor"><textarea id="ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_Tags" style="width: 97%; height: 100%;" rows="2" cols="30"></textarea><div style="white-space: nowrap; padding-top: 4px;"><table border="0" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td align="left"><input onclick="Telligent_Modal.Open('\/utility\/TagSelector.aspx?TagEditor=ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_TagEditor',400,300,null);;return false;" value="Select Tags..." type="button"></td><td align="right"><input value="Save" type="button"><input onclick="ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01.Close(); return false;" value="Cancel" type="button"></td></tr></tbody></table></div></div></div><span id="ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl02"><a href="http://blogs.msdn.com/b/carlnol/archive/tags/Hadoop/" rel="tag">Hadoop</a>, <a href="http://blogs.msdn.com/b/carlnol/archive/tags/MapReduce/" rel="tag">MapReduce</a>, <a href="http://blogs.msdn.com/b/carlnol/archive/tags/Hadoop+on+Azure/" rel="tag">Hadoop on Azure</a>, <a href="http://blogs.msdn.com/b/carlnol/archive/tags/Windows+Azure/" rel="tag">Windows Azure</a>, <a href="http://blogs.msdn.com/b/carlnol/archive/tags/-Net+Programming/" rel="tag">.Net Programming</a>, <a href="http://blogs.msdn.com/b/carlnol/archive/tags/PowerShell/" rel="tag">PowerShell</a>, <a href="http://blogs.msdn.com/b/carlnol/archive/tags/HDInsight/" rel="tag">HDInsight</a></span><input name="ctl00$content$ctl00$w_187898$_acbc85$ctl00$ctl15$ctl02" id="ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl02_State" value="value:%3Ca%20href%3D%22http%3A%2F%2Fblogs.msdn.com%2Fb%2Fcarlnol%2Farchive%2Ftags%2FHadoop%2F%22%20rel%3D%22tag%22%3EHadoop%3C%2Fa%3E%2C%20%3Ca%20href%3D%22http%3A%2F%2Fblogs.msdn.com%2Fb%2Fcarlnol%2Farchive%2Ftags%2FMapReduce%2F%22%20rel%3D%22tag%22%3EMapReduce%3C%2Fa%3E%2C%20%3Ca%20href%3D%22http%3A%2F%2Fblogs.msdn.com%2Fb%2Fcarlnol%2Farchive%2Ftags%2FHadoop%2Bon%2BAzure%2F%22%20rel%3D%22tag%22%3EHadoop%20on%20Azure%3C%2Fa%3E%2C%20%3Ca%20href%3D%22http%3A%2F%2Fblogs.msdn.com%2Fb%2Fcarlnol%2Farchive%2Ftags%2FWindows%2BAzure%2F%22%20rel%3D%22tag%22%3EWindows%20Azure%3C%2Fa%3E%2C%20%3Ca%20href%3D%22http%3A%2F%2Fblogs.msdn.com%2Fb%2Fcarlnol%2Farchive%2Ftags%2F-Net%2BProgramming%2F%22%20rel%3D%22tag%22%3E.Net%20Programming%3C%2Fa%3E%2C%20%3Ca%20href%3D%22http%3A%2F%2Fblogs.msdn.com%2Fb%2Fcarlnol%2Farchive%2Ftags%2FPowerShell%2F%22%20rel%3D%22tag%22%3EPowerShell%3C%2Fa%3E%2C%20%3Ca%20href%3D%22http%3A%2F%2Fblogs.msdn.com%2Fb%2Fcarlnol%2Farchive%2Ftags%2FHDInsight%2F%22%20rel%3D%22tag%22%3EHDInsight%3C%2Fa%3E" type="hidden"></div>
+</div>
+<div class="full-post-footer"></div></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment social-media-sharing no-wrapper-with-spacing" id="fragment-187899">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-content">
+
+<script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/47499858c4077d6e043f7add14000981-e99ec8f3b45f97b38095df2708dc.js" type="text/javascript"></script>
+<div class="ShareThisMainPanel">
+	<div id="ctl00_content_ctl00_w_187899__acbc85_ctl00_28352155_1770_4aec_a40e_083c9021ed41" class="ShareThis_ChildRootPanel" onmouseover="ShareThisChildRootPanelOnmouseOver(this.id);" onmouseout="ShareThisChildRootPanelOnmouseOut(this.id);">
+		<div id="ctl00_content_ctl00_w_187899__acbc85_ctl00_ShareThisBtnCollPanel_e5e50a7749b345ea9d9f305c3475de4f" class="tierOnePanel">
+			<div class="buttonPanel">
+				<a title="Share on Facebook" class="iconsOnPanel" href="http://www.facebook.com/sharer.php?u=http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx&amp;t=Managing+Your+HDInsight+Cluster+with+PowerShell" target="_blank"><img title="Share on Facebook" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/facebook.gif" style="border-width:0px;"></a>
+			</div><div class="buttonPanel">
+				<a title="Share on Twitter" class="iconsOnPanel" href="http://twitter.com/home?status=Managing+Your+HDInsight+Cluster+with+PowerShell%20:%20http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx" target="_blank"><img title="Share on Twitter" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/twitter.gif" style="border-width:0px;"></a>
+			</div><div class="buttonPanel">
+				<a title="Share on Digg" class="iconsOnPanel" href="http://digg.com/submit?url=http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx&amp;title=Managing+Your+HDInsight+Cluster+with+PowerShell" target="_blank"><img title="Share on Digg" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/digg.gif" style="border-width:0px;"></a>
+			</div><div class="buttonPanel">
+				<a title="Share on del.icio.us" class="iconsOnPanel" href="http://del.icio.us/post?url=http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx&amp;title=Managing+Your+HDInsight+Cluster+with+PowerShell" target="_blank"><img title="Share on del.icio.us" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/delicious.gif" style="border-width:0px;"></a>
+			</div>
+		</div><div id="ctl00_content_ctl00_w_187899__acbc85_ctl00_ShareThisBtnCollPanel_ee5528681df04355b2f0eba1c3a69abb" class="tierTwoPanel" onclick="TierTwoPanelOnclick(this.id);" onkeypress="if (event.keyCode == 13) TierTwoPanelOnclick(this.id);" onmouseover="TierTwoPanelOnmouseOver(this.id);" onmouseout="TierTwoPanelOnmouseOut(this.id);">
+			<div id="ctl00_content_ctl00_w_187899__acbc85_ctl00_ShareThisBtnCollPanel_4a2b5a4ab42b4727ad3cb38be9f9df7e" class="tierTwoRowPanel">
+				<div class="buttonPanel">
+					<a title="Share on Reddit" class="iconsOnPanel" href="http://www.reddit.com/submit?url=http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx&amp;title=Managing+Your+HDInsight+Cluster+with+PowerShell" target="_blank"><img title="Share on Reddit" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/reddit.gif" style="border-width:0px;"></a>
+				</div><div class="buttonPanel">
+					<a title="Share on LinkedIn" class="iconsOnPanel" href="http://www.linkedin.com/shareArticle?mini=true&amp;ro=true&amp;url=http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx&amp;title=Managing+Your+HDInsight+Cluster+with+PowerShell&amp;summary=&amp;source=Microsoft&amp;armin=armin" target="_blank"><img title="Share on LinkedIn" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/linkedin.gif" style="border-width:0px;"></a>
+				</div><div class="buttonPanel">
+					<a title="Share on Slashdot" class="iconsOnPanel" href="http://slashdot.org/bookmark.pl?url=http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx&amp;title=Managing+Your+HDInsight+Cluster+with+PowerShell" target="_blank"><img title="Share on Slashdot" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/slashdot.gif" style="border-width:0px;"></a>
+				</div><div class="buttonPanel">
+					<a title="Share on MySpace" class="iconsOnPanel" href="http://www.myspace.com/Modules/PostTo/Pages/?u=http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx&amp;t=Managing+Your+HDInsight+Cluster+with+PowerShell" target="_blank"><img title="Share on MySpace" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/myspace.gif" style="border-width:0px;"></a>
+				</div>
+			</div><div id="ctl00_content_ctl00_w_187899__acbc85_ctl00_ShareThisBtnCollPanel_b7b8f52d81ac4e9aa06301ee76ba3c62" class="tierTwoRowPanel">
+				<div class="buttonPanel">
+					<a title="Share on Technorati" class="iconsOnPanel" href="http://technorati.com/faves/?add=http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx" target="_blank"><img title="Share on Technorati" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/technorati.gif" style="border-width:0px;"></a>
+				</div><div class="buttonPanel">
+					<a title="Share on FriendFeed" class="iconsOnPanel" href="http://friendfeed.com/?url=http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx&amp;title=Managing+Your+HDInsight+Cluster+with+PowerShell" target="_blank"><img title="Share on FriendFeed" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/friendfeed.gif" style="border-width:0px;"></a>
+				</div><div class="buttonPanel">
+					<a title="Share on Messenger" class="iconsOnPanel" href="http://profile.live.com/badge?url=http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx&amp;title=Managing+Your+HDInsight+Cluster+with+PowerShell" target="_blank"><img title="Share on Messenger" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/messenger.png" style="border-width:0px;"></a>
+				</div><div class="buttonPanel">
+					<a title="Share on StumbleUpon" class="iconsOnPanel" href="http://www.stumbleupon.com/submit?url=http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx&amp;title=Managing+Your+HDInsight+Cluster+with+PowerShell" target="_blank"><img title="Share on StumbleUpon" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/stumbleupon.gif" style="border-width:0px;"></a>
+				</div>
+			</div>
+		</div>
+	</div><div id="ctl00_content_ctl00_w_187899__acbc85_ctl00_ShowMoreLessButtonsPanel_cc51e596_b62b_424e_a651_4d93b4064661" tabindex="1" class="ShowMoreLessButtonsPanel" onclick="ShowMoreLessButtonsPanelOnClick(this.id);" onkeypress="if (event.keyCode == 13) ShowMoreLessButtonsPanelOnClick(this.id);" onmouseover="ShowMoreLessButtonsPanelOnmouseOver(this.id);" onmouseout="ShowMoreLessButtonsPanelOnmouseOut(this.id);">
+		<a class="buttonMoreLess" id="btn_more"><img title="More" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/more.gif" style="border-width:0px;"></a><a class="buttonMoreLess" id="btn_less"><img title="Less" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/less.gif" style="border-width:0px;"></a>
+	</div>
+</div><div class="ShareClearFloatsPanel">
+
+</div></div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment captcha-blog-post-comment-form no-wrapper-with-spacing" id="fragment-187900">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-content">
+<input name="ctl00$content$ctl00$w_187900$_acbc85$ctl00$ctl00$postCommentUrl" id="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_postCommentUrl" type="hidden">
+
+    
+            <div class="field-list-header"></div>
+            <fieldset class="field-list">
+                <legend class="field-list-description">Leave a Comment</legend>
+                <ul class="field-list">
+                    <li id="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_NameField" class="field-item">
+                        <label for="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName" class="field-item-header">Name</label>
+                        <span class="field-item-input"><input name="ctl00$content$ctl00$w_187900$_acbc85$ctl00$ctl00$PlaceHolder1$ctl04$bpCommentForm$ctl04$tbName" size="60" id="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName" type="text"></span>
+                        <span id="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV" style="color:Red;display:none;"><span class="field-item-validation">*</span></span>
+                    </li>
+                    <li class="field-item post-body">
+                        <label for="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment" class="field-item-header">Comment</label>
+                        <span class="field-item-input"><textarea tabindex="-1" rows="2" cols="20" style="height: 100.333px; resize: none; overflow-y: hidden; position: absolute; top: 0px; left: -9999px; width: 668.333px; line-height: 17.5px; text-decoration: none; letter-spacing: normal;"></textarea><textarea name="ctl00$content$ctl00$w_187900$_acbc85$ctl00$ctl00$PlaceHolder1$ctl04$bpCommentForm$ctl04$tbComment" rows="2" cols="20" id="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment" style="height: 100px; resize: none; overflow-y: hidden;"></textarea></span>
+                        <span id="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV" style="color:Red;display:none;"><span class="field-item-validation">* Please enter a comment</span></span>
+                        <span id="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV" style="color:Red;display:none;"><span class="field-item-validation">Please shorten the content to 3072 or less</span></span>
+                    </li>
+                    <li class="field-item">
+                        
+                           <span id="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha" style="color:Red;display:none;">*</span><span style="display: none;" id="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_subtext_captcha">Please add 4 and 5 and type the answer here: <input name="ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_visibleanswer" type="text"></span>
+
+
+                    </li>
+                    <li class="field-item">
+                        <script type="text/javascript">
+                            // <![CDATA[
+
+                            $(document).ready(function () {
+                                $('a.add-reply.post').click(function (e) {
+                                    e.preventDefault();
+                                    postComment(this);
+                                    return false;
+                                });
+
+                                $('#ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment').keyup(function (e) {
+                                    $('#errorOnPosting').hide();
+                                });
+                                var nameBox = $('#ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName');
+                                if (nameBox.length > 0) {
+                                    $(nameBox).keyup(function (e) {
+                                        $('#errorOnPosting').hide();
+                                    });
+                                }
+                            });
+
+                            function postComment(anchor) {
+                                if (Page_ClientValidate('BlogPostCommentForm-ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00')) {
+                                    togglePostAndPublishing();
+
+                                    var Core_CreateBlogComment_AjaxEndpoint = '/Utility/ContentFragments/Core/CreateBlogComment.asmx' + "/PostComment";
+                                    var name = '';
+                                    var nameBox = $('#ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName');
+                                    if (nameBox.length > 0) {
+                                        name = $(nameBox).val();
+                                    }
+                                    var body = $('#ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment').val();
+                                    var weblogPostId = '10424475';
+
+                                    $.ajax({
+                                        type: "POST",
+                                        async: false,
+                                        url: Core_CreateBlogComment_AjaxEndpoint,
+                                        beforeSend: function (xhr) { TelligentUtility.WriteAuthorizationHeader(xhr); },
+                                        data: { weblogPostId: weblogPostId, url: '', subject: '', message: body, name: name, remember: false },
+                                        success: function (results) {
+                                            var responseVal = $(results.firstChild).text();
+                                            if (responseVal === "-1" || responseVal === "-2") {
+                                                togglePostAndPublishing();
+                                                if (responseVal == "-2")
+                                                    $('#errorOnPosting').html('Your comment has been flagged as spam! The blog administrator has been notified.');
+                                                $('#errorOnPosting').show();
+                                                return;
+                                            }
+                                            var redirectUrl = window.location.href;
+                                            if (redirectUrl.indexOf("?") > -1) {
+                                                redirectUrl = redirectUrl.replace(/\?.*/, "");
+                                            } else if (redirectUrl.indexOf("#") > -1) {
+                                                redirectUrl = redirectUrl.replace(/\#.*/, "");
+                                            }
+
+                                            redirectUrl += '?CommentPosted=true#commentmessage';
+                                            if (window.location.href == redirectUrl) {
+                                                location.reload(true);
+                                            }
+                                            else {
+                                                window.location.href = redirectUrl;
+                                            }
+                                        },
+                                        error: function (xhr, textStatus, errorThrown) {
+                                            togglePostAndPublishing();
+                                            $('#errorOnPosting').show();
+                                        }
+                                    });
+
+                                }
+                            }
+
+                            function togglePostAndPublishing() {
+                                $('a.add-reply.post').toggle();
+                                $('a.publishing').toggle();
+                            }
+                            // ]]>
+                        </script>
+                        <span class="field-item-input">
+                            
+                            <a class="internal-link add-reply post" style="cursor: pointer;"><span></span>Post</a>
+                            <a class="internal-link add-reply publishing" style="color:#c7c7c7; display: none;cursor: pointer;"><span></span>Publishing</a>
+                            <span id="errorOnPosting" style="color: white; background-color: red; padding: 5px; margin-left: 10px; display: none;">An error occurred while posting! Please retry posting your comment.</span>
+                        </span>
+                    </li>
+                </ul>
+            </fieldset>
+            <div class="field-list-footer"></div>
+            
+        
+    </div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+<div class="content-fragment blog-feedback-list no-wrapper-with-spacing" id="fragment-187901">
+<div class="content-fragment-inner wireframe-content-fragment-inner"><div class="content-fragment-top wireframe-content-fragment-top"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div><div class="content-fragment-content">
+
+
+
+
+<script type="text/javascript">
+	// <![CDATA[
+	$(document).ready(function() {
+	$(document).bind('telligent_blogs_commentposted', function(e, message) { 
+	            window.setTimeout(new Function(ctl00_content_ctl00_w_187901__acbc85_ctl00_ctl00_DelayedFeedbackList.Reload()), 100); 
+	            return true; 
+	    });
+	    ctl00_content_ctl00_w_187901__acbc85_ctl00_ctl00_DelayedFeedbackList.Reload();
+	});
+// ]]>
+</script>
+
+	
+
+<div style="cursor: default;" id="ctl00_content_ctl00_w_187901__acbc85_ctl00_ctl00_DelayedFeedbackList"><input name="ctl00$content$ctl00$w_187901$_acbc85$ctl00$ctl00$DelayedFeedbackList" value="true:undefined" type="hidden">
+	    
+	    
+	</div>
+</div>
+<div class="content-fragment-footer"></div>
+<div class="content-fragment-bottom wireframe-content-fragment-bottom"><div class="r1 wireframe-r1"></div><div class="r2 wireframe-r2"></div><div class="r3 wireframe-r3"></div><div class="r4 wireframe-r4"></div></div></div></div>
+</div>
+</div>
+</div>
+<div class="layout-footer"></div>
+</div></div>
+
+			<div class="footer-fragments-header"></div>
+<div class="footer-fragments"><div class="footer-fragment copyright-info" id="footer-fragment-247403536">
+
+<ul class="footer-fragment-links">
+    <li class="message copyright">© 2014 Microsoft Corporation.</li>
+	<li class="message termsOfService"><a href="http://msdn.microsoft.com/cc300389">Terms of Use</a> </li>
+    <li class="message trademarks"><a href="http://www.microsoft.com/library/toolbar/3.0/trademarks/en-us.mspx">Trademarks</a> </li>
+    <li class="message privacy"><a href="http://go.microsoft.com/fwlink/?LinkId=248681">Privacy &amp; Cookies</a> </li>
+    <li class="message abuse">
+    
+            <a id="ctl00_footer_fragment_247403536__acbc85_ctl00_ctl00_ctl01_lnkAbuse" href='javascript:WebForm_DoPostBackWithOptions(new%20WebForm_PostBackOptions("ctl00$footer_fragment_247403536$_acbc85$ctl00$ctl00$ctl01$lnkAbuse",%20"",%20true,%20"",%20"",%20false,%20true))'>Report Abuse</a>
+        
+    </li>
+    
+    <li class="message version">5.6.426.415</li>
+</ul></div><div class="footer-fragment omniture-footer-fragment" id="footer-fragment-247403537">
+
+
+<script src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/2569210a296af7a76a1f0a41cafcfd42-2e0c141b75ad92888490f6154505.js" type="text/javascript"></script>        <noscript><a href="http://www.omniture.com" title="Web Analytics"><img
+        src="http://msstomsdnblogs.112.2O7.net/b/ss/msstomsdnblogs/1/H.20.2--NS/0"
+        height="1" width="1" border="0" alt="" /></a></noscript>
+
+</div><div class="footer-fragment app-insights-footer-fragment" id="footer-fragment-247403538">
+
+        <script type="text/javascript" language="javascript">
+            $(document).ready(function () {
+                window.appInsights = { queue: [], start: function (n) { function r(n, t) { n[t] = function () { var i = arguments; n.queue.push(function () { n[t].apply(n, i) }) } } var t, i; this.applicationInsightsId = n; this.accountId = null; this.appUserId = null; r(this, "logEvent"); r(this, "logPageView"); t = document.createElement("script"); t.type = "text/javascript"; t.src = "//az416426.vo.msecnd.net/scripts/ai.js"; t.async = !0; i = document.getElementsByTagName("script")[0]; i.parentNode.insertBefore(t, i) } };
+                window.appInsights.start("b4d65b72-ce61-486e-b07c-969cef6675f6");
+                window.appInsights.logPageView();
+            });
+        </script>
+    </div></div>
+<div class="footer-fragments-footer"></div>
+		
+<script type="text/javascript">
+//<![CDATA[
+var Page_Validators =  new Array(document.getElementById("ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV"), document.getElementById("ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV"), document.getElementById("ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV"), document.getElementById("ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha"));
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+var ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV = document.all ? document.all["ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV"] : document.getElementById("ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV");
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.controltovalidate = "ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbName";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.display = "Dynamic";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.validationGroup = "BlogPostCommentForm-ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbNameRFV.initialvalue = "";
+var ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV = document.all ? document.all["ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV"] : document.getElementById("ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV");
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.controltovalidate = "ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.display = "Dynamic";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.validationGroup = "BlogPostCommentForm-ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.evaluationfunction = "RequiredFieldValidatorEvaluateIsValid";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentRFV.initialvalue = "";
+var ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV = document.all ? document.all["ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV"] : document.getElementById("ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV");
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.controltovalidate = "ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.display = "Dynamic";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.validationGroup = "BlogPostCommentForm-ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.evaluationfunction = "RegularExpressionValidatorEvaluateIsValid";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbCommentREV.validationexpression = "^[\\s\\S]{0,3072}$";
+var ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha = document.all ? document.all["ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha"] : document.getElementById("ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha");
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha.errormessage = "*";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha.display = "Dynamic";
+ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha.validationGroup = "BlogPostCommentForm-ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00";
+//]]>
+</script>
+
+<script type="text/javascript">
+// <![CDATA[
+ctl00_content_ctl00 = new ContentFragmentPageCustomCallback('ctl00_content_ctl00',new Function('mode','parameters','callback','errorCallback','context','ctl00_content_ctl00_ctl00._doCallback(mode+\':\'+parameters,callback,context,errorCallback);'));
+// ]]>
+</script>
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx"
+dc:identifier="http://blogs.msdn.com/b/carlnol/archive/2013/06/07/managing-your-hdinsight-cluster-with-powershell.aspx"
+dc:title="Managing Your HDInsight Cluster with PowerShell"
+trackback:ping="http://blogs.msdn.com/b/carlnol/trackback.ashx?WeblogPostID=10424475" />
+</rdf:RDF>
+-->
+<script type="text/javascript">
+// <![CDATA[
+Telligent_Modal.Configure('\/utility\/loading.htm',['modal'],['modal-title','modal-title-2','modal-title-3','modal-title-4'],['modal-close'],['modal-content','modal-content-2'],['modal-footer','modal-footer-2','modal-footer-3'],['modal-resize'],['modal-mask'],10000,false,true,true);
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+window.ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_GroupNavigationPopup = new Telligent_PopupPanel('ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_GroupNavigationPopup','menu group-navigation-content','down',100,null,null,false,'ctl00_header_fragment_247403541__acbc85_ctl00_ctl00_GroupNavigationPopup',new Function('Core_GroupNavigation_MouseOverPopup(ctl00_header_fragment_247403541)'),new Function('Core_GroupNavigation_MouseOutPopup(ctl00_header_fragment_247403541)'));
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+window.ctl00_content_ctl00_ctl00 = new Telligent_CallbackManager('ctl00_content_ctl00_ctl00','ctl00$content$ctl00$ctl00','aspnetForm');
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+var ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl01=new RateableContentRating('ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl01','ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl01','ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl01_Value', 5, '/Utility/images/', false, 'rating','rating active','rating readonly',['Terrible','Poor','Fair','Average','Good','Excellent'],true,true);
+// ]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+
+WebForm_InitCallback();//]]>
+</script>
+<script type="text/javascript">
+				// <![CDATA[
+				var ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl01_ajax={"SaveRating":function(rating,successFunction,failureFunction){WebForm_DoCallback('ctl00$content$ctl00$w_187898$_acbc85$ctl00$ctl01',rating,successFunction,rating,failureFunction,true)}};
+				// ]]>
+				</script><script type="text/javascript">
+// <![CDATA[
+$('#ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_Container input[value="Save"]').attr('onclick','').removeAttr('onclick').click( function(){ try { var tagText = $('#ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_Tags').val(); if (!tagText) return false;var tagList = tagText.replace(';',',').split(','); var isValid = true; for (var i=0,l=tagList.length;i<l;i++) {isValid = /^[ -~]{0,100}$/ig.test(tagList[i]); if (!isValid) { alert(tagList[i] + ' : is not valide'); return false; } }ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01.Save();}catch(ex){ } return false; });
+// ]]>
+</script>
+<script type="text/javascript">
+// <![CDATA[
+window.ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01 = new Telligent_InlineEditor('ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01','ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_Container',new Function('id', 'p', 'ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_InlineTagEditor.SetInlineEditorPanelAndParameter(id,p);'),new Function('return ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_InlineTagEditor.GetContent();'),new Function('c', 'ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_InlineTagEditor.SetContent(c);'),null,new Function('ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_InlineTagEditor.Focus();'),new Function('w', 'h', 'ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_InlineTagEditor.Resize(w,h);'),300,90);
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+var ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_TagEditor = new TagEditor('ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_TagEditor',[['.Net','.Net'],['.Net Programming','.Net Programming'],['Action','Action'],['Array.Parallel','Array.Parallel'],['BAM','BAM'],['Barrier','Barrier'],['Binary Data','Binary Data'],['Binary Streaming','Binary Streaming'],['BizTalk','BizTalk'],['C#','C#'],['C++','C++'],['Char','Char'],['Charting','Charting'],['Console','Console'],['CTE','CTE'],['Custom Task Scheduler','Custom Task Scheduler'],['Data Visualizations','Data Visualizations'],['Distinct','Distinct'],['DMV','DMV'],['Dynamic Operator','Dynamic Operator'],['Extension Methods','Extension Methods'],['F#','F#'],['FSharp','FSharp'],['FSharpChart','FSharpChart'],['Func','Func'],['GetHashCode','GetHashCode'],['Graphing','Graphing'],['Hadoop','Hadoop'],['Hadoop on Azure','Hadoop on Azure'],['Hadoop Streaming','Hadoop Streaming'],['Hadoop.Net','Hadoop.Net'],['HDFS','HDFS'],['HDInsight','HDInsight'],['Heap','Heap'],['Hekaton','Hekaton'],['Hive','Hive'],['Hortonworks Data Platform','Hortonworks Data Platform'],['HTML','HTML'],['ICollection','ICollection'],['IComparer','IComparer'],['IEnumerable','IEnumerable'],['IEqualityComparer','IEqualityComparer'],['Item Templates','Item Templates'],['iTextSharp','iTextSharp'],['Java','Java'],['Joins','Joins'],['JS Console','JS Console'],['Json Serialization','Json Serialization'],['Lazy','Lazy'],['LINQ','LINQ'],['LOB Data','LOB Data'],['Logging','Logging'],['Machine Learning','Machine Learning'],['MapReduce','MapReduce'],['Matrix','Matrix'],['Memory Optimized Tables','Memory Optimized Tables'],['nuget','nuget'],['Open XML SDK','Open XML SDK'],['Parallel Processing','Parallel Processing'],['Partitioning','Partitioning'],['Performance','Performance'],['PLINQ','PLINQ'],['PowerShell','PowerShell'],['PriorityQueue','PriorityQueue'],['Project Templates','Project Templates'],['PSeq','PSeq'],['QuickSort','QuickSort'],['Recommendations','Recommendations'],['Reflection','Reflection'],['Regex','Regex'],['Script File','Script File'],['Seq','Seq'],['Serialization','Serialization'],['Sorting','Sorting'],['SQL Server','SQL Server'],['SQL Server 2014','SQL Server 2014'],['StdErr','StdErr'],['String','String'],['Task','Task'],['Task Parallel Library','Task Parallel Library'],['Testing','Testing'],['Threading','Threading'],['TPL','TPL'],['Tracing','Tracing'],['TSQL','TSQL'],['Vector','Vector'],['Windows Azure','Windows Azure'],['WinForms','WinForms'],['WinHDFS','WinHDFS'],['WPF','WPF'],['XML Streaming','XML Streaming'],['xpath','xpath']],'ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_Tags');
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+var ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_InlineTagEditor = new InlineTagEditor('ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_InlineTagEditor','ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01','ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_Container','ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01_Tags');
+// ]]>
+</script><script type="text/javascript">
+// <![CDATA[
+window.ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl02 = new Telligent_InlineEditorPanel('ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl02','ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl02','ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl02_State','ctl00_content_ctl00_w_187898__acbc85_ctl00_ctl15_ctl01',false,null,null,null);
+// ]]>
+</script>
+<script type="text/javascript">
+//<![CDATA[
+
+var Page_ValidationActive = false;
+if (typeof(ValidatorOnLoad) == "function") {
+    ValidatorOnLoad();
+}
+
+function ValidatorOnSubmit() {
+    if (Page_ValidationActive) {
+        return ValidatorCommonOnSubmit();
+    }
+    else {
+        return true;
+    }
+}
+        $('#ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_tbComment').autoResize({animate : false,extraSpace : 0,limit : 3000});//]]>
+</script>
+<script type="text/javascript">
+subtext_invisible_captcha_hideFromJavascriptEnabledBrowsers('ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_subtext_captcha');
+</script><script type="text/javascript">
+subtext_invisible_captcha_setAnswer(4, 5, 'ctl00_content_ctl00_w_187900__acbc85_ctl00_ctl00_PlaceHolder1_ctl04_bpCommentForm_ctl04_invisibleCaptcha_answer');
+</script><script type="text/javascript">
+// <![CDATA[
+window.ctl00_content_ctl00_w_187901__acbc85_ctl00_ctl00_DelayedFeedbackList = new DelayedContent('ctl00_content_ctl00_w_187901__acbc85_ctl00_ctl00_DelayedFeedbackList','ctl00_content_ctl00_w_187901__acbc85_ctl00_ctl00_DelayedFeedbackList','ctl00_content_ctl00._customCallback(\'fragment-187901\',\'ctl00$content$ctl00$w_187901$_acbc85$ctl00$ctl00$DelayedFeedbackList\',argument,null,callback,null)',true,true,null);
+// ]]>
+</script></form>
+       
+    <script type="text/javascript">
+        $(window).load(function () {
+            $.getScript('http://widgets.membership.s-msft.com/v1/loader.js?brand=msdn&lang=en-US', function () {
+            });
+        });
+    </script>
+    
+	
+
+<div id="_WEDCSInsertedData" style="display: none;"><iframe id="_msnFrame" src="Managing%20Your%20HDInsight%20Cluster%20with%20PowerShell%20-%20Carl%27s%20Blog%20-%20Site%20Home%20-%20MSDN%20Blogs_files/c.gif" style="z-index:-1;height:1px;width:1px;display:none;visibility:hidden;" onload="javascript:MscomBeacon();"></iframe></div></body></html>

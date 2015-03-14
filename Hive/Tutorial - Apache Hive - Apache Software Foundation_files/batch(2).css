@@ -1,0 +1,276 @@
+.content-navigation .ajs-button .share>span{padding-left:0;}
+.content-navigation .ajs-button .share>span::before{content:"V";}
+#inline-dialog-shareContentPopup .contents{overflow:visible;}
+.share-content-popup .button-panel{text-align:right;}
+.share-content-popup .button-panel input:disabled{color:graytext;}
+.share-content-popup .button-panel .close-dialog{padding-left:5px;}
+form.share-content-popup .textarea{height:100px;padding-left:3px;padding-right:3px;max-height:260px;width:250px;}
+.share-content-popup ol.recipients{margin:7px 0 7px 0;padding:0;list-style-type:none;}
+.share-content-popup ol.recipients li{margin:5px 0;line-height:24px;}
+.share-content-popup ol.recipients li img{height:24px;width:24px;vertical-align:middle;border-radius:3px;margin-right:5px;}
+.progress-messages{position:absolute;left:0;max-width:110px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;height:30px;}
+.share-content-popup .done{top:7px;background:url(/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/2.0.4/_/download/resources/com.atlassian.confluence.plugins.share-page:mail-page-resources/images/tick.png) no-repeat;}
+.share-content-popup .error{top:7px;background:url(/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/2.0.4/_/download/resources/com.atlassian.confluence.plugins.share-page:mail-page-resources/images/error.png) no-repeat;}
+.share-content-popup .autocomplete li.active a span{color:white;}
+.share-page-progress{position:absolute;background-color:white;z-index:1;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+.share-page-progress-container-inner{position:absolute;text-align:center;}
+.share-content-popup .remove-recipient{float:right;background:url(/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/2.0.4/_/download/resources/com.atlassian.confluence.plugins.share-page:mail-page-resources/images/delete.png) no-repeat 100% 50%;text-indent:-9999px;height:24px;width:24px;cursor:pointer;}
+.share-content-popup .aui-dd-parent,#com-atlassian-confluence .share-content-popup .aui-dd-parent .aui-dropdown{width:250px;}
+form.aui .share-page-progress-container-inner p{margin:0;padding-bottom:0;}
+form.share-content-popup .field-group{padding-left:0;}
+form.share-content-popup .field-group.button-panel{padding-bottom:0;margin-bottom:0;line-height:30px;}
+.aui-inline-dialog .contents .share-content-popup .submit{text-align:center;}
+#com-k15t-confluence-scroll-epub-launcher{background-image:url('/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/3.0.11/_/download/resources/com.k15t.scroll.scroll-epub:export-link-resources/scroll-epub_icon_16.png');background-position:8px 50%;background-repeat:no-repeat}#com-k15t-confluence-scroll-epub-launcher span{margin-left:20px!important}
+.sv-conf5 .aui-dialog .dialog-button-panel button.button-panel-button[disabled],.sv-conf5 .aui-dialog .dialog-button-panel button.button-panel-button[disabled]:hover,.sv-conf5 .aui-dialog .dialog-button-panel button.button-panel-button[disabled]:active{border-color:#ccc;box-shadow:none;color:#999;cursor:default;text-shadow:none}
+div.k15t-blanket{background:#000;height:100%;left:0;opacity:.5;position:fixed;top:0;width:100%;z-index:2500}
+.loading-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background-color:rgba(255,255,255,0.75);background-image:url(data:image/gif;base64,R0lGODlhEAAQAPMPALu7u5mZmTMzM93d3REREQAAAHd3d1VVVWZmZqqqqoiIiO7u7kRERCIiIgARAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQFBwAPACwAAAAAEAAQAEAEcPDJtyg6dUrFetDTIopMoSyFcxxD1krD8AwCkASDIlPaUDQLR6G1Cy0SgqIkE1IQGMrFAKCcGWSBzwPAnAwarcKQ15MpTMJYd1ZyUDXSDGelBY0qIoBh/ZoYGgELCjoxCRRvIQcGD1kzgSAgAACQDxEAIfkEBQcADwAsAAAAAA8AEAAABF3wyfkMkotOJpscRKJJwtI4Q1MAoxQ0RFBw0xEvhGAVRZZJh4JgMAEQW7TWI4EwGFjKR+CAQECjn8DoN0kwDtvBT8FILAKJgfoo1iAGAPNVY9DGJXNMIHN/HJVqIxEAIfkEBQcADwAsAAAAABAADwAABFrwyfmColgiydpaQiY5x9Ith7hURdIl0wBIhpCAjKIIxaAUPQ0hFQsAC7MJALFSFi4SgC4wyHyuCYNWxH3AuhSEotkNGAALAPqqkigG8MWAjAnM4A8594vPUyIAIfkEBQcADwAsAAAAABAAEAAABF3wySkDvdKsddg+APYIWrcg2DIRQAcU6DJICjIsjBEETLEEBYLqYSDdJoCGiHgZwG4LQCCRECEIBAdoF5hdEIWwgBJqDs7DgcKyRHZl3uUwuhm2AbNNW+LV7yd+FxEAIfkEBQcACAAsAAAAABAADgAABEYQyYmMoVgeWQrP3NYhBCgZBdAFRUkdBIAUguVVo1ZsWFcEGB5GMBkEjiCBL2a5ZAi+m2SAURExwKqPiuCafBkvBSCcmiYRACH5BAUHAA4ALAAAAAAQABAAAARs0MnpAKDYrbSWMp0xZIvBKYrXjNmADOhAKBiQDF5gGcICNAyJTwFYTBaDQ0HAkgwSmAUj0OkMrkZM4HBgKK7YTKDRICAo2clAEIheKc9CISjEVTuEQrJASGcSBQcSUFEUDQUXJBgDBW0Zj34RACH5BAUHAA8ALAAAAAAQABAAAARf8Mn5xqBYgrVC4EEmBcOSfAEjSopJMglmcQlgBYjE5NJgZwjCAbO4YBAJjpIjSiAQh5ayyRAIDKvJIbnIagoFRFdkQDQKC0RBsCIUFAWsT7RwG410R8HiiK0WBwJjFBEAIfkEBQcADgAsAQABAA8ADwAABFrQybEWADXJLUHHAMJxIDAgnrOo2+AOibEMh1LN62gIxphzitRoCDAYNcNN6FBLShao4WzwHDQKvVGhoFAwGgtFgQHENhoB7nCwHRAIC0EyUcC8Zw1ha3NIRgAAIfkEBQcADwAsAAAAABAAEAAABGDwyfnWoljaNYYFV+Zx3hCEGEcuypBtMJBISpClAWLfWODymIFiCJwMDMiZBNAAYFqUAaNQ2E0YBIXGURAMCo1AAsFYBBoIScBJEwgSVcmP0li4FwcHz+FpCCQMPCFINxEAIfkEBQcADgAsAAABABAADwAABFzQyemWXYNqaSXY2vVtw3UNmROM4JQowKKlFOsgRI6ASQ8IhSADFAjAMIMAgSYJtByxyQIhcEoaBcSiwegpDgvAwSBJ0AIHBoCQqIAEi/TCIAABGhLG8MbcKBQgEQAh+QQFBwAPACwAAAEAEAAPAAAEXfDJSd+qeK5RB8fDRRWFspyotAAfQBbfNLCVUSSdKDV89gDAwcFBIBgywMRnkWBgcJUDKSZRIKAPQcGwYByAAYTEEJAAJIGbATEQ+B4ExmK9CDhBd8ThdHw/AmUYEQAh+QQFBwAPACwAAAEADwAPAAAEXvBJQIa8+ILSspdHkXxS9wxF4Q3L2aTBeC0sFjhAtuyLIjAMhYc2GBgaSKGuyNoBDp7czFAgeBIKwC6kWCAMxUSAFjtNCAAFGGF5tCQLAaJnWCTqHoREvQuQJAkyGBEAOw==);background-repeat:no-repeat;background-position:center center;z-index:5000}.loading-overlay:before{position:absolute;top:50%;left:0;width:100%;height:100%;color:black;color:rgba(0,0,0,0.5);text-align:center;font-size:20px;font-weight:bold;content:'Loading...'}
+
+/* ----------------------------- Confluence 4 <-> 5 compatibility ------------------------------- */
+
+.scroll-epub-common-message-dialog.aui-dialog .dialog-panel-body {
+    padding: 10px;
+}
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.scroll-epub-common-message-dialog.aui-dialog h2.dialog-title {
+    background-image: url("/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/3.0.11/_/download/resources/com.k15t.scroll.scroll-epub:common-dialogs/icon_26.png");
+    background-repeat: no-repeat;
+    background-position: 16px 50%;
+    padding-left: 3em;
+}
+
+.scroll-epub-common-message-dialog.aui-dialog .support-info-box {
+    height: 220px;
+    background-color: #efefef;
+    padding: 5px;
+    border-radius: 5px;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.scroll-epub-common-message-dialog.aui-dialog .support-info-box .stacktrace-container {
+    max-height: 185px;
+}
+
+
+/* ----------------------------- Confluence 4 <-> 5 compatibility ------------------------------- */
+
+.scroll-epub-export-dialog.aui-dialog .dialog-panel-body,
+.scroll-epub-export-progress-dialog.aui-dialog .dialog-panel-body,
+.scroll-epub-save-export-scheme-dialog.aui-dialog .dialog-panel-body,
+.scroll-epub-rest-url-dialog.aui-dialog .dialog-panel-body {
+    padding: 10px;
+}
+
+.scroll-epub-export-dialog.aui-dialog form.aui,
+.scroll-epub-export-progress-dialog.aui-dialog form.aui,
+.scroll-epub-save-export-scheme-dialog.aui-dialog form.aui,
+.scroll-epub-rest-url-dialog.aui-dialog form.aui {
+    margin: 0;
+}
+
+.scroll-epub-export-dialog.aui-dialog.confluence-4-dialog .configuration-property-container input {
+	margin-left: 25px;
+}
+
+
+/* ---------------------------------------------------------------------------------------------- */
+
+.scroll-epub-export-dialog.aui-dialog h2.dialog-title,
+.scroll-epub-export-progress-dialog.aui-dialog  h2.dialog-title,
+.scroll-epub-save-export-scheme-dialog.aui-dialog  h2.dialog-title,
+.scroll-epub-rest-url-dialog.aui-dialog  h2.dialog-title {
+    background-image: url("/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/3.0.11/_/download/resources/com.k15t.scroll.scroll-epub:export-dialog-resources/icon_26.png");
+    background-repeat: no-repeat;
+    background-position: 16px 50%;
+    padding-left: 3em;
+}
+
+.scroll-epub-export-dialog.aui-dialog ul.dialog-page-menu li.page-menu-item button.aui-validation-error {
+    color: red;
+    font-weight: bold;
+}
+.scroll-epub-export-dialog.aui-dialog ul.dialog-page-menu li.page-menu-item.selected button.aui-validation-error {
+    background-color: red;
+    color: white;
+}
+
+.scroll-epub-export-dialog .simple-mode-page .dialog-messages {	
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+	border-bottom: 1px solid #F0F0F0;
+}
+
+.scroll-epub-export-dialog .simple-mode-page .dialog-messages .aui-message:first-child {	
+	margin-top: 0;
+}
+
+.scroll-epub-export-dialog .simple-mode-page .export-schemes {
+    padding: 10px;
+    overflow: auto;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.scroll-epub-export-dialog .simple-mode-page li.export-scheme {
+    float: left;
+    vertical-align: top;
+    margin: 0;
+    padding: 10px;
+    border: 1px solid white;
+    border-radius: 3px;
+    cursor: pointer;
+    width: 50%;
+    height: 80px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.scroll-epub-export-dialog .simple-mode-page li.export-scheme.selected {
+    background-color: #E6EFF8;
+    border: 1px solid #CCD9EA;
+}
+
+.scroll-epub-export-dialog .simple-mode-page li.export-scheme.last-used .export-scheme-name {
+    font-style: italic;
+}
+
+.scroll-epub-export-dialog .simple-mode-page li.export-scheme .export-scheme-meta {
+    padding-left: 60px;
+}
+
+.scroll-epub-export-dialog .simple-mode-page li.export-scheme .export-scheme-name {
+    font-weight: bold;
+    margin-top: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.scroll-epub-export-dialog .simple-mode-page li.export-scheme .export-scheme-preview {
+    float: left;
+    width: 48px;
+    height: 48px;
+    vertical-align: text-bottom;
+    background-image: url('/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/3.0.11/_/download/resources/com.k15t.scroll.scroll-epub:export-dialog-resources/export-scheme.png');
+}
+
+.scroll-epub-export-dialog .simple-mode-page li.export-scheme .export-scheme-description {
+    margin-top: 0;
+    height: 40px;
+    overflow: hidden;
+}
+
+
+
+.scroll-epub-export-dialog.aui-dialog .dialog-button-panel a.button-panel-link.scroll-customize-settings-link,
+.scroll-epub-export-dialog.aui-dialog .dialog-button-panel a.button-panel-link.scroll-simple-mode-link,
+.scroll-epub-export-dialog.aui-dialog .dialog-button-panel a.button-panel-link.scroll-back-link {
+    float: left;
+    margin-left: 10px;
+}
+
+
+
+.scroll-epub-export-dialog .advanced-mode-page .dialog-panel-body form {
+    margin-top: 10px;
+}
+
+.scroll-epub-export-dialog .advanced-mode-page .content-processing-panel fieldset {
+    margin-bottom: 15px;
+}
+
+.scroll-epub-export-dialog .advanced-mode-page #metadata-form .long-field {
+    width: 450px;
+}
+
+.scroll-epub-export-progress-dialog #export-progress-form .current-status-message {
+    float: left; 
+    max-width : 540px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.scroll-epub-export-progress-dialog #export-progress-form .current-step-indicator {
+    float: right; 
+}
+
+.scroll-epub-export-progress-dialog .export-progress-panel .progress-container {
+    margin-top: 5px;
+    background-color: silver;
+    border-radius: 3px;
+}
+
+.scroll-epub-export-progress-dialog .export-progress-panel .progress-indicator {
+    background-color: #0e90d2;
+    border-radius: 3px;
+}
+
+.scroll-epub-export-dialog .export-result-page .scroll-customize-settings-link {
+    float: left;
+    padding-left: 1.65em;
+}
+
+.scroll-epub-export-dialog .export-result-page #export-result-form {
+    margin: 0;
+    height: 100%;
+}
+
+.scroll-epub-export-dialog .export-result-page .result-container {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    min-height: 200px;
+    margin-top: -100px;
+    padding-left: 170px;
+    padding-top: 25px;
+    padding-right: 25px;
+    border-top: 2px solid #AAB8C6;
+    border-bottom: 1px solid #AAB8C6;
+
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+
+    background-image: url(/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/3.0.11/_/download/resources/com.k15t.scroll.scroll-epub:export-dialog-resources/download.png);
+    background-repeat: no-repeat;
+    background-position: 100px 30px;
+    background-color: #FCFCFC;
+}
+
+.scroll-epub-export-dialog .export-result-page .error-description-container {
+    width: 650px;
+}
+
+
+.scroll-epub-export-dialog .export-result-page .download-filename {
+    font-size: 150%;
+}
+
+.scroll-epub-export-dialog .export-result-page .export-scheme-management-container {
+    margin-top: 15px;
+}
+
+.scroll-epub-export-dialog .export-result-page .export-scheme-management-options {
+    margin-left: -15px;
+}
+
+.scroll-epub-export-dialog .export-result-page .export-scheme-saved-message {
+    color: #14892C;
+}
+

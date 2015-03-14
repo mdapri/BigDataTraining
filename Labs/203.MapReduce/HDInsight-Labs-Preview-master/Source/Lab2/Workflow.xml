@@ -1,0 +1,39 @@
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="streaming-wf">
+  <start to="streaming-node"/>
+  <action name="streaming-node">
+    <map-reduce>
+      <job-tracker>${jobTracker}</job-tracker>
+      <name-node>${nameNode}</name-node>
+      <streaming>
+        <mapper>${streamingMapper}</mapper>
+        <reducer>${streamingReducer}</reducer>
+      </streaming>
+      <configuration>
+        <property>
+          <name>mapred.job.queue.name</name>
+          <value>${queueName}</value>
+        </property>
+        <property>
+          <name>mapred.input.dir</name>
+          <value>${inputDir}</value>
+        </property>
+        <property>
+          <name>mapred.output.dir</name>
+          <value>${outputDir}</value>
+        </property>
+        <property>
+          <name>fs.default.name</name>
+          <value>${fs.default.name}</value>
+        </property>
+      </configuration>
+      <file>asv://joydivision@joydivision.blob.core.windows.net/handsonlabs/app/mrlib/microsoft.hadoop.mapdriver.exe</file>
+    </map-reduce>
+    <ok to="end"/>
+    <error to="fail"/>
+  </action>
+  <kill name="fail">
+    <message>Streaming Map/Reduce failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+  </kill>
+  <end name="end"/>
+</workflow-app>
+

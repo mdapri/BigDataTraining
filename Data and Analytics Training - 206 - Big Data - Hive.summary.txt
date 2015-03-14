@@ -1,0 +1,195 @@
+===========  Introduction
+Tools to enable easy data extract/transform/load (ETL)
+A mechanism to impose structure on a variety of data formats
+Access to files stored either directly in Apache HDFS or in other data storage systems such as Apache HBase (Nota vigan:Hive su HBase fa cagare, meglio Phoenix
+MS può accedere credo tramite ETL mediante ODBC su PHoenix)
+
+Hive defines a simple SQL-like query language, called QL,  QL can also be extended with custom scalar functions (UDF's), aggregations (UDAF's), and table functions(UDTF's). 
+Apache Hive provides a way of running MapReduce job through an SQL-like scripting language,called HiveQL
+
+In the order of granularity - Hive data is organized into:
+* Databases: Namespaces 
+* Tables: Homogeneous units of data which have the same schema. 
+* Partitions: Each Table can have one or more partition Keys which determines how the data is
+stored.  For example, a date_partition of type STRING and country_partition of type STRING. 
+Note however, that just because a partition is named 2009-12-23 does not mean that it contains all or only data from that date; partitions are named after dates for convenience but it is the user's job to guarantee the relationship between partition name and data content!).
+* Buckets (or Clusters): Data in each partition may in turn be divided into Buckets based on the value of a hash function of some column of the Table. For example the page_views table may be bucketed by userid, which is one of the columns, other than the partitions columns, of the page_view table. These can be used to efficiently sample the data.
+
+
+============  Type System
+Hive supports primitive and complex data types, as described below. Types are associated with the
+columns in the tables. The following Primitive types are supported:
+https://cwiki.apache.org/confluence/display/Hive/LanguageManual+Types
+
+? Integers
+	o TINYINT - 1 byte integer
+	o SMALLINT - 2 byte integer
+	o INT - 4 byte integer
+	o BIGINT - 8 byte integer
+? Boolean type
+	o BOOLEAN - TRUE/FALSE
+? Floating point numbers
+	o FLOAT - single precision
+	o DOUBLE - Double precision
+? String type
+	o STRING - sequence of characters in a specified character set
+? Date type
+
+Complex Types can be built up from primitive types and other composite types using:
+	? Structs: the elements within the type can be accessed using the DOT (.) notation. For example,
+for a column c of type STRUCT {a INT; b INT} the a field is accessed by the expression c.a
+	? Maps (key-value tuples): The elements are accessed using ['element name'] notation. For
+example in a map M comprising of a mapping from 'group' -> gid the gid value can be
+accessed using M['group']
+	? Arrays (indexable lists): The elements in the array have to be in the same type. Elements can
+be accessed using the [n] notation where n is an index (zero-based) into the array. For
+example for an array A having the elements ['a', 'b', 'c'], A[1] retruns 'b'.
+
+=========== Internal and external tables
+And that’s got nothing to do with where on the file system the table points to. It has nothing to do with the location of the folder. 
+When we say a table is INTERNAL, what we mean is, its lifetime and the lifetime of the folder on which it is mapped is
+managed internally by Hive. So if we drop the table, it would delete the folder and all of its contents.
+
+We can also create EXTERNAL tables in Hive. And when we create external table, if we drop the table, the table metadata is deleted, but the data stays where it is in the HDFS environment
+
+CREATE EXTERNAL TABLE table3
+(col1 STRING,
+col2 INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
+STORED AS TEXTFILE LOCATION '/data/table3' ;
+
+The data that are in the FOLDER are considered part of the table;
+========== Loading Data (LOAD and INSERT)
+We discussed the creation of tables, we talked about idea of them containing data. And of course
+they don’t contain data, it is the folders that contain the data. The tables just project the schema on to
+it. But how do we get the data into the folders that are referenced by Hive tables?
+1.There is a very simple way, we can just simply save the files into those folders. And actually if the
+2.  LOAD statement. It is really a good way of taking data (perhaps that’s been staged) to a particular staging folder and just moving it into the appropriate folder for the table.
+What the INSERT statement does in HiveQL, is more like an INSERT FROM semantics:
+
+FROM StagingTable
+INSERT INTO TABLE MyTable
+SELECT Col1, Col2;
+
+Quite often, you create the table on top of your source, you then use an insert statement to transform that source into another table, perhaps then into another table and so on until you get a format you want
+
+============ Demo
+#go to https://mdhdinsight.azurehdinsight.net/GettingStarted/Tutorials/WeblogAnalysis/WasbLoading
+# the files are in wasb://mdbigdata@mdbigdata.blob.core.windows.net/HdiSamples/WebsiteLogSampleData/SampleLog/
+
+* LOG FILE
+#Fields: date time s-sitename cs-method cs-uri-stem cs-uri-query s-port cs-username c-ip cs(User-Agent) cs(Cookie) cs(Referer) cs-host sc-status sc-substatus sc-win32-status sc-bytes cs-bytes time-taken
+
+* LAB SCRIPTS
+
+%HIVE_HOME%\bin\hive
+
+# this starts the hive environment
+CREATE TABLE weblogs_raw
+(s_date date, s_time string, s_sitename string, cs_method string, cs_uristem string, cs_uriquery string, s_port int, cs_username string, c_ip string, cs_useragent string, cs_cookie string, cs_referer string, cs_host string, sc_status int, sc_substatus int, sc_win32status int, sc_bytes int, cs_bytes int, s_timetaken int )
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
+
+** ATTEMPT> Parse error. Attention to the carriage return
+2 Attempt: OK
+CREATE TABLE weblogs_raw
+(s_date date, s_time string, s_sitename string, cs_method string, cs_uristem string, cs_uriquery string, s_port int, cs_username string, c_ip string)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ' ';
+
+3 Attempt: ALL the fields in ONE SINGLE ROW
+CREATE TABLE weblogs_raw
+(s_date date, s_time string, s_sitename string, cs_method string, cs_uristem string, cs_uriquery string, s_port int, cs_username string, c_ip string, cs_useragent string, cs_cookie string, cs_referer string, cs_host string, sc_status int, sc_substatus int, sc_win32status int, sc_bytes int, cs_bytes int, s_timetaken int )
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ' ';
+
+#create the staging table
+CREATE EXTERNAL TABLE weblogs_clean
+(s_date date, s_time string, s_sitename string, cs_method string, cs_uristem string, cs_uriquery string, s_port int, cs_username string,
+ c_ip string, cs_useragent string, cs_cookie string, cs_referer string, cs_host string, sc_status int, sc_substatus int, sc_win32status int, sc_bytes int, cs_bytes int,
+s_timetaken int )
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
+STORED AS TEXTFILE LOCATION '/data/cleanlog/';
+
+#insert data into staging table
+LOAD DATA INPATH '/HdiSamples/WebsiteLogSampleData/SampleLog' INTO TABLE weblogs_raw;
+# check the table
+SELECT * from weblogs_raw where SUBSTR(s_date,1,1)<>'#'
+
+Time taken: 58.792 seconds, Fetched: 646 row(s)
+
+#cleansing
+FROM weblogs_raw 
+INSERT INTO TABLE weblogs_clean
+SELECT * WHERE SUBSTR(s_date,1,1)<>'#'
+
+the output in this case is 
+Query ID = mdadminR_20150226160909_a3d929b4-5228-4b40-8bfa-e18fb3fb52f8
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Starting Job = job_1424944498166_0002, Tracking URL = http://headnodehost:9014/proxy/application_1424944498166_0002/
+Kill Command = C:\apps\dist\hadoop-2.4.0.2.1.10.0-2290\bin\hadoop.cmd job  -kill job_1424944498166_0002
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+2015-02-26 16:09:54,350 Stage-1 map = 0%,  reduce = 0%
+2015-02-26 16:10:06,448 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 3.592 sec
+MapReduce Total cumulative CPU time: 3 seconds 592 msec
+Ended Job = job_1424944498166_0002
+Stage-3 is selected by condition resolver.
+Stage-2 is filtered out by condition resolver.
+Stage-4 is filtered out by condition resolver.
+Moving data to: wasb://mdbigdata@mdbigdata.blob.core.windows.net/hive/scratch/hive_2015-02-26_16-09-16_588_1133574854853
+209750-1/-ext-10000
+Loading data to table default.weblogs_clean
+MapReduce Jobs Launched:
+Job 0: Map: 1   Cumulative CPU: 3.592 sec   HDFS Read: 0 HDFS Write: 0 SUCCESS
+Total MapReduce CPU Time Spent: 3 seconds 592 msec
+OK
+Time taken: 54.54 seconds
+
+
+#examine the cleanlog/
+SELECT s_date, COUNT(*) AS PageHits, SUM(sc_bytes) AS BytesReceived, SUM(cs_bytes) AS BytesSent
+FROM weblogs_clean
+GROUP BY s_date
+ORDER BY s_date;
+
+Log is
+Query ID = mdadminR_20150226161010_c7842182-4e87-4ad6-8ffd-4e217b7c6368
+Total jobs = 2
+Launching Job 1 out of 2
+Number of reduce tasks not specified. Estimated from input data size: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1424944498166_0003, Tracking URL = http://headnodehost:9014/proxy/application_1424944498166_0003/
+Kill Command = C:\apps\dist\hadoop-2.4.0.2.1.10.0-2290\bin\hadoop.cmd job  -kill job_1424944498166_0003
+Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+2015-02-26 16:11:19,169 Stage-1 map = 0%,  reduce = 0%
+2015-02-26 16:11:30,455 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.311 sec
+2015-02-26 16:11:42,159 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 5.076 sec
+MapReduce Total cumulative CPU time: 5 seconds 76 msec
+Ended Job = job_1424944498166_0003
+Launching Job 2 out of 2
+Number of reduce tasks determined at compile time: 1
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Starting Job = job_1424944498166_0004, Tracking URL = http://headnodehost:9014/proxy/application_1424944498166_0004/
+Kill Command = C:\apps\dist\hadoop-2.4.0.2.1.10.0-2290\bin\hadoop.cmd job  -kill job_1424944498166_0004
+Hadoop job information for Stage-2: number of mappers: 1; number of reducers: 1
+2015-02-26 16:12:04,592 Stage-2 map = 0%,  reduce = 0%
+2015-02-26 16:12:14,690 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 2.719 sec
+2015-02-26 16:12:25,337 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 5.657 sec
+MapReduce Total cumulative CPU time: 5 seconds 657 msec
+Ended Job = job_1424944498166_0004
+MapReduce Jobs Launched:
+Job 0: Map: 1  Reduce: 1   Cumulative CPU: 5.076 sec   HDFS Read: 0 HDFS Write: 128 SUCCESS
+Job 1: Map: 1  Reduce: 1   Cumulative CPU: 5.657 sec   HDFS Read: 224 HDFS Write: 31 SUCCESS
+Total MapReduce CPU Time Spent: 10 seconds 733 msec
+OK
+2014-01-01      646     25899167        513240
+Time taken: 96.653 seconds, Fetched: 1 row(s)

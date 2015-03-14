@@ -1,0 +1,47 @@
+﻿<workflow-app xmlns="uri:oozie:workflow:0.2" name="map-reduce-wf">
+  <start to="lab2workflowjob"/>
+  <action name="lab2workflowjob">
+    <map-reduce>
+      <job-tracker>${jobTracker}</job-tracker>
+      <name-node>${nameNode}</name-node>
+      <configuration>
+        <property>
+          <name>mapred.job.queue.name</name>
+          <value>${queueName}</value>
+        </property>
+        <property>
+          <name>mapred.mapper.class</name>
+          <value>org.apache.hadoop.examples.TokenizerMapper</value>
+        </property>
+        <property>
+          <name>mapred.reducer.class</name>
+          <value>org.apache.hadoop.examples.IntSumReducer</value>
+        </property>
+        <property>
+          <name>mapred.map.tasks</name>
+          <value>1</value>
+        </property>
+        <property>
+          <name>mapred.input.dir</name>
+          <value>${inputDir}</value>
+        </property>
+        <property>
+          <name>mapred.output.dir</name>
+          <value>${outputDir}</value>
+        </property>
+        <property>
+          <name>templeton.args</name>
+          <value>cmd,/c,c:\\apps\\dist\\hadoop-1.1.0-SNAPSHOT/bin/hadoop.cmd,jar,hadoop-streaming.jar,-files,"asv://joydivision@joydivision.blob.core.windows.net/user/hadoop/dotnetcli/580417fc-bb81-44fd-a2ab-6f79340bf7d8/app/Lab1.vshost.exe#Lab1.vshost.exe\,asv://joydivision@joydivision.blob.core.windows.net/user/hadoop/dotnetcli/580417fc-bb81-44fd-a2ab-6f79340bf7d8/app/Lab1.exe#Lab1.exe\,asv://joydivision@joydivision.blob.core.windows.net/user/hadoop/dotnetcli/580417fc-bb81-44fd-a2ab-6f79340bf7d8/app/Microsoft.Hadoop.MapReduce.dll#Microsoft.Hadoop.MapReduce.dll\,asv://joydivision@joydivision.blob.core.windows.net/user/hadoop/dotnetcli/580417fc-bb81-44fd-a2ab-6f79340bf7d8/app/Labs.Common.dll#Labs.Common.dll\,asv://joydivision@joydivision.blob.core.windows.net/user/hadoop/dotnetcli/580417fc-bb81-44fd-a2ab-6f79340bf7d8/app/Microsoft.Hadoop.WebClient.dll#Microsoft.Hadoop.WebClient.dll\,asv://joydivision@joydivision.blob.core.windows.net/user/hadoop/dotnetcli/580417fc-bb81-44fd-a2ab-6f79340bf7d8/app/Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll#Microsoft.CompilerServices.AsyncTargetingPack.Net4.dll\,asv://joydivision@joydivision.blob.core.windows.net/user/hadoop/dotnetcli/580417fc-bb81-44fd-a2ab-6f79340bf7d8/app/Newtonsoft.Json.dll#Newtonsoft.Json.dll\,asv://joydivision@joydivision.blob.core.windows.net/user/hadoop/dotnetcli/580417fc-bb81-44fd-a2ab-6f79340bf7d8/app/Microsoft.Hadoop.MapDriver.exe#Microsoft.Hadoop.MapDriver.exe\,asv://joydivision@joydivision.blob.core.windows.net/user/hadoop/dotnetcli/580417fc-bb81-44fd-a2ab-6f79340bf7d8/app/Microsoft.Hadoop.ReduceDriver.exe#Microsoft.Hadoop.ReduceDriver.exe\,asv://joydivision@joydivision.blob.core.windows.net/user/hadoop/dotnetcli/580417fc-bb81-44fd-a2ab-6f79340bf7d8/app/Microsoft.Hadoop.CombineDriver.exe#Microsoft.Hadoop.CombineDriver.exe",-D,"mapred.map.max.attempts=1",-D,"mapred.reduce.max.attempts=1",-input,asv://joydivision@joydivision.blob.core.windows.net/handsonlabs/clickStream.log,-output,asv://joydivision@joydivision.blob.core.windows.net/handsonlabs/output/aggregatePurchase2110110168ca4003b3517f1848beacb2,-mapper,Microsoft.Hadoop.MapDriver.exe,-reducer,Microsoft.Hadoop.ReduceDriver.exe,-cmdenv,"MSFT_HADOOP_REDUCER_DLL=Lab1.exe",-cmdenv,"MSFT_HADOOP_REDUCER_TYPE=Lab1.Reducers.AggregatePurchaseReducer",-cmdenv,"MSFT_HADOOP_MAPPER_DLL=Lab1.exe",-cmdenv,"MSFT_HADOOP_MAPPER_TYPE=Lab1.Mappers.AggregatePurchaseMapper"</value>
+        </property>
+      </configuration>
+    </map-reduce>
+    <ok to="end"/>
+    <error to="fail"/>
+  </action>
+  <kill name="fail">
+    <message>Map/Reduce failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+  </kill>
+  <end name="end"/>
+</workflow-app>
+
+

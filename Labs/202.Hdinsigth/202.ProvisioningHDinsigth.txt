@@ -1,0 +1,5 @@
+name = hdhdinsight
+username = mdadmin
+password= Av@nade001
+
+https://mdhdinisght.azurehdinsight.net//

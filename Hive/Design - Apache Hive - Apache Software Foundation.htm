@@ -1,0 +1,884 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0055)https://cwiki.apache.org/confluence/display/Hive/Design -->
+<!DOCTYPE html PUBLIC "" ""><HTML><HEAD><META content="IE=10.000" 
+http-equiv="X-UA-Compatible">
+	             <TITLE>Design - Apache Hive - Apache Software Foundation</TITLE>   
+                                                                                 
+         
+<META http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=IE7"> 
+<META charset="UTF-8"> <!-- Deprecated since 3.4. To be removed in a future version of Confluence; use AJS.Confluence.getContextPath() --> 
+<META name="confluence-context-path" id="confluence-context-path" content="/confluence"> 
+<META name="confluence-base-url" id="confluence-base-url" content="https://cwiki.apache.org/confluence"> 
+<META name="atlassian-token" id="atlassian-token" content="900ca1a06fdd52c5ad025a1efda17271851797a2"> 
+<META name="confluence-space-key" id="confluence-space-key" content="Hive"> 
+<SCRIPT type="text/javascript">
+    // Deprecated global variables. To be removed in a future version of Confluence.
+    var contextPath = '/confluence';
+</SCRIPT>
+     <!-- include system css resources -->     <!--[if lt IE 9]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/39/_/download/superbatch/css/batch.css?conditionalComment=lt+IE+9" media="all">
+<![endif]--> 
+<LINK href="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/batch.css" 
+rel="stylesheet" type="text/css" media="print"> <LINK href="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/batch(1).css" 
+rel="stylesheet" type="text/css" media="all"> <!--[if gte IE 9]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/39/_/download/superbatch/css/batch.css?conditionalComment=gte+IE+9" media="all">
+<![endif]--> <!--[if lte IE 8]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/39/_/download/superbatch/css/batch.css?conditionalComment=lte+IE+8" media="all">
+<![endif]--> <!--[if lte IE 9]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/39/_/download/superbatch/css/batch.css?conditionalComment=lte+IE+9" media="all">
+<![endif]--> <!--[if lt IE 9]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/709a76d38b5ac561d0cef5a523e77410/_/download/contextbatch/css/page/batch.css?conditionalComment=lt+IE+9" media="all">
+<![endif]--> <LINK href="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/batch(2).css" 
+rel="stylesheet" type="text/css" media="all"> <!--[if lt IE 9]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/017312f8c03fc008ec7f1f86c896d3d8/_/download/contextbatch/css/viewcontent/batch.css?conditionalComment=lt+IE+9" media="all">
+<![endif]--> 
+<LINK href="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/batch(3).css" 
+rel="stylesheet" type="text/css" media="all"> <LINK href="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/batch(4).css" 
+rel="stylesheet" type="text/css" media="all"> <LINK href="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/batch(5).css" 
+rel="stylesheet" type="text/css" media="all"> <LINK href="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/org.randombits.confluence.toc_toc-plugin-styles.css" 
+rel="stylesheet" type="text/css" media="all"> <LINK href="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/com.atlassian.confluence.plugins.confluence-space-ia_spacesidebar.css" 
+rel="stylesheet" type="text/css" media="all"> <!--[if lt IE 9]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/5.0.3/_/download/batch/com.atlassian.confluence.plugins.confluence-space-ia:spacesidebar/com.atlassian.confluence.plugins.confluence-space-ia:spacesidebar.css?conditionalComment=lt+IE+9" media="all">
+<![endif]--> 
+<LINK href="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/com.atlassian.mywork.mywork-confluence-host-plugin_mw-header-anchor.css" 
+rel="stylesheet" type="text/css" media="all"> <LINK href="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/colors.css" 
+rel="stylesheet" type="text/css" media="all"> <LINK href="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/default-theme.css" 
+rel="stylesheet" type="text/css" media="all"> <!-- end system css resources -->  
+   
+<META name="confluence-request-time" content="1424860021778"> <!-- Deprecated since 3.4. To be removed in a future version of Confluence; use atl.header --> 
+                    
+<SCRIPT title="share-content-popup" type="text/x-template">
+    <form action="#" method="post" class="aui share-content-popup">
+        <div class="field-group">
+            <div class="autocomplete-user-target">
+                <input class="text autocomplete-sharepage" id="users" data-max="10" data-dropdown-target=".autocomplete-user-target" data-none-message="No matching user or email found" placeholder="User name or email"/>
+            </div>
+            <ol class="recipients">
+            </ol>
+        </div>
+        <div class="field-group">
+            <textarea class="textarea" id="note" placeholder="Add an optional note"/>
+        </div>
+        <div class="field-group button-panel">
+            <div class="progress-messages-icon"></div>
+            <div class="progress-messages">
+            </div>
+            <input class="button submit" type="submit" value="Share" disabled/>
+            <a class="close-dialog" href="#">Cancel</a>
+        </div>
+    </form>
+</SCRIPT>
+ 
+<SCRIPT title="share-content-popup-recipient-username" type="text/x-template">
+    <li data-username="{username}" style="display: none">
+        <span>
+            <img src="{thumbnailLink.href}" title="{title}">
+            <span>{title}</span>
+            <span class="remove-recipient"/>
+        </span>
+    </li>
+</SCRIPT>
+ 
+<SCRIPT title="share-content-popup-recipient-email" type="text/x-template">
+    <li data-email="{email}" style="display: none">
+        <span>
+            <img src="{icon}" title="{email}">
+            <span>{email}</span>
+            <span class="remove-recipient"/>
+        </span>
+    </li>
+</SCRIPT>
+                         
+<META name="ajs-use-keyboard-shortcuts" content="true">             
+<META name="ajs-keyboardshortcut-hash" content="930f70e51dda96d6cb148385abc89367"> 
+            
+<META name="gliffy-license-type" content="OPEN_SOURCE"> 
+<META name="gliffy-license-quantity" content="-1">             
+<SCRIPT title="gliffy-webpanel-footer" type="text/x-template">
+        <div class="gliffy-webpanel-footer"><span>This Confluence installation runs a Free Gliffy License - Evaluate the <a href="http://www.gliffy.com/products/confluence-plugin/">Gliffy Confluence Plugin</a> for your Wiki!</span></div>
+</SCRIPT>
+             
+<META name="ap-request-id" content="3be931611d721862">             
+<STYLE>.ia-fixed-sidebar, .ia-splitter-left {width: 55px;}.theme-default .ia-splitter #main {margin-left: 55px;}.acs-side-bar {visibility: hidden;}</STYLE>
+                                                 
+<META name="ajs-page-id" content="27362072">             
+<META name="ajs-content-type" content="page">             
+<META name="ajs-page-title" content="Design">             
+<META name="ajs-parent-page-id" content="">             
+<META name="ajs-space-key" content="Hive">             
+<META name="ajs-space-name" content="Apache Hive">             
+<META name="ajs-from-page-title" content="">             
+<META name="ajs-browse-page-tree-mode" content="view">             
+<META name="ajs-editor.loader.comment.resources" content='<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/def88f1396f473dd83f398203309c7bb/_/download/contextbatch/css/comment-editor/batch.css" media="all">&#10;'> 
+            
+<META name="ajs-context-path" content="/confluence">             
+<META name="ajs-base-url" content="https://cwiki.apache.org/confluence">         
+    
+<META name="ajs-version-number" content="5.0.3">             
+<META name="ajs-build-number" content="4109">             
+<META name="ajs-remote-user" content="">             
+<META name="ajs-static-resource-url-prefix" content="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/_"> 
+            
+<META name="ajs-global-settings-attachment-max-size" content="20971520">         
+    
+<META name="ajs-user-locale" content="en_GB">             
+<META name="ajs-enabled-dark-features" content="">             
+<META name="ajs-atl-token" content="900ca1a06fdd52c5ad025a1efda17271851797a2">   
+          
+<META name="ajs-confluence-flavour" content="VANILLA">             
+<META name="ajs-editor.loader.resources" content='<!--[if lt IE 9]>&#10;<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/e88e5c074267cd8662f3f09e5e5daf28/_/download/contextbatch/css/editor,fullpage-editor,macro-browser,-viewcontent/batch.css?conditionalComment=lt+IE+9" media="all">&#10;<![endif]-->&#10;<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/e88e5c074267cd8662f3f09e5e5daf28/_/download/contextbatch/css/editor,fullpage-editor,macro-browser,-viewcontent/batch.css" media="all">&#10;<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/e88e5c074267cd8662f3f09e5e5daf28/_/download/contextbatch/css/editor,fullpage-editor,macro-browser,-viewcontent/batch.css?media=%28max-width%3A+1270px%29" media="(max-width: 1270px)">&#10;<script type="text/javascript" src="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/e88e5c074267cd8662f3f09e5e5daf28/_/download/contextbatch/js/editor,fullpage-editor,macro-browser,-viewcontent/batch.js" ></script>&#10;'> 
+            
+<META name="ajs-date.format" content="MMM dd, yyyy">         <LINK href="/confluence/favicon.ico" 
+rel="shortcut icon">     <LINK href="/confluence/favicon.ico" rel="icon" type="image/x-icon"> 
+<LINK title="Apache Software Foundation" href="/confluence/opensearch/osd.action" 
+rel="search" type="application/opensearchdescription+xml">     <!-- include system javascript resources --> 
+    
+<SCRIPT src="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/batch.js" type="text/javascript"></SCRIPT>
+ <!--[if lte IE 8]>
+<script type="text/javascript" src="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/39/_/download/superbatch/js/batch.js?conditionalComment=lte+IE+8" ></script>
+<![endif]--> 
+<SCRIPT src="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/batch(1).js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/batch(2).js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/batch(3).js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/batch(4).js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/com.atlassian.confluence.plugins.confluence-space-ia_soy-resources.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/com.atlassian.confluence.plugins.editor-loader_background-loading-editor.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/com.atlassian.confluence.plugins.confluence-space-ia_spacesidebar.js" type="text/javascript"></SCRIPT>
+ 
+<SCRIPT src="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/com.atlassian.mywork.mywork-confluence-host-plugin_mw-header-anchor.js" type="text/javascript"></SCRIPT>
+                 <!-- end system javascript resources -->                        
+ <LINK href="https://cwiki.apache.org/confluence/display/Hive/Design" rel="canonical"> 
+        <LINK href="https://cwiki.apache.org/confluence/x/GIOhAQ" rel="shortlink"> 
+    
+<META name="wikilink" content="[Hive:Design]">     
+<META name="page-version" content="13"> 
+<META name="GENERATOR" content="MSHTML 10.00.9200.16899"></HEAD> 
+<BODY class="theme-default  aui-layout aui-theme-default" id="com-atlassian-confluence" 
+onload="placeFocus()">
+<UL class="assistive" id="assistive-skip-links">
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#title-heading">Skip 
+  to content</A></LI>
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#breadcrumbs">Skip 
+  to breadcrumbs</A></LI>
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#header-menu-bar">Skip 
+  to header menu</A></LI>
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#navigation">Skip 
+  to action menu</A></LI>
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#quick-search-query">Skip 
+  to quick search</A></LI></UL>
+<DIV id="page">
+<DIV id="full-height-container">
+<DIV id="header-precursor">
+<DIV class="cell">
+<STYLE type="text/css">
+#preview #previewArea iframe {
+
+   overflow: visible;
+}
+</STYLE>
+                             </DIV></DIV><HEADER id="header" role="banner"><NAV 
+class="aui-header aui-dropdown2-trigger-group" role="navigation">
+<DIV class="aui-header-inner">
+<DIV class="aui-header-before"><A tabindex="0" class="aui-dropdown2-trigger app-switcher-trigger" 
+aria-haspopup="true" aria-owns="app-switcher"><SPAN class="aui-icon aui-icon-small aui-iconfont-appswitcher">Linked 
+Applications</SPAN></A>
+<DIV class="aui-dropdown2 aui-style-default" id="app-switcher">
+<DIV class="app-switcher-loading">Loading…</DIV></DIV>
+<SCRIPT>
+            (function (NL) {
+                var initialise = function () {
+                    // For some milestones of AUI, the atlassian soy namespace was renamed to aui. Handle that here by ensuring that window.atlassian is defined.
+                    window.atlassian = window.atlassian || window.aui;
+                    new NL.AppSwitcher({
+                        dropdownContents: '#app-switcher'
+                    });
+                };
+                if (NL.AppSwitcher) {
+                    initialise();
+                } else {
+                    NL.onInit = initialise;
+                }
+            }(window.NL = (window.NL || {})));
+            window.NL.isUserAdmin = false</SCRIPT>
+</DIV>
+<DIV class="aui-header-primary">
+<H1 class="aui-header-logo aui-header-logo-custom" id="logo"><A href="https://cwiki.apache.org/confluence/dashboard.action"><IMG 
+alt="Apache Software Foundation" src="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/confluence-logo.png"></A></H1>
+<UL class="aui-nav">
+  <LI><A title="Spaces" class=" aui-nav-imagelink" id="space-directory-link" 
+  href="https://cwiki.apache.org/confluence/spacedirectory/view.action"><SPAN>Spaces</SPAN> 
+      </A></LI></UL></DIV>
+<DIV class="aui-header-secondary">
+<UL class="aui-nav">
+  <LI>
+  <FORM class="aui-quicksearch dont-default-focus" id="quick-search" action="/confluence/dosearchsite.action" 
+  method="get">
+  <FIELDSET><LABEL class="assistive" for="quick-search-query">Quick 
+  Search</LABEL>         <INPUT name="queryString" title="Quick Search" class="text app-search search quick-search-query" 
+  id="quick-search-query" accesskey="q" type="text" placeholder="Search" value="" 
+  autocomplete="off">         <INPUT class="quick-search-submit" id="quick-search-submit" type="submit" value="Search"> 
+          
+  <DIV class="aui-dd-parent quick-nav-drop-down"></DIV></FIELDSET>
+  <DIV class="hidden parameters"><!-- putMetadata failed to add value for key "quick-nav-enabled" so rendering metadata inline - see server debug log for details --> 
+          
+  <META name="ajs-quick-nav-enabled" content="true">                 
+  </DIV></FORM></LI>
+  <LI><A title="Help" class="aui-nav-link aui-dropdown2-trigger" id="help-menu-link" 
+  aria-haspopup="true" aria-owns="help-menu-link-content" href="https://cwiki.apache.org/confluence/display/Hive/Design#"><SPAN 
+  class="aui-icon aui-icon-small aui-iconfont-help">Help</SPAN><SPAN class="aui-icon-dropdown"></SPAN> 
+      </A><NAV class="aui-dropdown2 aui-style-default" id="help-menu-link-content" 
+  aria-hidden="true">
+  <DIV class="aui-dropdown2-section">
+  <UL class="aui-list-truncate section-leading first" id="help-menu-link-leading">
+    <LI><A title="Visit the Confluence documentation home" class="    " id="confluence-help-link" 
+    href="http://docs.atlassian.com/confluence/docs-50/Getting+Help+And+Support" 
+    target="_blank">        Online Help </A></LI>
+    <LI><A title="View available keyboard shortcuts" class="    " id="keyboard-shortcuts-link" 
+    href="https://cwiki.apache.org/confluence">        Keyboard Shortcuts 
+    </A></LI>
+    <LI><A title="Create your custom RSS feed." class="    " id="feed-builder-link" 
+    href="https://cwiki.apache.org/confluence/dashboard/configurerssfeed.action"> 
+           Feed Builder </A></LI>
+    <LI><A title="" class="    " id="whats-new-menu-link" href="http://docs.atlassian.com/confluence/docs-50/whatsnew/iframe"> 
+           What’s new </A></LI>
+    <LI><A title="Browse gadgets provided by Confluence" class="   user-item administration-link " 
+    id="gadget-directory-link" href="https://cwiki.apache.org/confluence">       
+     Available Gadgets </A></LI></UL></DIV></NAV>     </LI>
+  <LI></LI>
+  <LI>
+  <LI><A title="" class="   user-item login-link " id="login-link" href="https://cwiki.apache.org/confluence/login.action?os_destination=%2Fdisplay%2FHive%2FDesign"> 
+         Log In </A></LI>
+  <LI><A title="" class="   user-item signup-link " id="signup-link" href="https://cwiki.apache.org/confluence/signup.action"> 
+         Sign Up </A></LI></UL></DIV></DIV><!-- .aui-header-inner--></NAV><!-- .aui-header --> 
+    <BR class="clear"></HEADER>
+<DIV class="ia-splitter">
+<DIV class="ia-splitter-left">
+<DIV class="ia-fixed-sidebar">
+<DIV class="acs-side-bar ia-scrollable-section">
+<DIV class="acs-side-bar-space-info tipsy-enabled" data-configure-tooltip="Edit Space Details">
+<DIV class="avatar">
+<DIV class="space-logo " data-entity-type="confluence.space" data-name="Apache Hive" 
+data-key="Hive">
+<DIV class="avatar-img-container">
+<DIV class="avatar-img-wrapper"><A title="Apache Hive" href="https://cwiki.apache.org/confluence/display/Hive"><IMG 
+class="avatar-img" alt="Apache Hive" src="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/Hive"></A></DIV></DIV></DIV></DIV>
+<DIV class="name"><A title="Apache Hive" href="https://cwiki.apache.org/confluence/display/Hive">Apache 
+Hive</A></DIV>
+<DIV class="flyout-handle icon"></DIV></DIV>
+<DIV class="acs-nav-wrapper">
+<DIV class="acs-nav">
+<DIV class="acs-nav-sections">
+<DIV class="main-links-section ">
+<UL class="acs-nav-list">
+  <LI class="acs-nav-item wiki current-item" 
+  data-collector-key="spacebar-pages"><A class="acs-nav-item-link tipsy-enabled" 
+  href="https://cwiki.apache.org/confluence/collector/pages.action?key=Hive" 
+  data-collapsed-tooltip="Pages"><SPAN class="icon"></SPAN><SPAN class="acs-nav-item-label">Pages</SPAN></A></LI>
+  <LI class="acs-nav-item blog" data-collector-key="spacebar-blogs"><A class="acs-nav-item-link tipsy-enabled" 
+  href="https://cwiki.apache.org/confluence/pages/viewrecentblogposts.action?key=Hive" 
+  data-collapsed-tooltip="Blog"><SPAN class="icon"></SPAN><SPAN class="acs-nav-item-label">Blog</SPAN></A></LI></UL></DIV>
+<HR>
+
+<DIV class="advanced-links-section tipsy-enabled ">
+<UL class="acs-nav-list">
+  <LI class="acs-nav-item settings" data-collector-key="spacebar-advanced"><A 
+  class="acs-nav-item-link tipsy-enabled" href="https://cwiki.apache.org/confluence/spaces/spacetools.action?key=Hive" 
+  data-collapsed-tooltip="Space tools"><SPAN class="icon"></SPAN><SPAN class="acs-nav-item-label">Space 
+  tools</SPAN></A></LI></UL></DIV></DIV></DIV></DIV>
+<DIV class="ia-secondary-container tipsy-enabled" data-tree-type="pages">
+<HR>
+
+<DIV class="ia-secondary-header">
+<H5 class="ia-secondary-header-title wiki current-item"><SPAN 
+class="icon"></SPAN><SPAN class="label">Design</SPAN></H5></DIV>
+<DIV class="ia-secondary-content"></DIV></DIV>
+<DIV class="hidden"><A id="space-pages-link" href="https://cwiki.apache.org/confluence/collector/pages.action?key=Hive"></A>
+<SCRIPT title="logo-config-content" type="text/x-template"><h2>Space Details</h2><form id="crop-photo-form" class="aui" method="post" action="#"><div id="sidebar-logo-messages"></div><fieldset><div class="field-group"><label for="spaceName">Name</label><input autocomplete="off" name="spaceName" id="spaceName" class="text" maxlength="255" value="{spaceName}"><input type="hidden" name="spaceKey" id="spaceKey" value="Hive"><input type="hidden" name="offsetX" id="avatar-offsetX" value="-1"><input type="hidden" name="offsetY" id="avatar-offsetY" value="-1"><input type="hidden" name="width" id="avatar-width" value="-1"><input type="hidden" name="logoType" id="logoType" value="custom" data-last-value="custom"></div></fieldset></form><form id="upload-logo-form" class="aui" method="POST" action="#" enctype="multipart/form-data"><fieldset class="group"><legend><span>Logo</span></legend><div class="field-group"><input class="upload" type="file" id="upload-logo-input" name="upload-logo-input"></div><small ><a href="#" id="reset-logo">Reset to default logo</a></small><div id="image-holder" /></fieldset></form><div id="space-details-actions" class="buttons-container"><div class="buttons"><button class="aui-button save">Save</button><a href="#" class="aui-button aui-button-link cancel">Cancel</a></div></div></SCRIPT>
+</DIV></DIV></DIV></DIV><!-- \#header -->                 
+<DIV class=" aui-page-panel" id="main">
+<DIV id="main-header">
+<DIV class="content-navigation view" id="navigation">
+<UL class="ajs-menu-bar">
+  <LI class="normal ajs-menu-item"><A class="action ajs-menu-title aui-dropdown2-trigger" 
+  id="action-menu-link" aria-haspopup="true" aria-owns="action-menu" href="https://cwiki.apache.org/confluence/display/Hive/Design#" 
+  data-container="#navigation"><SPAN><SPAN>Tools</SPAN></SPAN></A>
+  <DIV class="aui-dropdown2 aui-style-default" id="action-menu">
+  <UL class="section-primary first aui-dropdown2-section" id="action-menu-primary">
+    <LI><A title="View Attachments" class="action-view-attachments" id="view-attachments-link" 
+    accesskey="t" href="https://cwiki.apache.org/confluence/pages/viewpageattachments.action?pageId=27362072"><SPAN>A<U>t</U>tachments 
+    (1)</SPAN>    </A></LI>
+    <LI><A title="" class="action-view-history" id="action-view-history-link" 
+    href="https://cwiki.apache.org/confluence/pages/viewpreviousversions.action?pageId=27362072"><SPAN>Page 
+    History</SPAN>    </A></LI>
+    <LI><A title="Edit restrictions" class="action-page-permissions" id="action-page-permissions-link" 
+    href="https://cwiki.apache.org/confluence/pages/viewinfo.action?pageId=27362072"><SPAN>Restrictions</SPAN> 
+       </A></LI></UL>
+  <UL class="section-secondary aui-dropdown2-section" 
+id="action-menu-secondary">
+    <LI><A title="" class="action-view-info" id="view-page-info-link" href="https://cwiki.apache.org/confluence/pages/viewinfo.action?pageId=27362072"><SPAN>Page 
+    Information</SPAN>    </A></LI>
+    <LI><A title="Link to this Page" id="link-to-page-link" href="https://cwiki.apache.org/confluence/pages/viewinfo.action?pageId=27362072"><SPAN>Link 
+    to this Page…</SPAN>    </A></LI>
+    <LI><A title="" id="view-in-hierarchy-link" href="https://cwiki.apache.org/confluence/pages/reorderpages.action?key=Hive&amp;openId=27362072#selectedPageInHierarchy"><SPAN>View 
+    in Hierarchy</SPAN>    </A></LI>
+    <LI><A title="" class="action-view-source popup-link" id="action-view-source-link" 
+    href="https://cwiki.apache.org/confluence/plugins/viewsource/viewpagesrc.action?pageId=27362072"><SPAN>View 
+    Source</SPAN>    </A></LI>
+    <LI><A title="" id="action-export-pdf-link" href="https://cwiki.apache.org/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=27362072"><SPAN>Export 
+    to PDF</SPAN>    </A></LI>
+    <LI><A title="" id="com-k15t-confluence-scroll-epub-launcher" href="https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27362072"><SPAN>Export 
+    to EPUB</SPAN>    </A></LI>
+    <LI><A title="" class="action-export-word" id="action-export-word-link" 
+    href="https://cwiki.apache.org/confluence/exportword?pageId=27362072"><SPAN>Export 
+    to Word</SPAN>    </A></LI></UL>
+  <UL class="section-modify aui-dropdown2-section" id="action-menu-modify">
+    <LI><A title="" id="treecopy-action" href="https://cwiki.apache.org/confluence/plugins/treecopy/setnames.action?pageId=27362072"><SPAN>Copy 
+    Page Tree</SPAN>    </A></LI></UL></DIV></LI></UL></DIV>
+<H1 class="pagetitle with-breadcrumbs" id="title-heading">
+<DIV id="breadcrumb-section">
+<OL id="breadcrumbs">
+  <LI class="first"><SPAN><A href="https://cwiki.apache.org/confluence/collector/pages.action?key=Hive">Pages</A></SPAN> 
+                  </LI></OL></DIV><SPAN class="with-breadcrumbs" 
+id="title-text"><A href="https://cwiki.apache.org/confluence/display/Hive/Design">Design</A> 
+                                    </SPAN>             </H1></DIV><!-- \#main-header --> 
+                        
+<DIV id="sidebar-container"></DIV><!-- \#sidebar-container -->                   
+                                                                                 
+                                                                                 
+                                                                                 
+                                                                                 
+                                                                                 
+                                                                                 
+                      
+<DIV class="page view" id="content">
+<DIV id="action-messages"></DIV>
+<SCRIPT title="movePageDialog" type="text/x-template">
+    <div class="row information">
+        <div class="inner">
+            <div class="element">
+                Specify the new parent page for this page and its children by space and title.
+            </div>
+        </div>
+    </div>
+        <form class="aui" onsubmit="return false;">
+	        <fieldset>
+	                
+
+    <legend class="assistive"><span>Change the Parent Page to a Known Page</span></legend>
+	            <div class="field-group">
+	                <label for="new-space">New space:</label>
+	                <div class="value new-space-value">
+	                    <input id="new-space-key" name="new-space-key" type="hidden" value="Hive">
+	                    	                        <span class="space-input">
+	                            <input id="new-space" name="new-space" value="Apache Hive" disabled="disabled" class="text long-field">
+	                        </span>
+                            <div class="description warning">You cannot move this page to another space because you do not have permission to remove it from this space.</div>
+	                    	                    <div class="new-space-dropdown aui-dd-parent autocomplete"></div>
+	                </div>
+	            </div>
+	            <div class="field-group">
+	                <label for="new-parent-page">New parent page:</label>
+	                <div class="value new-parent-page-value">
+	                    <span class="page-input">
+	                        <input id="new-parent-page" name="new-parent-page" value="" class="text long-field">
+	                    </span>
+                        <div class="description">Start typing a page title to see a list of suggestions.</div>
+	                    <div class="new-parent-page-dropdown aui-dd-parent autocomplete"></div>
+	                </div>
+	            </div>
+	        </fieldset>
+        </form>
+    <div class="location-info">
+        <div class="row">
+            <label>Current location:</label>
+            <div class="value breadcrumbs-container">
+                <div class="breadcrumbs-line">
+                    <ul id="current-parent-breadcrumbs" class="breadcrumbs">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <label>New location:</label>
+            <div class="value breadcrumbs-container">
+                <div class="breadcrumbs-line">
+                    <ul id="new-parent-breadcrumbs" class="breadcrumbs">
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</SCRIPT>
+ 
+<SCRIPT title="movePageSearchPanel" type="text/x-template">
+    <div class="row information">
+        <div class="inner">
+            <div class="element">
+                Search for and select the new parent page for this page and its children.
+            </div>
+        </div>
+    </div>
+    <div id="move-page-search-container" class="row">
+	        <form class="aui" onsubmit="return false;">
+	            <fieldset>
+	                    
+
+    <legend class="assistive"><span>Search for a New Parent Page</span></legend>
+	                    
+
+    <label  for="move-page-search-query" class="assistive">Search keywords</label>
+	                <input class="search-query text" id="move-page-search-query">
+	                    
+
+    <label  for="move-page-search-space" class="assistive">Search in space</label>
+	                	                    <select id="move-page-search-space" class="search-space select" disabled="disabled">
+	                        <option value="Hive" selected="selected">Apache Hive</option>
+	                    </select>
+	                	                <input type="button" value="Search" class="button submit">
+	                	                    <div class="description warning">You cannot move this page to another space because you do not have permission to remove it from this space.</div>
+	                	            </fieldset>
+	        </form>
+        <div class="search-results">
+        </div>
+    </div>
+</SCRIPT>
+ 
+<SCRIPT title="searchResultsGrid" type="text/x-template">
+    <table class="aui">
+        <thead>
+            <tr class="header">
+                <th class="search-result-title">Page Title</th>
+                <th class="search-result-space">Space</th>
+                <th class="search-result-date">Updated</th>
+            </tr>
+        </thead>
+    </table>
+</SCRIPT>
+ 
+<SCRIPT title="searchResultsGridCount" type="text/x-template">
+    <p class="search-result-count">{0}</p>
+</SCRIPT>
+ 
+<SCRIPT title="searchResultsGridRow" type="text/x-template">
+    <tr class="search-result">
+        <th class="search-result-title"><a href="{1}" class="content-type-{2}"><span>{0}</span></a></th>
+        <td class="search-result-space"><a class="space" href="/confluence/display/{4}/" title="{3}">{3}</a></td>
+        <td class="search-result-date"><span class="date" title="{6}">{5}</span></td>
+    </tr>
+</SCRIPT>
+<!-- Start restrictions section --> 
+<SCRIPT title="page-permissions-div" type="text/x-template">
+<div id="page-permissions-div">
+    <div id="page-permissions-editor-form">
+                <div id="page-permissions-error-div" class="aui-message warning shadowed closeable hidden">
+            <p class="title"/>
+            <span class="aui-icon icon-warning"></span>
+            <span class="aui-icon icon-close" tabindex="0" role="button"></span>
+        </div>
+                <div id="page-permissions-type-radios" class="page-permissions-label-rows">
+            <div class="radio">
+                <input id="restrictViewRadio" class="radio" type="radio" checked="checked" name="pagePermissionTypeRadio" value="view"/>
+                <label for="restrictViewRadio">Restrict viewing of this page</label>
+                <input id="restrictEditRadio" class="radio" type="radio" name="pagePermissionTypeRadio" value="edit"/>
+                <label for="restrictEditRadio">Restrict editing of this page</label>
+            </div>
+        </div>
+        <div id="page-permissions-input" class="page-permissions-label-rows">
+            <div class="page-permissions-label">To:</div>
+            <div id="page-permissions-chooser-box">
+                                <span id="page-permissions-choose-user" class="aui-button">
+                    
+
+
+    
+    
+
+
+
+
+
+
+<a id='userpicker-popup-link'  href='#' onClick="var picker = window.open('/confluence/spaces/openuserpicker.action?key=Hive&amp;startIndex=0&amp;onPopupSubmit=AJS.PagePermissions.addUserPermissions', 'EntitiesPicker', 'status=yes,resizable=yes,top=100,left=200,width=700,height=680,scrollbars=yes'); picker.focus(); return false;">
+    				    <img src="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/_/images/icons/user_16.png" height=16 width=16 border=0 align="absmiddle"  title="Choose users" />
+						    Person...
+	        </a>
+
+
+                </span>
+                <span id="page-permissions-choose-group" class="aui-button">
+                    
+
+
+    
+    
+
+ 
+
+
+
+
+<a id='grouppicker-popup-link'  href='#' onClick="var picker = window.open('/confluence/spaces/opengrouppicker.action?key=Hive&amp;startIndex=0&amp;actionName=dosearchgroups.action&amp;onPopupSubmit=AJS.PagePermissions.addGroupPermissions', 'EntitiesPicker', 'status=yes,resizable=yes,top=100,left=200,width=580,height=550,scrollbars=yes'); picker.focus(); return false;">
+    				    <img src="/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/_/images/icons/group_16.png" height=16 width=16 border=0 align="absmiddle"  title="Choose groups" />
+						    Group...
+	        </a>
+
+
+                </span>
+            </div>
+            <div id="page-permissions-input-box">
+                <input id="page-permissions-names-input" class="autocomplete-user text" type="text" name="permissionNames"
+                    placeholder="Enter user or group name:"
+                    data-max="10" data-none-message="No matches"
+                    data-target="#page-permissions-names-hidden" data-template="{username}"
+                    data-dropdown-target="#page-perms-name-dropdown-wrapper" data-resize-to-input="true"
+                    size="30"/>
+                <input
+    type="hidden"
+                            id="page-permissions-names-hidden"           />                <button class="aui-button" id="add-typed-names">Restrict</button>
+                <div id="page-perms-name-dropdown-wrapper" class="aui-dd-parent autocomplete autocomplete-user-target"></div>
+            </div>
+        </div>
+    </div>
+    <div id="page-permissions-tables">
+        <div id="page-permissions-table-div">
+                        <table id="page-permissions-table" class="page-permissions-table">
+                <tr id="page-permissions-no-views" class="marker-row">
+                    <td colspan="3" class="page-permissions-marker-cell">
+                            <span class="aui-icon aui-icon-small aui-iconfont-view"></span>
+                        <span>No view restrictions are defined for this page</span>
+                    </td>
+                </tr>
+                <tr id="page-permissions-no-edits" class="marker-row">
+                    <td colspan="3" class="page-permissions-marker-cell">
+                            <span class="aui-icon aui-icon-small edit-icon"></span>
+                        <span>No edit restrictions are defined for this page</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="page-inherited-permissions-table-div" class="hidden">
+            <span id="page-inherited-permissions-table-desc">
+                <a class="icon twisty-closed">Show/Hide</a>
+                <a id="toggle-inherited-permissions" title="Click to see inherited restrictions">This page has restricted parent pages. It can only be seen by users who can see those parent pages.</a>
+            </span>
+            <div id="page-inherited-permissions-tables" class="hidden page-inheritance-togglable"></div>
+        </div>
+    </div>
+</div>
+</SCRIPT>
+ <!-- End restrictions section -->                                               
+                                              <A class="assistive" href="https://cwiki.apache.org/confluence/display/Hive/Design#page-metadata-end">Skip 
+to end of metadata</A> 
+<DIV class="assistive" id="page-metadata-start"></DIV>
+<DIV class="page-metadata">
+<UL>
+  <LI class="page-metadata-item noprint"><A title="Page restrictions apply. Click the lock icon to view or edit the restriction." 
+  class="page-metadata-icon page-restrictions hidden" id="content-metadata-page-restrictions" 
+  href="https://cwiki.apache.org/confluence/display/Hive/Design#"><SPAN>Page 
+  restrictions apply</SPAN>    </A> </LI>
+  <LI class="page-metadata-item noprint"><A title="Attachments: 1" class="page-metadata-icon action-view-attachments" 
+  id="content-metadata-attachments" accesskey="t" href="https://cwiki.apache.org/confluence/pages/viewpageattachments.action?pageId=27362072&amp;metadataLink=true"><SPAN><SPAN 
+  class="page-metadata-attachments-text">Attachments:</SPAN><SPAN class="page-metadata-attachments-count">1</SPAN></SPAN> 
+     </A> </LI>
+  <LI class="page-metadata-modification-info">                                   
+   Added by <A class="url fn" href="https://cwiki.apache.org/confluence/display/~admin">Confluence 
+  Administrator</A>, last edited by <A class="url fn" href="https://cwiki.apache.org/confluence/display/~leftyl">Lefty 
+  Leverenz</A> on Oct 29, 2014                                                   
+                <SPAN class="noprint">&nbsp;(<A id="view-change-link" href="https://cwiki.apache.org/confluence/pages/diffpages.action?pageId=27362072&amp;originalId=47384952">view 
+  change</A>)</SPAN>                                                 </LI>
+  <LI class="show-hide-comment-link"><A class="inline-control-link" id="show-version-comment" 
+  href="https://cwiki.apache.org/confluence/display/Hive/Design#">show 
+  comment</A>                     <A class="inline-control-link" id="hide-version-comment" 
+  style="display: none;" href="https://cwiki.apache.org/confluence/display/Hive/Design#">hide 
+  comment</A>                 </LI></UL>
+<DIV class="noteMacro" id="version-comment"><STRONG>Comment:</STRONG>        add 
+correlation optimizer; unable to fix indentation of Optimizer section 
+(reformatting will fix that)<BR></DIV></DIV><A class="assistive" href="https://cwiki.apache.org/confluence/display/Hive/Design#page-metadata-start">Go 
+to start of metadata</A> 
+<DIV class="assistive" id="page-metadata-end"></DIV>
+<DIV class="wiki-content" id="main-content">
+<P>This page contains details about the Hive design and architecture. A brief 
+technical report about Hive is available at <SPAN 
+class="error">[^hive.pdf]</SPAN>. </P>
+<STYLE type="text/css">/*<![CDATA[*/
+div.rbtoc1424860022327 {padding: 0px;}
+div.rbtoc1424860022327 ul {list-style: disc;margin-left: 0px;}
+div.rbtoc1424860022327 li {margin-left: 0px;padding-left: 0px;}
+
+/*]]>*/</STYLE>
+
+<DIV class="toc-macro rbtoc1424860022327"> 
+<UL class="toc-indentation">
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#Design-HiveArchitecture">Hive 
+  Architecture</A></LI>
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#Design-HiveDataModel">Hive 
+  Data Model</A></LI>
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#Design-Metastore">Metastore</A> 
+  <UL class="toc-indentation">
+    <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#Design-Motivation">Motivation</A></LI>
+    <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#Design-MetadataObjects">Metadata 
+    Objects</A></LI>
+    <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#Design-MetastoreArchitecture">Metastore 
+    Architecture</A></LI>
+    <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#Design-MetastoreInterface">Metastore 
+    Interface</A></LI></UL></LI>
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#Design-HiveQueryLanguage">Hive 
+  Query Language</A></LI>
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#Design-Compiler">Compiler</A></LI>
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#Design-Optimizer">Optimizer</A></LI>
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#Design-Execution">Execution</A></LI>
+  <LI><A href="https://cwiki.apache.org/confluence/display/Hive/Design#Design-Conclusion">Conclusion</A></LI></UL></DIV>
+<P>Figure 1<BR><SPAN class="image-wrap"><IMG style="border: 0px solid black;" 
+src="Design%20-%20Apache%20Hive%20-%20Apache%20Software%20Foundation_files/system_architecture.png"></SPAN></P>
+<H2><A name="Design-HiveArchitecture"></A>Hive Architecture</H2>
+<P>Figure 1 shows the major components of Hive and its interactions with Hadoop. 
+As shown in that figure, the main components of Hive are: </P>
+<UL>
+  <LI>UI – The user interface for users to submit queries and other operations 
+  to the system. As of 2011 the system had a command line interface and a web 
+  based GUI was being developed.</LI>
+  <LI>Driver – The component which receives the queries. This component 
+  implements the notion of session handles and provides execute and fetch APIs 
+  modeled on JDBC/ODBC interfaces.</LI>
+  <LI>Compiler – The component that parses the query, does semantic analysis on 
+  the different query blocks and query expressions and eventually generates an 
+  execution plan with the help of the table and partition metadata looked up 
+  from the metastore.</LI>
+  <LI>Metastore – The component that stores all the structure information of the 
+  various tables and partitions in the warehouse including column and column 
+  type information, the serializers and deserializers necessary to read and 
+  write data and the corresponding HDFS files where the data is stored.</LI>
+  <LI>Execution Engine – The component which executes the execution plan created 
+  by the compiler. The plan is a DAG of stages. The execution engine manages the 
+  dependencies between these different stages of the plan and executes these 
+  stages on the appropriate system components.</LI></UL>
+<P>Figure 1 also shows how a typical query flows through the system. The UI 
+calls the execute interface to the Driver (step 1 in Figure 1). The Driver 
+creates a session handle for the query and sends the query to the compiler to 
+generate an execution plan (step 2). The compiler gets the necessary metadata 
+from the metastore (steps 3 and 4). This metadata is used to typecheck the 
+expressions in the query tree as well as to prune partitions based on query 
+predicates. The plan generated by the compiler (step 5) is a DAG of stages with 
+each stage being either a map/reduce job, a metadata operation or an operation 
+on HDFS. For map/reduce stages, the plan contains map operator trees (operator 
+trees that are executed on the mappers) and a reduce operator tree (for 
+operations that need reducers). The execution engine submits these stages to 
+appropriate components (steps 6, 6.1, 6.2 and 6.3). In each task 
+(mapper/reducer) the deserializer associated with the table or intermediate 
+outputs is used to read the rows from HDFS files and these are passed through 
+the associated operator tree. Once the output is generated, it is written to a 
+temporary HDFS file though the serializer (this happens in the mapper in case 
+the operation does not need a reduce). The temporary files are used to provide 
+data to subsequent map/reduce stages of the plan. For DML operations the final 
+temporary file is moved to the table's location. This scheme is used to ensure 
+that dirty data is not read (file rename being an atomic operation in HDFS). For 
+queries, the contents of the temporary file are read by the execution engine 
+directly from HDFS as part of the fetch call from the Driver (steps 7, 8 and 
+9).</P>
+<H2><A name="Design-HiveDataModel"></A>Hive Data Model</H2>
+<P>Data in Hive is organized into:</P>
+<UL>
+  <LI>Tables – These are analogous to Tables in Relational Databases. Tables can 
+  be filtered, projected, joined and unioned. Additionally all the data of a 
+  table is stored in a directory in HDFS. Hive also supports the notion of 
+  external tables wherein a table can be created on prexisting files or 
+  directories in HDFS by providing the appropriate location to the table 
+  creation DDL. The rows in a table are organized into typed columns similar to 
+  Relational Databases.</LI>
+  <LI>Partitions – Each Table can have one or more partition keys which 
+  determine how the data is stored, for example a table T with a date partition 
+  column ds had files with data for a particular date stored in the &lt;table 
+  location&gt;/ds=&lt;date&gt; directory in HDFS. Partitions allow the system to 
+  prune data to be inspected based on query predicates, for example a query that 
+  is interested in rows from T that satisfy the predicate T.ds = '2008-09-01' 
+  would only have to look at files in &lt;table location&gt;/ds=2008-09-01/ 
+  directory in HDFS.</LI>
+  <LI>Buckets – Data in each partition may in turn be divided into Buckets based 
+  on the hash of a column in the table. Each bucket is stored as a file in the 
+  partition directory. Bucketing allows the system to efficiently evaluate 
+  queries that depend on a sample of data (these are queries that use the SAMPLE 
+  clause on the table).</LI></UL>
+<P>Apart from primitive column types (integers, floating point numbers, generic 
+strings, dates and booleans), Hive also supports arrays and maps. Additionally, 
+users can compose their own types programmatically from any of the primitives, 
+collections or other user-defined types. The typing system is closely tied to 
+the SerDe (Serailization/Deserialization) and object inspector interfaces. User 
+can create their own types by implementing their own object inspectors, and 
+using these object inspectors they can create their own SerDes to serialize and 
+deserialize their data into HDFS files). These two interfaces provide the 
+necessary hooks to extend the capabilities of Hive when it comes to 
+understanding other data formats and richer types. Builtin object inspectors 
+like ListObjectInspector, StructObjectInspector and MapObjectInspector provide 
+the necessary primitives to compose richer types in an extensible manner. For 
+maps (associative arrays) and arrays useful builtin functions like size and 
+index operators are provided. The dotted notation is used to navigate nested 
+types, for example a.b.c = 1 looks at field c of field b of type a and compares 
+that with 1.</P>
+<H2><A name="Design-Metastore"></A>Metastore</H2>
+<H3><A name="Design-Motivation"></A>Motivation</H3>
+<P>The Metastore provides two important but often overlooked features of a data 
+warehouse: data abstraction and data discovery. Without the data abstractions 
+provided in Hive, a user has to provide information about data formats, 
+extractors and loaders along with the query. In Hive, this information is given 
+during table creation and reused every time the table is referenced. This is 
+very similar to the traditional warehousing systems. The second functionality, 
+data discovery, enables users to discover and explore relevant and specific data 
+in the warehouse. Other tools can be built using this metadata to expose and 
+possibly enhance the information about the data and its availability. Hive 
+accomplishes both of these features by providing a metadata repository that is 
+tightly integrated with the Hive query processing system so that data and 
+metadata are in sync.</P>
+<H3><A name="Design-MetadataObjects"></A>Metadata Objects</H3>
+<UL>
+  <LI>Database – is a namespace for tables. It can be used as an administrative 
+  unit in the future. The database 'default' is used for tables with no 
+  user-supplied database name.</LI>
+  <LI>Table – Metadata for a table contains list of columns, owner, storage and 
+  SerDe information. It can also contain any user-supplied key and value data. 
+  Storage information includes location of the underlying data, file inout and 
+  output formats and bucketing information. SerDe metadata includes the 
+  implementation class of serializer and deserializer and any supporting 
+  information required by the implementation. All of this information can be 
+  provided during creation of the table.</LI>
+  <LI>Partition – Each partition can have its own columns and SerDe and storage 
+  information. This facilitates schema changes without affecting older 
+  partitions.</LI></UL>
+<H3><A name="Design-MetastoreArchitecture"></A>Metastore Architecture</H3>
+<P>Metastore is an object store with a database or file backed store. The 
+database backed store is implemented using an object-relational mapping (ORM) 
+solution called the <A class="external-link" href="http://www.datanucleus.org/" 
+rel="nofollow">DataNucleus</A>. The prime motivation for storing this in a 
+relational database is queriability of metadata. Some disadvantages of using a 
+separate data store for metadata instead of using HDFS are synchronization and 
+scalability issues. Additionally there is no clear way to implement an object 
+store on top of HDFS due to lack of random updates to files. This, coupled with 
+the advantages of queriability of a relational store, made our approach a 
+sensible one.</P>
+<P>The metastore can be configured to be used in a couple of ways: remote and 
+embedded. In remote mode, the metastore is a <A class="external-link" href="https://thrift.apache.org/" 
+rel="nofollow">Thrift</A> service. This mode is useful for non-Java clients. In 
+embedded mode, the Hive client directly connects to an underlying metastore 
+using JDBC. This mode is useful because it avoids another system that needs to 
+be maintained and monitored. Both of these modes can co-exist. (Update: Local 
+metastore is a third possibility. See <A class="external-link" href="https://cwiki.apache.org/confluence/display/Hive/AdminManual+MetastoreAdmin" 
+rel="nofollow">Hive Metastore Administration</A> for details.)</P>
+<H3><A name="Design-MetastoreInterface"></A>Metastore Interface</H3>
+<P>Metastore provides a <A class="external-link" href="https://thrift.apache.org/docs/idl" 
+rel="nofollow">Thrift interface</A> to manipulate and query Hive metadata. 
+Thrift provides bindings in many popular languages. Third party tools can use 
+this interface to integrate Hive metadata into other business metadata 
+repositories.</P>
+<H2><A name="Design-HiveQueryLanguage"></A>Hive Query Language</H2>
+<P>HiveQL is an SQL-like query language for Hive. It mostly mimics SQL syntax 
+for creation of tables, loading data into tables and querying the tables. HiveQL 
+also allows users to embed their custom map-reduce scripts. These scripts can be 
+written in any language using a simple row-based streaming interface – read rows 
+from standard input and write out rows to standard output. This flexibility 
+comes at a cost of a performance hit caused by converting rows from and to 
+strings. However, we have seen that users do not mind this given that they can 
+implement their scripts in the language of their choice. Another feature unique 
+to HiveQL is multi-table insert. In this construct, users can perform multiple 
+queries on the same input data using a single HiveQL query. Hive optimizes these 
+queries to share the scan of the input data, thus increasing the throughput of 
+these queries several orders of magnitude. We omit more details due to lack of 
+space.  For a more complete description of the HiveQL language see the <A class="external-link" 
+href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual" rel="nofollow">language 
+manual</A>.</P>
+<H2><A name="Design-Compiler"></A>Compiler</H2>
+<UL>
+  <LI>Parser – Transform a query string to a parse tree representation.</LI>
+  <LI>Semantic Analyser – Transform the parse tree to an internal query 
+  representation, which is still block based and not an operator tree. As part 
+  of this step, the column names are verified and expansions like * are 
+  performed. Type-checking and any implicit type conversions are also performed 
+  at this stage. If the table under consideration is a partitioned table, which 
+  is the common scenario, all the expressions for that table are collected so 
+  that they can be later used to prune the partitions which are not needed. If 
+  the query has specified sampling, that is also collected to be used later 
+  on.</LI>
+  <LI>Logical Plan Generator – Convert the internal query representation to a 
+  logical plan, which consists of a tree of operators. Some of the operators are 
+  relational algebra operators like 'filter', 'join' etc. But some of the 
+  operators are Hive specific and are used later on to convert this plan into a 
+  series of map-reduce jobs. One such operator is a reduceSink operator which 
+  occurs at the map-reduce boundary. This step also includes the optimizer to 
+  transform the plan to improve performance – some of those transformations 
+  include: converting a series of joins into a single multi-way join, performing 
+  a map-side partial aggregation for a group-by, performing a group-by in 2 
+  stages to avoid the scenario when a single reducer can become a bottleneck in 
+  presence of skewed data for the grouping key. Each operator comprises a 
+  descriptor which is a serializable object.</LI>
+  <LI>Query Plan Generator – Convert the logical plan to a series of map-reduce 
+  tasks. The operator tree is recursively traversed, to be broken up into a 
+  series of map-reduce serializable tasks which can be submitted later on to the 
+  map-reduce framework for the Hadoop distributed file system. The reduceSink 
+  operator is the map-reduce boundary, whose descriptor contains the reduction 
+  keys. The reduction keys in the reduceSink descriptor are used as the 
+  reduction keys in the map-reduce boundary. The plan consists of the required 
+  samples/partitions if the query specified so. The plan is serialized and 
+  written to a file.<BR>&nbsp;
+  <H2><A name="Design-Optimizer"></A>Optimizer</H2>More plan transformations are 
+  performed	by the optimizer. The optimizer	is an evolving component. As of 
+  2011, it was rule-based and performed the following: column pruning and 
+  predicate pushdown. However, the infrastructure was in place, and there was 
+  work under progress to include other optimizations like map-side 
+  join.&nbsp;(Hive 0.11 added several <A class="external-link" href="https://cwiki.apache.org/confluence/display/Hive/LanguageManual+JoinOptimization" 
+  rel="nofollow">join optimizations</A>.)<BR>&nbsp;<BR>The optimizer can be 
+  enhanced to be cost-based (see <A class="external-link" href="https://cwiki.apache.org/confluence/display/Hive/Cost-based+optimization+in+Hive" 
+  rel="nofollow">Cost-based optimization in Hive</A> and <A class="external-link" 
+  href="https://issues.apache.org/jira/browse/HIVE-5775" 
+  rel="nofollow">HIVE-5775</A>). The sorted nature of output tables can also be 
+  preserved and used later on to generate better plans. The query can be 
+  performed on a small sample of data to guess the data distribution, which can 
+  be used to generate a better plan.<BR>&nbsp;<BR>A <A class="external-link" 
+  href="https://cwiki.apache.org/confluence/display/Hive/Correlation+Optimizer" 
+  rel="nofollow">correlation optimizer</A> was added in Hive 0.12.<BR>&nbsp;<BR>
+  The plan is a generic operator tree, and can be easily manipulated.<BR>&nbsp;
+  <H2><A name="Design-Execution"></A>Execution</H2>
+  <H2><A name="Design-Conclusion"></A>Conclusion</H2></LI></UL></DIV><!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+         <rdf:Description
+    rdf:about="https://cwiki.apache.org/confluence/display/Hive/Design"
+    dc:identifier="https://cwiki.apache.org/confluence/display/Hive/Design"
+    dc:title="Design"
+    trackback:ping="https://cwiki.apache.org/confluence/rpc/trackback/27362072"/>
+</rdf:RDF>
+--> 
+                            
+<DIV class="pageSection group" id="labels-section">
+<DIV class="labels-editor"><SPAN class="label-title" 
+id="labels-section-title">Labels</SPAN>         
+<DIV class="labels-section-content content-column" entitytype="page" entityid="27362072">
+<DIV class="labels-content">
+<UL class="label-list label-list-right">
+  <LI class="no-labels-message-container"><SPAN class="no-labels-message" id="labels-section-title-none"> 
+             No labels         </SPAN>     </LI>         
+</UL></DIV></DIV></DIV></DIV>
+<DIV class="pageSection group" id="comments-section">
+<DIV class="bottom-comment-panels comment-panels"></DIV></DIV></DIV></DIV><!-- \#main --> 
+                                
+<DIV id="footer"><SECTION class="footer-body">
+<P class="license license-opensource">                  Powered by a free 
+<B>Atlassian Confluence Open Source Project License</B> granted to Apache 
+Software Foundation. <A href="http://www.atlassian.com/c/conf/11461">Evaluate 
+Confluence today</A>.<BR></P>
+<UL id="poweredby">
+  <LI class="noprint">Powered by <A class="hover-footer-link" href="http://www.atlassian.com/software/confluence">Atlassian 
+  Confluence</A> <SPAN id="footer-build-information">5.0.3</SPAN>, <A class="hover-footer-link" 
+  href="http://www.atlassian.com/software/confluence/overview/team-collaboration-software?utm_source=confluence-footer">Team 
+  Collaboration Software</A></LI>
+  <LI class="print-only">Printed by Atlassian Confluence 5.0.3, Team 
+  Collaboration Software.</LI>
+  <LI class="noprint"><A class="hover-footer-link" href="http://jira.atlassian.com/secure/BrowseProject.jspa?id=10470">Report 
+  a bug</A></LI>
+  <LI class="noprint"><A class="hover-footer-link" href="http://www.atlassian.com/about/connected.jsp?s_kwcid=Confluence-stayintouch">Atlassian 
+  News</A></LI></UL></SECTION></DIV></DIV></DIV><!-- \#full-height-container --> 
+</DIV><!-- \#page --> </BODY></HTML>

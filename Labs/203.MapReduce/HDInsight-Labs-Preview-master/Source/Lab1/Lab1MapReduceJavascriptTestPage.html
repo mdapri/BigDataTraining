@@ -1,0 +1,69 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>QUnit Tests for Lab1 MapReduce</title>  
+    <link rel="stylesheet" href="http://github.com/jquery/qunit/raw/master/qunit/qunit.css" type="text/css" media="screen">  
+    <script type="text/javascript" src="http://github.com/jquery/qunit/raw/master/qunit/qunit.js"></script>  
+    <script type="text/javascript" src="Lab1MapReduce.js"></script>  
+
+<script type="text/javascript">
+
+function contextWriter() {
+ this.localKey = null;
+ this.localValue = null;
+
+ this.write = function(key, value) {
+    this.localKey = key;
+    this.localValue = value;
+  }
+}
+
+var fakeContext = new contextWriter();
+
+function reducerValues() {
+
+    this.values = ["New", "Regular"];
+    this.counter = -1;
+
+    this.hasNext = function() {
+        if (this.counter + 1 < this.values.length) {
+            return true;
+        };
+        return false;
+    }
+
+    this.next = function() {
+        this.counter++;
+        return this.values[this.counter];
+    }
+}
+
+var fakeReducerValues = new reducerValues();
+
+test('Aggregate Purchase Map Reduce Tests', function() { 
+
+    map("", 
+        "01/03/2013 11:30:08\t    155990\t  New\t USA\t Adword\t  Purchase",
+         fakeContext);
+
+    equal( "USA", fakeContext.localKey, 'testing usa counted');  
+    equal( "New", fakeContext.localValue, 'testing new user correctly emitted'); 
+
+    reduce("Germany", 
+            fakeReducerValues,
+            fakeContext);
+
+    equal("2, (50%)", fakeContext.localValue, 'reducer counting correctly'); 
+
+})  
+</script>
+
+</head>  
+<body>  
+    <h1 id="qunit-header">QUnit Test Suite</h1>  
+    <h2 id="qunit-banner"></h2>  
+    <div id="qunit-testrunner-toolbar"></div>  
+    <h2 id="qunit-userAgent"></h2>  
+    <ol id="qunit-tests"></ol>  
+</body>  
+</html> 

@@ -1,0 +1,1 @@
+Bootstrapper.bindDOMParsed(function(){var Bootstrapper=window["Bootstrapper"];var ensightenOptions=Bootstrapper.ensightenOptions;Bootstrapper.insertScript("//www.microsoft.com/library/svy/sto/https/broker.js")},650320,241932);

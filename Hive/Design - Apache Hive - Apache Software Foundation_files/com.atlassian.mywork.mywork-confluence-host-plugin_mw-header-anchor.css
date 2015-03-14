@@ -1,0 +1,63 @@
+.mw-anchor {
+	padding: 4px; width: 20px; height: 18px; line-height: 1em; font-weight: bold; border-top-color: currentColor; border-top-width: 0px; border-top-style: none; float: right; display: block;
+}
+#com-atlassian-confluence .studio-header .mw-anchor {
+	height: 16px; margin-top: 0px;
+}
+#header .aui-style-header .mw-anchor {
+	height: 24px;
+}
+#header .aui-header .mw-anchor {
+	height: 14px; padding-top: 10px; padding-right: 14px; padding-bottom: 16px;
+}
+#notifications-anchor .badge-i {
+	background-position: center; left: 15%; top: 20%; width: 16px; height: 16px; position: relative; pointer-events: none; background-image: url("/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/1.1.13/_/download/resources/com.atlassian.mywork.mywork-confluence-host-plugin:mw-header-anchor/icon-workday.png"); background-repeat: no-repeat;
+}
+#notifications-anchor .aui-icon.badge-i {
+	background-image: none;
+}
+.read#notifications-anchor .aui-icon.badge-i {
+	background-image: none;
+}
+#notifications-anchor .aui-icon.badge-i::before {
+	content: "G";
+}
+.read#notifications-anchor .badge-i {
+	background-image: url("/confluence/s/en_GB-1988229788/4109/76e0dbb30bc8580e459c201f3535d84f9283a9ac.1/1.1.13/_/download/resources/com.atlassian.mywork.mywork-confluence-host-plugin:mw-header-anchor/icon-workday-empty.png");
+}
+.read#notifications-anchor .aui-icon.badge-i::before {
+	content: "H";
+}
+.active#notifications-anchor {
+	background-color: rgb(50, 108, 166);
+}
+#notifications-anchor:hover {
+	background-color: rgb(50, 108, 166);
+}
+.studio-header #notifications-anchor:hover {
+	background-color: transparent;
+}
+.studio-header .active#notifications-anchor {
+	background-color: rgb(0, 51, 102);
+}
+.read#notifications-anchor .badge {
+	font-size: 0px;
+}
+.mw-anchor .badge {
+	padding: 0px 2px; border-radius: 7px; color: white; font-size: 12px; display: inline-block; min-height: 10px; min-width: 10px;
+}
+.mw-anchor .badge-w {
+	left: 50%; top: -4px; width: 100%; text-align: center; line-height: 14px; text-indent: 0px; margin-left: 0px; position: absolute; pointer-events: none;
+}
+.unread.mw-anchor .badge {
+	background: rgb(58, 126, 194); border: 1px solid rgba(0, 0, 0, 0.2);
+}
+#inline-dialog-notifications-miniview {
+	right: 6px !important; z-index: 5001;
+}
+#inline-dialog-notifications-miniview .contents {
+	padding: 0px;
+}
+#notifications-miniview-iframe {
+	border: currentColor; width: 500px; height: 510px;
+}
