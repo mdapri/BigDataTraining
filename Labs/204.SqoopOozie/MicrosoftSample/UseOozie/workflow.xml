@@ -1,0 +1,53 @@
+<workflow-app name="useooziewf" xmlns="uri:oozie:workflow:0.2">
+    <start to = "RunHiveScript"/> 
+    <action name="RunHiveScript">
+        <hive xmlns="uri:oozie:hive-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+            </configuration>
+            <script>${hiveScript}</script>
+            <param>hiveTableName=${hiveTableName}</param>
+            <param>hiveDataFolder=${hiveDataFolder}</param>
+            <param>hiveOutputFolder=${hiveOutputFolder}</param>
+        </hive>
+        <ok to="RunSqoopExport"/>
+        <error to="fail"/>
+    </action>
+
+    <action name="RunSqoopExport">
+        <sqoop xmlns="uri:oozie:sqoop-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.compress.map.output</name>
+                    <value>true</value>
+                </property>
+            </configuration>
+        <arg>export</arg>
+        <arg>--connect</arg> 
+        <arg>${sqlDatabaseConnectionString}</arg> 
+        <arg>--table</arg>
+        <arg>${sqlDatabaseTableName}</arg> 
+        <arg>--export-dir</arg> 
+        <arg>${hiveOutputFolder}</arg> 
+        <arg>-m</arg> 
+        <arg>1</arg>
+        <arg>--input-fields-terminated-by</arg>
+        <arg>"\001"</arg>
+        </sqoop>
+        <ok to="end"/>
+        <error to="fail"/>
+    </action>
+
+    <kill name="fail">
+        <message>Job failed, error message[${wf:errorMessage(wf:lastErrorNode())}] </message>
+    </kill>
+
+   <end name="end"/>
+</workflow-app>

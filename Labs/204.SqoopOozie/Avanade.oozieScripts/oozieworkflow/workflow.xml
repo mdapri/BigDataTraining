@@ -1,0 +1,50 @@
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="WebLogDataWorkflow">
+<start to="CreateWebDataTable" />
+<action name="CreateWebDataTable">
+<hive xmlns="uri:oozie:hive-action:0.2">
+	<job-tracker>${jobTracker}</job-tracker>
+	<name-node>${nameNode}</name-node>
+<configuration>
+<property>
+<name>mapred.job.queue.name</name>
+<value>default</value>
+</property>
+<property>
+<name>oozie.hive.defaults</name>
+<value>hive-default.xml</value>
+</property>
+</configuration>
+<script>CreateWebDataTable.q</script>
+<param>TABLE_NAME=${webDataTableName}</param>
+<param>LOCATION=${webDataTableFolder}</param>
+</hive>
+<ok to="LoadData" />
+<error to="fail" />
+</action>
+<action name="LoadData">
+<hive xmlns="uri:oozie:hive-action:0.2">
+<job-tracker>${jobTracker}</job-tracker>
+<name-node>${nameNode}</name-node>
+<configuration>
+<property>
+<name>mapred.job.queue.name</name>
+<value>default</value>
+</property>
+<property>
+<name>oozie.hive.defaults</name>
+<value>hive-default.xml</value>
+</property>
+</configuration>
+<script>LoadData.q</script>
+<param>SOURCE_TABLE_NAME=${logDataTableName}</param>
+<param>TARGET_TABLE_NAME=${webDataTableName}</param>
+</hive>
+<ok to="end" />
+<error to="fail" />
+</action>
+<kill name="fail">
+<message>Workflow failed, error
+message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+</kill>
+<end name="end" />
+</workflow-app>
