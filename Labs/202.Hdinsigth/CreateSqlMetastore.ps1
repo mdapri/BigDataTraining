@@ -11,7 +11,7 @@ $serverName = Get-AzureSqlDatabaseServer|%{$_.ServerName}
 $username="mdadmin"
 $password="Av@nade001"
 
-$currentIp ="151.66.236.209"
+$currentIp ="93.62.229.132"
 #add the IP to the firewall rule
 New-AzureSqlDatabaseServerFirewallRule -ServerName $serverName -RuleName “mdadmin_rule” -StartIPAddress $currentIp -EndIPAddress $currentIp
 #create credentials

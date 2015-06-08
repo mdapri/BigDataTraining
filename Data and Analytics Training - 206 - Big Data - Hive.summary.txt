@@ -59,12 +59,28 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
 STORED AS TEXTFILE LOCATION '/data/table3' ;
 
 The data that are in the FOLDER are considered part of the table;
+
+note that the statement
+CREATE TABLE table2
+(col1 STRING,
+col2 INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ' '
+STORED AS TEXTFILE LOCATION '/data/table2';
+
+Essentially differs for the lack of the EXTERNAL keyword. It states that the file is stored in a location we decide and as a text file. But when the table is dropped the directory is deleted
+
+
+
 ========== Loading Data (LOAD and INSERT)
 We discussed the creation of tables, we talked about idea of them containing data. And of course
 they don’t contain data, it is the folders that contain the data. The tables just project the schema on to
 it. But how do we get the data into the folders that are referenced by Hive tables?
-1.There is a very simple way, we can just simply save the files into those folders. And actually if the
-2.  LOAD statement. It is really a good way of taking data (perhaps that’s been staged) to a particular staging folder and just moving it into the appropriate folder for the table.
+1.  There is a very simple way, we can just simply save the files into those folders. And actually if the folder where we create a table already contains data, that data is already in the table.
+2.  LOAD statement: it will move or copy the files from a location in HDFS to the folder for the table. It is really a good way of taking data (perhaps that’s been staged) to a particular staging folder and just moving it into the appropriate folder for the table.
+LOAD DATA LOCAL INPATH '/data/source' INTO
+TABLE MyTable;
+
+INSERT
 What the INSERT statement does in HiveQL, is more like an INSERT FROM semantics:
 
 FROM StagingTable
@@ -99,6 +115,8 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY ' ';
 CREATE TABLE weblogs_raw
 (s_date date, s_time string, s_sitename string, cs_method string, cs_uristem string, cs_uriquery string, s_port int, cs_username string, c_ip string, cs_useragent string, cs_cookie string, cs_referer string, cs_host string, sc_status int, sc_substatus int, sc_win32status int, sc_bytes int, cs_bytes int, s_timetaken int )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ' ';
+
+directory created in /hive/warehouse
 
 #create the staging table
 CREATE EXTERNAL TABLE weblogs_clean
@@ -193,3 +211,90 @@ Total MapReduce CPU Time Spent: 10 seconds 733 msec
 OK
 2014-01-01      646     25899167        513240
 Time taken: 96.653 seconds, Fetched: 1 row(s)
+======== A second experiment
+CREATE TABLE weblogs_raw (s_date date, s_time string, s_sitename string, cs_method string,c_ip string, cs_referer string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ' ';
+
+-- DO NOT FORGET THE ; AT THE END
+
+CREATE TABLE weblogs_raw (s_date date, s_time string, s_sitename string, cs_method string,c_ip string, cs_referer string)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ' ';
+
+## USE partitioning!!
+
+CREATE EXTERNAL TABLE weblogs_clean ( s_time string, s_sitename string, cs_method string,c_ip string, cs_referer string)
+PARTITIONED BY(s_date date)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ' '
+STORED AS TEXTFILE
+LOCATION '/data/cleanlog';
+#Leaving the column s_date in the table definition raises the error
+#  CREATE EXTERNAL TABLE weblogs_clean1 ( s_date date,s_time string, s_sitename string, cs_method string,c_ip string, cs_referer string)
+#  PARTITIONED BY(s_date date)
+#  ROW FORMAT DELIMITED
+#  FIELDS TERMINATED BY ' '
+#  STORED AS TEXTFILE
+#  LOCATION '/data/cleanlog1';
+##  FAILED: SemanticException [Error 10035]: Column repeated in partitioning columns
+# so the s_date column is not in the list
+
+
+#insert data into staging table. THE FORMAT WILL BE NOT CORRECT!!! The file have much more colums
+# we only take 5 
+# date time s-sitename cs-method cs-uri-stem cs-uri-query (the last 2 are interpreted as ip and referer)
+LOAD DATA INPATH '/HdiSamples/WebsiteLogSampleData/SampleLog' INTO TABLE weblogs_raw;	
+
+#this MOVES THE FILE
+###  hadoop fs -cp /hive/warehouse/weblogs_raw/909f2b.log  /HdiSamples/WebsiteLogSampleData/SampleLog/909f2b.log
+
+#insert cleaned data
+# attempt 1 #
+set hive.exec.dynamic.partition.mode=nonstrict;
+FROM weblogs_raw 
+INSERT OVERWRITE TABLE weblogs_clean PARTITION(s_date)
+SELECT *  WHERE SUBSTR(s_date, 1, 1) <> '#';
+
+////
+    > SELECT *  WHERE SUBSTR(s_date, 1, 1) <> '#';
+FAILED: SemanticException [Error 10096]: Dynamic partition strict mode requires
+at least one static partition column. To turn this off set hive.exec.dynamic.partition.mode=nonstrict
+////
+tion.java:1594)
+        at org.apache.hadoop.mapred.YarnChild.main(YarnChild.java:163)
+Caused by: org.apache.hadoop.hive.ql.metadata.HiveFatalException: [Error 20004]:
+ Fatal error occurred when node tried to create too many dynamic partitions. The
+ maximum number of dynamic partitions is controlled by hive.exec.max.dynamic.par
+titions and hive.exec.max.dynamic.partitions.pernode. Maximum was set to: 100
+////
+
+# attempt 2 #
+# NOTE the missing s_date in the select clause and the weid where clause. Othewise an ERROR coccurs
+FROM weblogs_raw 
+INSERT OVERWRITE TABLE weblogs_clean PARTITION(s_date ='2014-01-01')
+SELECT  s_time , s_sitename , cs_method ,c_ip ,  cs_referer  WHERE s_date ='2014-01-01';  SUBSTR(s_date, 1, 1) <> '#';
+
+# a directory is created 
+# /data/cleanlog/s_date=2014-01-01
+# not browseable via hadoop fs -ls
+# using the file browser accessible from 
+# https://mdhdinsight.azurehdinsight.net/Home/FileBrowser
+# the file contained in the directory does not have the s_date column
+
+check if it is returned, though
+
+SELECT * from weblogs_clean
+# the s_date colum is NOT returned.
+# but 
+SELECT s_date from weblogs_clean;
+#returns a list of dates (only 1 actually)
+SELECT s_date, s_time,c_ip from weblogs_clean;
+# returns the data correctly
+
+
+
+
+
+
+

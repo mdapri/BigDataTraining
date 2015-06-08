@@ -1,0 +1,168 @@
+==========  Sqoop
+Sqoop is a tool designed to transfer data between Hadoop clusters and relational databases. You can use it to import data from a relational database management system (RDBMS) such as SQL, MySQL
+or Oracle into the Hadoop Distributed File System (HDFS), transform the data in Hadoop with MapReduce or Hive, and then export the data back into an RDBMS.
+These files may be delimited
+text files (for example, with commas or tabs separating each field), or binary Avro or SequenceFiles containing serialized record data.
+A by-product of the import process is a generated Java class which can encapsulate one row of the imported table. This class is used during the import process by Sqoop itself. 
+The Java source code for this class is also provided to you, for use in subsequent MapReduce processing of the data
+Sqoop jobs can be initiated from:
+? Hadoop command line on the remote desktop
+? PowerShell, can be done remotely
+? Custom application using .NET SDK for Hadoop
+? An action within Oozie workflow
+
+To execute Sqoop commands, on the Hadoop command line you can access Sqoop from
+%SQOOP_HOME%\bin\sqoop
+
+>	sqoop export --connect <connectionString> --table <tableName> --export-dir
+	<HDFS path>
+
+The above command will export data from HDFS into the table in the database specified by the
+connection string.
+	sqoop export --connect jdbc:mysql://db.example.com/foo --table bar --export-dir /results/bar_data --validate
+	
+>	sqoop import --connect <connectionString> --table <tableName>
+	
+The above command will import data into HDFS from the table in the database pointed to by the connection string. By default, Sqoop will import a table named foo to a directory named foo inside
+your home directory in HDFS. For example, if your username is someuser, then the import tool will write to /user/someuser/foo/(files)
+This code sample will use 8 parallel tasks:
+	sqoop import --connect jdbc:mysql://db.foo.com/corp --table EMPLOYEES -m 8
+
+Validation
+Validate the data copied, either import or export by comparing the row counts from the source and
+the target post copy8.
+Here’s a basic import of a table named EMPLOYEES in the corp database that uses validation to
+validate the row counts:
+sqoop import --connect jdbc:mysql://db.foo.com/corp --table
+EMPLOYEES --validate
+And here’s a basic export to populate a table named bar with validation enabled:
+sqoop export --connect jdbc:mysql://db.example.com/foo --table
+bar --export-dir /results/bar_data –validate
+
+==========  Oozie
+Apache Oozie is a workflow/coordination system that manages Hadoop jobs. It is integrated with the Hadoop stack and supports Hadoop jobs for 
+Apache MapReduce
+Apache Pig
+Apache Hive
+Apache Sqoop
+It can also be used to schedule jobs specific to a system, like Java programs or shell scripts
+
+http://azure.microsoft.com/en-us/documentation/articles/hdinsight-use-oozie/
+
+An Oozie Workflow is a collection of actions arranged in a Directed Acyclic Graph (DAG) . Control nodes define job chronology, setting rules for beginning and ending a workflow, which controls the workflow execution path with decision, fork and join nodes. Action nodes trigger the execution of tasks.
+Oozie detects completion of tasks through callback and polling. When Oozie starts a task, it provides a unique callback HTTP URL to the task, thereby notifying that URL when it’s complete. If the task fails to invoke the callback URL, Oozie can poll the task for completion.
+
+Often it is necessary to run Oozie workflows on regular time intervals, but in coordination with unpredictable levels of data availability or events. 
+In these circumstances, OOZIE COORDINATOR allows you to model workflow execution triggers in the form of the data, time or event predicates. The workflow job is started after those predicates are satisfied
+
+To coordinate all of this, we kick off the Oozie workflow from some sort of client
+If Oozie is going to run a Hive script in one of its actions, it needs to know how to set up the Hive environment and needs to know what the configuration settings it should use for Hive is
+====  Oozie Workflow File
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="MyWorkflow">
+	<start to="FirstAction"/>
+		<action name="FirstAction">
+			<hive xmlns="uri:oozie:hive-action:0.2">
+				<script>CreateTable.q</script>
+				<param>TABLE_NAME=${tableName}</param>
+				<param>LOCATION=${tableFolder}</param>
+			</hive>
+			<ok to="SecondAction"/>
+			<error to="fail"/>
+		</action>
+		<action name="SecondAction">
+		…
+		</action>
+		<kill name="fail">
+			<message>Workflow failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+		</kill>
+	<end name="end"/>
+</workflow-app>
+
+== script file
+	DROP TABLE IF EXISTS ${TABLE_NAME};
+	CREATE EXTERNAL TABLE ${TABLE_NAME}
+	(Col1 STRING,
+	Col2 FLOAT,
+	Col3 FLOAT)
+	ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+	STORED AS TEXTFILE LOCATION '${LOCATION}';
+
+== Job.properties
+	nameNode=wasb://my_container@my_storage_account.blob.core.windows.net
+	jobTracker=jobtrackerhost:9010
+	queueName=default
+	oozie.use.system.libpath=true
+	oozie.wf.application.path=/example/workflow/
+	tableName=ExampleTable
+	tableFolder=/example/ExampleTable
+	
+The parameters are defined in the job properties file, they are passed to the Oozie workflow file and then the Oozie workflow file, passes them on to the individual script that perform the actions.
+
+====	Running Oozie Workflow
+1. Create a Job.properties file as below:
+	nameNode=wasb://<container-name>@<storage-account>.blob.core.windows.net
+	jobTracker=jobtrackerhost:9010
+	queueName=default
+	oozie.use.system.libpath=true
+	oozie.wf.application.path=/adventureworks/oozieworkflow/
+	webDataTableName=webdata
+	webDataTableFolder=/adventureworks/webdata
+	logDataTableName=logdata
+
+2. look at the Oozie xml file
+
+<workflow-app xmlns="uri:oozie:workflow:0.2" name="WebLogDataWorkflow">
+<start to="CreateWebDataTable" />
+<action name="CreateWebDataTable">
+	<hive xmlns="uri:oozie:hive-action:0.2">
+			<job-tracker>${jobTracker}</job-tracker>
+			<name-node>${nameNode}</name-node>
+	<configuration>
+	<property>
+		<name>mapred.job.queue.name</name>
+		<value>default</value>
+	</property>
+	<property>
+		<name>oozie.hive.defaults</name>
+		<value>hive-default.xml</value>
+	</property>
+	</configuration>
+	<script>CreateWebDataTable.q</script>
+		<param>TABLE_NAME=${webDataTableName}</param>
+		<param>LOCATION=${webDataTableFolder}</param>
+	</hive>
+	<ok to="LoadData" />
+	<error to="fail" />
+</action>
+<action name="LoadData">
+	<hive xmlns="uri:oozie:hive-action:0.2">
+		<job-tracker>${jobTracker}</job-tracker>
+		<name-node>${nameNode}</name-node>
+	<configuration>
+	<property>
+		<name>mapred.job.queue.name</name>
+		<value>default</value>
+	</property>
+	<property>
+		<name>oozie.hive.defaults</name>
+		<value>hive-default.xml</value>
+	</property>
+	</configuration>
+	<script>LoadData.q</script>
+		<param>SOURCE_TABLE_NAME=${logDataTableName}</param>
+		<param>TARGET_TABLE_NAME=${webDataTableName}</param>
+	</hive>
+	<ok to="end" />
+	<error to="fail" />
+</action>
+<kill name="fail">
+	<message>Workflow failed, error
+	message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+</kill>
+<end name="end" />
+</workflow-app>
+
+When we provision an HDInsight cluster, the installation of Hive under C:\APPS\DIST\HIVE-0.13.0.2.1.8.0-2176 includes a conf folder. 
+In this conf folder is a hive-site.xml which has the default configuration for Hive in our HDInsight cluster.
+ If we would like to change the way Hive behaves, this is the XML that we would edit. 
+FOR THIS TUTORIAL, WE HAVE USED THIS FILE AND COPIED AND RENAMED IT to hive-default.xml
